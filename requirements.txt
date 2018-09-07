@@ -30,7 +30,6 @@ oauthlib==2.0.7
 openpyxl==2.1.4
 pluggy==0.7.1
 py==1.6.0
-PyAutoGUI==0.9.36
 PyJWT==1.6.4
 PyMsgBox==1.0.6
 PyPDF2==1.26.0
@@ -38,7 +37,6 @@ PyScreeze==0.1.14
 PySocks==1.6.8
 pytest==3.8.0
 python-dateutil==2.7.2
-python-docx==0.8.6
 python-editor==1.0.3
 PyTweening==1.0.3
 pytz==2018.5
@@ -55,3 +53,4 @@ URLObject==2.4.3
 Werkzeug==0.14.1
 wincertstore==0.2
 WTForms==2.1
+uwsgi
