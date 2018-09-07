@@ -29,18 +29,18 @@ def not_found(error):
 def index():
     return "Hi person ;-)"
 
-@app.route('/dann/api/v1.0/orders', methods=['GET'])
+@app.route('/dann/api/v1/orders', methods=['GET'])
 def get_orders():
     return jsonify({'orders': orders})
 
-@app.route('/dann/api/v1.0/orders/<int:order_id>', methods=['GET'])
+@app.route('/dann/api/v1/orders/<int:order_id>', methods=['GET'])
 def get_order(order_id):
     order =[order for order in orders if order['id'] == order_id ]
     if len(order)==0:
         abort(404)
     return jsonify({'order': order[0]})
 
-@app.route('/dann/api/v1.0/orders', methods=['POST'])
+@app.route('/dann/api/v1/orders', methods=['POST'])
 def create_order():
     if not request.json or not 'title' in request.json:
         abort(404)
@@ -53,7 +53,7 @@ def create_order():
     orders.append(order)
     return jsonify({'order': order}), 201
 
-@app.route('/dann/api/v1.0/orders/<int:order_id>', methods=['PUT'])
+@app.route('/dann/api/v1/orders/<int:order_id>', methods=['PUT'])
 def update_order(order_id):
     order =[order for order in orders if order['id'] == order_id ]
     if len(order)==0:
