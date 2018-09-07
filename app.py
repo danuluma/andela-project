@@ -22,7 +22,7 @@ orders = [
 def index():
     return "Hi person ;-)"
 
-@app.route('/dann/api/v1.0/orders', methods=['GET'])
+@app.route('/dann/api/v1/orders', methods=['GET'])
 def get_orders():
     return jsonify({'orders': orders})
 
