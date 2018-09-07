@@ -67,7 +67,7 @@ def update_order(order_id):
     order[0]['title'] = request.json.get('title', order[0]['title'])
     order[0]['description'] = request.json.get('description', order[0]['description'])
     order[0]['price'] = request.json.get('price', order[0]['price'])
-    return jsonify({'order': order[0]})
+    return jsonify({'order': order[0]}), 201
 
 if __name__ == '__main__':
     app.run(debug=True)

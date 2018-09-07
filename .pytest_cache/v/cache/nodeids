@@ -1,0 +1,7 @@
+[
+  "dann_test.py::test_home",
+  "dann_test.py::test_get_all",
+  "dann_test.py::test_get_order1",
+  "dann_test.py::test_create_order",
+  "dann_test.py::test_edit_order"
+]
