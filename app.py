@@ -7,6 +7,7 @@ from flask import request
 app = Flask(__name__)
 
 orders = [
+<<<<<<< HEAD
     {
     'id': 1,
     'title': 'pancake',
@@ -21,18 +22,44 @@ orders = [
     }
 ]
 
+=======
+ {
+  'id': 1,
+  'title': 'pancake',
+  'description': 'Lorem ipsum',
+  'price': 50
+ },
+ {
+  'id': 2,
+  'title': 'pizza',
+  'description': 'Lorem ipsum',
+  'price': 500
+ }
+]
+
+
+>>>>>>> develop
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
 @app.route('/')
 def index():
     return "Hi person ;-)"
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
 @app.route('/dann/api/v1/orders', methods=['GET'])
 def get_orders():
     return jsonify({'orders': orders})
 
+<<<<<<< HEAD
 @app.route('/dann/api/v1/orders/<int:order_id>', methods=['GET'])
 def get_order(order_id):
     order =[order for order in orders if order['id'] == order_id ]
@@ -43,6 +70,20 @@ def get_order(order_id):
 @app.route('/dann/api/v1/orders', methods=['POST'])
 def create_order():
     if not request.json or not 'title' in request.json:
+=======
+
+@app.route('/dann/api/v1/orders/<int:order_id>', methods=['GET'])
+def get_order(order_id):
+    order = [order for order in orders if order['id'] == order_id ]
+    if len(order) == 0:
+        abort(404)
+    return jsonify({'order': order[0]})
+
+
+@app.route('/dann/api/v1/orders', methods=['POST'])
+def create_order():
+    if not request.json or'title' not in request.json:
+>>>>>>> develop
         abort(404)
     order = {
         'id': orders[-1]['id'] + 1,
@@ -53,10 +94,18 @@ def create_order():
     orders.append(order)
     return jsonify({'order': order}), 201
 
+<<<<<<< HEAD
 @app.route('/dann/api/v1/orders/<int:order_id>', methods=['PUT'])
 def update_order(order_id):
     order =[order for order in orders if order['id'] == order_id ]
     if len(order)==0:
+=======
+
+@app.route('/dann/api/v1/orders/<int:order_id>', methods=['PUT'])
+def update_order(order_id):
+    order = [order for order in orders if order['id'] == order_id]
+    if len(order) == 0:
+>>>>>>> develop
         abort(404)
     if not request.json:
         abort(400)
@@ -69,5 +118,9 @@ def update_order(order_id):
     order[0]['price'] = request.json.get('price', order[0]['price'])
     return jsonify({'order': order[0]}), 201
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
 if __name__ == '__main__':
     app.run(debug=True)
