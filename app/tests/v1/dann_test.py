@@ -1,16 +1,17 @@
 import json
 import pytest
-from app import app
+import sys
+
+
+from run import create_app
 
 
 @pytest.fixture
 def client(request):
+    app = create_app()
     test_client = app.test_client()
 
-    def teardown():
-        pass
 
-    request.addfinalizer(teardown)
     return test_client
 
 
