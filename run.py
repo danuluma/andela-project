@@ -8,7 +8,7 @@ def create_app():
 
 
     from app import api_bp
-    app.register_blueprint(api_bp, url_prefix='/api/v1')
+    app.register_blueprint(api_bp, url_prefix='/dann/api/v1')
 
     return app
 
