@@ -8,8 +8,8 @@ install:
   - pip install coveralls codecov
 
 script:
-  - python3 -m pytest
-  #- nosetests --with-coverage --cover-package=app test
+  - python3 -m unittest
+  - nosetests --with-coverage --cover-package=app test
 
 after_success:
   - coveralls
