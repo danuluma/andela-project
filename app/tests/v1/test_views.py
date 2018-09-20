@@ -17,8 +17,10 @@ class ViewsTest(unittest.TestCase):
     self.order = {"title": "edit2", "description": "Lorem ipsum", "price": 5}
 
   def test_order_creation(self):
+    """ assert that you can't create a duplicate order (asserts tiltle must be unique) """
+    self.client().post('/dann/api/v1/orders', json=self.order)
     response = self.client().post('/dann/api/v1/orders', json=self.order)
-    self.assertEqual(response.status_code, 201)
+    self.assertEqual(response.status_code, 400)
 
   def test_get_all_orders(self):
     self.client().post('/dann/api/v1/orders', json=self.order)
@@ -31,7 +33,8 @@ class ViewsTest(unittest.TestCase):
 
   def test_edit_an_order(self):
     self.client().post('/dann/api/v1/orders', json=self.order)
-    response = self.client().put('/dann/api/v1/orders/1',  json={"title": "testagain", "description": "Lorem ipsum", "price": 10})
+    response = self.client().put('/dann/api/v1/orders/1',
+                                 json={"title": "testagain", "description": "Lorem ipsum", "price": 10})
     self.assertEqual(response.status_code, 201)
 
 

@@ -33,6 +33,9 @@ class Orders(Resource):
     if not request.get_json(force=True):
       abort(404)
     args = parser.parse_args()
+    order = [order for order in orders if order['title'] == args['title'] ]
+    if len(order) != 0:
+      abort(400)
     order = {
         'id': len(orders) + 1,
         'title': args['title'],
