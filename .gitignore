@@ -1,3 +1,5 @@
 instance/config.py
 .pytest_cache
 requirements2.txt
+*pycache*
+*pytest_cache*
