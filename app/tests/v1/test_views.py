@@ -16,6 +16,9 @@ class ViewsTest(unittest.TestCase):
     self.client = self.app.test_client
     self.order = {"title": "edit2", "description": "Lorem ipsum", "price": 5}
 
+  def tearDown(self):
+    pass
+
   def test_order_creation(self):
     """ assert that you can't create a duplicate order (asserts tiltle must be unique) """
     self.client().post('/dann/api/v1/orders', json=self.order)

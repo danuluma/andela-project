@@ -2,6 +2,8 @@
 from flask import abort
 from flask import request
 from flask_restful import Resource, reqparse
+from flask_jwt import jwt_required
+from run import *
 
 
 orders = [
@@ -18,7 +20,7 @@ parser.add_argument('price', type=int,
 
 class Home(Resource):
   """docstring for Home"""
-
+  @jwt_required
   def get(self):
     return {"message": "Hello, there ;-)"}, 200
 
@@ -29,13 +31,14 @@ class Orders(Resource):
   def get(self):
     return {'orders': orders}, 200
 
+  @jwt_required
   def post(self):
     if not request.get_json(force=True):
-      abort(404)
+      return {'Error':'Data is not application/json!!!'}, 404
     args = parser.parse_args()
     order = [order for order in orders if order['title'] == args['title'] ]
     if len(order) != 0:
-      abort(400)
+      return {'Error':'Order already exists'}, 400
     order = {
         'id': len(orders) + 1,
         'title': args['title'],
@@ -52,13 +55,14 @@ class MyOrder(Resource):
   def get(self, order_id):
     order = [order for order in orders if order['id'] == order_id]
     if len(order) == 0:
-      abort(404)
+      return {'Error':'Order does not exist'}, 400
     return {'order': order[0]}, 200
 
+  @jwt_required
   def put(self, order_id):
     order = [order for order in orders if order['id'] == order_id]
     if len(order) == 0:
-      abort(404)
+      return {'Error':'That order does not exist'}, 400
 
     args = parser.parse_args()
     order[0]['title'] = args['title']
