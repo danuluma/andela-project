@@ -8,9 +8,8 @@ from flask_jwt_extended import (
 
 def create_app():
     app = Flask(__name__)
-    # app.config.from_object(configfilehapa)
+    # app.config.from_object(configfile)
     from app import api_bp
-    #app.config['JWT_TOKEN_LOCATION'] = ['json']
     app.config['JWT_SECRET_KEY'] = 'hahaha'
     jwt = JWTManager(app)
 

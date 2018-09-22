@@ -71,12 +71,3 @@ class Refresh(Resource):
       'access_token': access_token
     }
     return mesg, 200
-
-
-class Test(Resource):
-  """docstring for Test"""
-  @jwt_required
-  def get(self):
-    username = get_jwt_identity()
-    return {'Info': f"You're logged in as {username}"}, 200
-
