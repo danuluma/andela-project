@@ -1,4 +1,0 @@
-instance/config.py
-.pytest_cache
-*pycache*
-.pytest_cache*
