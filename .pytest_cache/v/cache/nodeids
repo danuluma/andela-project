@@ -1,7 +1,0 @@
-[
-  "app/tests/v1/conftest.py::test_home",
-  "app/tests/v1/conftest.py::test_get_all",
-  "app/tests/v1/conftest.py::test_get_order1",
-  "app/tests/v1/conftest.py::test_create_order",
-  "app/tests/v1/conftest.py::test_edit_order"
-]
