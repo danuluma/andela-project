@@ -20,7 +20,7 @@ class ViewsTest(unittest.TestCase):
     pass
 
   def test_order_creation(self):
-    """ assert that you can't create a duplicate order (asserts tiltle must be unique) """
+    """ assert that you can't create a duplicate order (asserts title must be unique) """
     self.client().post('/dann/api/v1/orders', json=self.order)
     response = self.client().post('/dann/api/v1/orders', json=self.order)
     self.assertEqual(response.status_code, 400)

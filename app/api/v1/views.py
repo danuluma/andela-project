@@ -20,7 +20,7 @@ parser.add_argument('price', type=int,
 
 class Home(Resource):
   """docstring for Home"""
-  @jwt_required
+  # @jwt_required
   def get(self):
     return {"message": "Hello, there ;-)"}, 200
 
@@ -31,7 +31,7 @@ class Orders(Resource):
   def get(self):
     return {'orders': orders}, 200
 
-  @jwt_required
+  # @jwt_required
   def post(self):
     if not request.get_json(force=True):
       return {'Error':'Data is not application/json!!!'}, 404
@@ -58,7 +58,7 @@ class MyOrder(Resource):
       return {'Error':'Order does not exist'}, 400
     return {'order': order[0]}, 200
 
-  @jwt_required
+  # @jwt_required
   def put(self, order_id):
     order = [order for order in orders if order['id'] == order_id]
     if len(order) == 0:
