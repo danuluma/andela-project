@@ -10,7 +10,7 @@ install:
 
 script:
   - python3 -m unittest
-  - nosetests --with-coverage --cover-package=app test
+
 
 after_success:
   - coveralls
