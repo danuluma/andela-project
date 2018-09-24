@@ -1,0 +1,12 @@
+{
+  "app/tests/v1/conftest.py::test_create_order": true, 
+  "app/tests/v1/conftest.py::test_get_order1": true, 
+  "app/tests/v1/conftest.py::test_home": true, 
+  "app/tests/v1/dann_test.py::test_create_order": true, 
+  "app/tests/v1/dann_test.py::test_edit_order": true, 
+  "app/tests/v1/dann_test.py::test_get_all": true, 
+  "app/tests/v1/dann_test.py::test_get_order1": true, 
+  "app/tests/v1/dann_test.py::test_home": true, 
+  "app/tests/v1/test_app.py": true, 
+  "app/tests/v1/test_views.py": true
+}
