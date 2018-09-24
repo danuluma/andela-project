@@ -13,4 +13,4 @@ script:
 
 after_success:
   - coveralls
-  #- codecov --token=bahaslas
+  - codecov --token=CODECOV_TOKEN
