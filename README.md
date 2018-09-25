@@ -15,7 +15,7 @@ This is the api backend for dann's fast foods.
 # Orders API endpoints
 
 |  URL Endpoint | HTTP Request  |  Access | Status  |
-|---|---|---|---|---|
+|---|---|---|---|
 |  /dann/api/v1/orders |   GET|  Retrieves all orders |  Public |
 |  /dann/api/v1/orders |   POST|  Creates a orders |  Private |
 |  /dann/api/v1/orders/<int:order_id> |   GET|  Retrives a specific order with the specified ID |  Public |
