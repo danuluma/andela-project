@@ -60,7 +60,7 @@ class MyOrder(Resource):
   def get(self, order_id):
     order = [order for order in orders if order['id'] == order_id]
     if len(order) == 0:
-      return {'Error':'Order does not exist'}, 400
+      return {'Error':'Order does not exist'}, 404
     return {'order': order[0]}, 200
 
   """Endpoint for PUT requests. Edits a specific order with the new details passed in"""

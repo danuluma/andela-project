@@ -12,7 +12,7 @@ There are currently six working endpoints:
 ```POST ~/dann/api/v1/orders``` --> This endpoint creates a new order
 ```GET dann/api/v1/order/<int:order_id>``` --> This endpoint retrieves a specific order
 ```POST ~/dann/api/v1/order/<int:order_id>``` --> This endpoint updates a specific order
-```POST ~/dann/api/v1/register``` --> This endpoint registers a new user
+```POST ~/dann/api/v1/reg``` --> This endpoint registers a new user
 ```POST ~/dann/api/v1/login``` --> This endpoint authenticates a new user
 
 # How To Test

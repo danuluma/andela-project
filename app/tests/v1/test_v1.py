@@ -63,7 +63,7 @@ class ViewsTest(unittest.TestCase):
 
   def test_user_login(self):
     """ test user login """
-    self.client().post('/dann/api/v1/reg', json=self.test_user)
+    self.client().post('/dann/api/v1/register', json=self.test_user)
     response = self.client().post('/dann/api/v1/login', json=self.test_user)
     json_data = json.loads(response.data)
     self.assertTrue(json_data.get('access_token'))
@@ -162,7 +162,7 @@ class ViewsTest(unittest.TestCase):
     json_data = json.loads(response.data)
     access_token = json_data.get('access_token')
     self.client().post('/dann/api/v1/orders',headers={"Authorization":"Bearer " + access_token}, json=self.order)
-    response = self.client().get('/dann/api/v1/orders/1')
+    response = self.client().get('/dann/api/v1/order/1')
     json_data = json.loads(response.data)
     print(json_data)
     self.assertTrue(json_data.get('order'))
@@ -175,8 +175,8 @@ class ViewsTest(unittest.TestCase):
     json_data = json.loads(response.data)
     access_token = json_data.get('access_token')
     self.client().post('/dann/api/v1/orders',headers={"Authorization":"Bearer " + access_token}, json=self.order)
-    response = self.client().get('/dann/api/v1/orders/0')
-    self.assertEqual(response.status_code, 400)
+    response = self.client().get('/dann/api/v1/order/0')
+    self.assertEqual(response.status_code, 404)
 
   def test_to_edit_an_order_without_authentication(self):
     self.client().post('/dann/api/v1/reg', json=self.test_user)
@@ -185,7 +185,7 @@ class ViewsTest(unittest.TestCase):
     access_token = json_data.get('access_token')
     self.client().post('/dann/api/v1/orders',headers={"Authorization":"Bearer " + access_token}, json=self.order)
     data2 = {"title": "testagain", "description": "Lorem ipsum", "price": 10}
-    response = self.client().put('/dann/api/v1/orders/1',
+    response = self.client().put('/dann/api/v1/order/1',
                                  json=data2)
     self.assertNotEqual(response.status_code, 201)
 
@@ -196,7 +196,7 @@ class ViewsTest(unittest.TestCase):
     access_token = json_data.get('access_token')
     self.client().post('/dann/api/v1/orders',headers={"Authorization":"Bearer " + access_token}, json=self.order)
     data2 = {"title": "testagain", "description": "Lorem ipsum", "price": 10}
-    response = self.client().put('/dann/api/v1/orders/1',headers={"Authorization":"Bearer " + access_token}, json=data2)
+    response = self.client().put('/dann/api/v1/order/1',headers={"Authorization":"Bearer " + access_token}, json=data2)
     json_data = json.loads(response.data)
     print(json_data)
     self.assertTrue(json_data.get('order'))
@@ -209,7 +209,7 @@ class ViewsTest(unittest.TestCase):
     access_token = json_data.get('access_token')
     self.client().post('/dann/api/v1/orders',headers={"Authorization":"Bearer " + access_token}, json=self.order)
     data2 = {"title": "testagain", "description": "Lorem ipsum", "price": 10}
-    response = self.client().put('/dann/api/v1/orders/0',headers={"Authorization":"Bearer " + access_token}, json=data2)
+    response = self.client().put('/dann/api/v1/order/0',headers={"Authorization":"Bearer " + access_token}, json=data2)
     json_data = json.loads(response.data)
     print(json_data)
     self.assertTrue(json_data.get('Error'))
@@ -222,7 +222,7 @@ class ViewsTest(unittest.TestCase):
     access_token = json_data.get('access_token')
     self.client().post('/dann/api/v1/orders',headers={"Authorization":"Bearer " + access_token}, json=self.order)
     data2 = {"title": "", "description": "", "price": -4}
-    response = self.client().put('/dann/api/v1/orders/0',headers={"Authorization":"Bearer " + access_token}, json=data2)
+    response = self.client().put('/dann/api/v1/order/0',headers={"Authorization":"Bearer " + access_token}, json=data2)
     json_data = json.loads(response.data)
     print(json_data)
     self.assertTrue(json_data.get('Error'))
