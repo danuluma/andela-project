@@ -86,10 +86,8 @@ curl -X GET \
 Alternatively, you may use postman or any other gui tool for testing apis
 If using postman, please Bearer Token as the authorization type and insert the acess_token as the token
 
-![Postman example](/home/dan/Pictures/Screenshot%20from%202018-09-25%2021-11-17.png
-)
-![Postman example](/home/dan/Pictures/Screenshot%20from%202018-09-25%2021-15-47.png
-)
+![Postman example](https://res.cloudinary.com/danuluma/image/upload/v1537900187/postmanex.png)
+![Postman example](https://res.cloudinary.com/danuluma/image/upload/v1537900242/postmanex2.png)
 
 ## Credits
 
