@@ -13,28 +13,38 @@ users = [
 
 
 parser = reqparse.RequestParser(bundle_errors=True)
-parser.add_argument('username', type=str, location='json')
+parser.add_argument('username', type=str, required=True, help='please enter a username',  location='json')
 parser.add_argument('password', type=str,
-  help='pword can\'t be empty', required=True, location='json')
+  help='password can\'t be empty', required=True, location='json')
 parser.add_argument('access_token', location='json')
 
 class Reg(Resource):
-  """docstring for Reg"""
+  """Endpoint to register a new user"""
   def post(self):
     args = parser.parse_args()
-    use = {
-            'id': len(users) + 1,
-            'username': args['username'],
-            'password': args['password']
-            }
-    users.append(use)
-    return {'users': users}
+    username = args['username']
+    password = args['password']
 
+    user = [user for user in users if user['username'] == username]
+    if len(user) != 0:
+      return {'Error':'Username already exists'}, 400
+    if username == "":
+      return {'Error':'Please input a valid username'}, 400
+    if password == "":
+      return {'Error':'Please input a valid password'}, 400
+    new_user = {
+            'id': len(users) + 1,
+            'username': username,
+            'password': password
+            }
+    users.append(new_user)
+    return {'users': users}, 200
+  # @jwt_required
   def get(self):
-    return {'message':'hey'}, 200
+    return {'message':'hey'}, 203
 
 class Login(Resource):
-  """docstring for Login"""
+  """Endpoint to login a user and create an access token"""
   def post(self):
     args = parser.parse_args()
     username = args['username']
@@ -45,7 +55,7 @@ class Login(Resource):
       return {'Error':'Username does not exist'}, 404
 
 
-    if args['password'] != user[0]['password']:
+    if password != user[0]['password']:
       return {'Error':'Wrong password'}, 401
 
     access_token = create_access_token(identity=username)
@@ -61,7 +71,7 @@ class Login(Resource):
 
 
 class Refresh(Resource):
-  """docstring for Refresh"""
+  """Endpoint to create Refresh tokens. It is not to be accessed externally"""
   @jwt_refresh_token_required
   def post(self):
     current_user = get_jwt_identity()
