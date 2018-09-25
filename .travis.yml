@@ -14,4 +14,4 @@ script:
 
 after_success:
   - coveralls
-  - codecov --token=CODECOV_TOKEN
+  - codecov
