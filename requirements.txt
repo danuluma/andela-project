@@ -33,6 +33,7 @@ PyPDF2==1.26.0
 PyScreeze==0.1.14
 PySocks==1.6.8
 pytest==3.8.0
+pytest-cov==2.6.0
 pytest-flask==0.12.0
 python-dateutil==2.7.3
 python-docx==0.8.6

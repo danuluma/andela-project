@@ -1,4 +1,4 @@
 instance/config.py
 .pytest_cache
-*pycache*
+*__pycache__*
 .pytest_cache*

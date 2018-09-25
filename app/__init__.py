@@ -1,4 +1,3 @@
-# 
 from flask import Blueprint
 from flask_restful import Api
 
@@ -14,10 +13,10 @@ api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
 
 
-# Route
-api.add_resource(Home, '/')
+# Routes
+api.add_resource(Home, '/home')
 api.add_resource(Orders, '/orders')
-api.add_resource(MyOrder, '/orders/<int:order_id>')
-api.add_resource(Reg, '/reg')
+api.add_resource(MyOrder, '/order/<int:order_id>')
+api.add_resource(Reg, '/register')
 api.add_resource(Login, '/login')
 api.add_resource(Refresh, '/refresh')

@@ -19,19 +19,21 @@ parser.add_argument('price', type=int,
 
 
 class Home(Resource):
-  """docstring for Home"""
-  # @jwt_required
+  """Just a test endpoint ~/dann/api/v1/home"""
+  @jwt_required
   def get(self):
     return {"message": "Hello, there ;-)"}, 200
 
 
 class Orders(Resource):
-  """docstring for Orders"""
+  """Endpoint for orders. ~/dann/api/v1/orders"""
 
+  """Endpoint for GET requests. Retrieves list of orders"""
   def get(self):
     return {'orders': orders}, 200
 
-  # @jwt_required
+  """Endpoint for POST requests. Creates a new order. Authentication is required"""
+  @jwt_required
   def post(self):
     if not request.get_json(force=True):
       return {'Error':'Data is not application/json!!!'}, 404
@@ -39,6 +41,8 @@ class Orders(Resource):
     order = [order for order in orders if order['title'] == args['title'] ]
     if len(order) != 0:
       return {'Error':'Order already exists'}, 400
+    if args['title'] == "":
+      return {'Error':'Order must have a valid title'}, 400
     order = {
         'id': len(orders) + 1,
         'title': args['title'],
@@ -50,22 +54,36 @@ class Orders(Resource):
 
 
 class MyOrder(Resource):
-  """docstring for MyOrder"""
+  """Endpoint for specific orders. ~/dann/api/v1/order/<int:order_id>"""
 
+  """Endpoint for GET requests. Retrieves a specific order requested"""
   def get(self, order_id):
     order = [order for order in orders if order['id'] == order_id]
     if len(order) == 0:
       return {'Error':'Order does not exist'}, 400
     return {'order': order[0]}, 200
 
-  # @jwt_required
+  """Endpoint for PUT requests. Edits a specific order with the new details passed in"""
+  @jwt_required
   def put(self, order_id):
     order = [order for order in orders if order['id'] == order_id]
+    args = parser.parse_args()
+    title = args['title']
+    description = args['description']
+    price = args['price']
     if len(order) == 0:
       return {'Error':'That order does not exist'}, 400
 
-    args = parser.parse_args()
-    order[0]['title'] = args['title']
-    order[0]['description'] = args['description']
-    order[0]['price'] = args['price']
+    if title == "":
+      return {"Error": "Title can't be changed to null"}, 400
+
+    if description == "":
+      return {"Error": "Description can't be changed to null"}, 400
+
+    if price < 0:
+      return {"Error": "Price can't be less than zero"}, 400
+
+    order[0]['title'] = title
+    order[0]['description'] = description
+    order[0]['price'] = price
     return {'order': order[0]}, 201
