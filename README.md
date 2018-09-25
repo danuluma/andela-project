@@ -50,6 +50,46 @@ There are currently six working endpoints in version 1:
 * Check on the output for the test results
 
 You can manually test using curl or postman
+* To use curl, open another terminal window and signup by sending a POST request to ```~/dann/api/v1/reg```:
+~~~~
+curl -X POST \
+  http://localhost:5000/dann/api/v1/reg \
+  -H 'Content-Type: application/json' \
+  -d '{ "username": "test", "password": "test"}'
+ ~~~~
+
+* Send a POST request to ```~/dann/api/v1/login``` with the previous details in json format to log in:
+```
+curl -X POST \
+  http://localhost:5000/dann/api/v1/login \
+  -H 'Content-Type: application/json' \
+  -d '{"username": "test", "password":"test"}'
+  ```
+
+You will get a json containing an access token eg.
+```
+{
+    "message": "Logged in as Test",
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzc4OTc5NjQsIm5iZiI6MTUzNzg5Nzk2NCwianRpIjoiMGQ4MmU3YTYtNzVmZC00NzRmLWEzOGItZTMwZjg2YjYzODAyIiwiZXhwIjoxNTM3ODk4ODY0LCJpZGVudGl0eSI6ImRhbiIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.Dk0VRCCpt5l3qht03VLyOVksmbszdMw9mV2QIvUf33M",
+    "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzc4OTc5NjQsIm5iZiI6MTUzNzg5Nzk2NCwianRpIjoiY2Q0NzhmNDEtNzk5Yi00MDZhLThhZGMtODA4N2NkMzRlODQzIiwiZXhwIjoxNTQwNDg5OTY0LCJpZGVudGl0eSI6ImRhbiIsInR5cGUiOiJyZWZyZXNoIn0.Z09ZxpwGuYe7d-0rGkNQl1UvRFVCP5gPsnzzxKu7VhY"
+}
+```
+
+You can now access protected endpoints by attachind your valid access_token to the request's header with the format of ```'Authorization: Bearer <access_token>'```
+Please note there's a space between "Bearer" and "access_token"
+```
+curl -X GET \
+  http://localhost:5000/dann/api/v1/home \
+  -H 'Authorization: Bearer <your access_token here>' \
+  -H 'Content-Type: application/json' \
+  ```
+Alternatively, you may use postman or any other gui tool for testing apis
+If using postman, please Bearer Token as the authorization type and insert the acess_token as the token
+
+![Postman example](/home/dan/Pictures/Screenshot%20from%202018-09-25%2021-11-17.png
+)
+![Postman example](/home/dan/Pictures/Screenshot%20from%202018-09-25%2021-15-47.png
+)
 
 ## Credits
 

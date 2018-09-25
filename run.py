@@ -21,4 +21,4 @@ def create_app():
 if __name__ == "__main__":
     app = create_app()
     port = int(os.environ.get('PORT', 5000))
-    app.run(port=port)
+    app.run(port=port, debug=True)
