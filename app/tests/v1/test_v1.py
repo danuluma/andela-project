@@ -1,19 +1,20 @@
-import unittest
+from dotenv import load_dotenv
+import json
 import os
 import sys
-import json
-from dotenv import load_dotenv
+import unittest
 
-localPath = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, localPath + '/../../../')
-
+#local
 from run import create_app
 
+LOCALPATH = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, LOCALPATH + '/../../../')
+
 load_dotenv('.env')
-status = os.getenv('STATUS')
 
 
-class ViewsTest(unittest.TestCase):
+class Apiv1Test(unittest.TestCase):
+  """ Tests for api endpoints """
 
   def setUp(self):
     self.app = create_app()
