@@ -1,5 +1,5 @@
 # andela-project
-[![Build Status](https://travis-ci.com/danuluma/andela-project.svg?branch=master)](https://travis-ci.com/danuluma/andela-project)   [![Coverage Status](https://coveralls.io/repos/github/danuluma/andela-project/badge.svg?branch=master)](https://coveralls.io/github/danuluma/andela-project?branch=master)
+[![Build Status](https://travis-ci.com/danuluma/andela-project.svg?branch=master)](https://travis-ci.com/danuluma/andela-project)   [![Coverage Status](https://coveralls.io/repos/github/danuluma/andela-project/badge.svg?branch=ch-configure-badges-160759291)](https://coveralls.io/github/danuluma/andela-project?branch=ch-configure-badges-160759291)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/76222adb39c1ccdc0a94/maintainability)](https://codeclimate.com/github/danuluma/andela-project/maintainability)   [![Test Coverage](https://api.codeclimate.com/v1/badges/76222adb39c1ccdc0a94/test_coverage)](https://codeclimate.com/github/danuluma/andela-project/test_coverage)
 
@@ -11,7 +11,7 @@ This is the api backend for dann's fast foods.
 There are currently six working endpoints in version 1:
 * ```GET ~/dann/api/v1/orders``` --> This endpoint retrieves a list of all the available orders
 * ```POST ~/dann/api/v1/orders``` --> This endpoint creates a new order
-* ```GET dann/api/v1/order/<int:order_id>``` --> This endpoint retrieves a specific order
+* ```GET ~/dann/api/v1/order/<int:order_id>``` --> This endpoint retrieves a specific order
 * ```POST ~/dann/api/v1/order/<int:order_id>``` --> This endpoint updates a specific order
 * ```POST ~/dann/api/v1/reg``` --> This endpoint registers a new user
 * ```POST ~/dann/api/v1/login``` --> This endpoint authenticates a new user
