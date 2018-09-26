@@ -8,7 +8,7 @@
 <!-- # WIP -->
 
 
-This is the api backend for dann's fast foods site. Dann's fasts foods fast it a webite where customers can order for fast foods online and it gets delivered to them fast. The api provides access to al the necessary feature required by the frontend. Customers are able to view all the available foods and place an order. Admins(from dann's fast foods) can view the orders and either accept or reject if its an invalid order. When the order has been delivered, they can also update its status to 'delivered'. Customers can also view their previous orders they have made on the site.
+This is the api backend for dann's fast foods site. Dann's fasts foods fast it a website where customers can order for fast foods online and it gets delivered to them fast. The api provides access to all the necessary feature required by the frontend. Customers are able to view all the available foods and place an order. Admins, (from dann's fast foods) can view the orders and either accept or reject if its an invalid order. When the order has been delivered, they can also update its status to 'delivered'. Customers can also view the previous orders they have made on the site.
 
 # Orders API endpoints
 
