@@ -6,3 +6,5 @@ instance/config.py
 .coverage
 .pyc
 *.pyc
+.env
+uwsgi.ini
