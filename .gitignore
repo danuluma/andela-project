@@ -3,3 +3,6 @@ instance/config.py
 *__pycache__*
 .pytest_cache*
 .coveralls.yml
+.coverage
+.pyc
+*.pyc

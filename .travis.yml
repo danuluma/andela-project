@@ -9,8 +9,9 @@ install:
 
 script:
   - python3 -m unittest
-
+  - coverage run --source=app -m unittest
+  - coverage report
 
 after_success:
   - coveralls
-  - codecov --token=CODECOV_TOKEN
+  - codecov

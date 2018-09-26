@@ -5,10 +5,10 @@ import sys
 import unittest
 
 #local
-from run import create_app
-
 LOCALPATH = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, LOCALPATH + '/../../../')
+
+from run import create_app
 
 load_dotenv('.env')
 
