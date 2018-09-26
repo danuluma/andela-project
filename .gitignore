@@ -7,4 +7,4 @@ instance/config.py
 .pyc
 *.pyc
 .env
-.uwsgi.ini
+uwsgi.ini
