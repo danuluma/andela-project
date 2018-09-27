@@ -6,7 +6,8 @@ CREATE TABLE users (
        username varchar(80) unique not null,
        email varchar(80) unique not null,
        password varchar(80) not null,
-       phone varchar(12) unique
+       phone varchar(12) unique,
+       role varchar(20) not null
 );
 
 DROP TABLE IF EXISTS orders;
@@ -33,7 +34,8 @@ DROP TABLE IF EXISTS menu;
 CREATE TABLE menu (
        id serial primary key,
        title varchar not null,
-       category varchar(80) references categories (name),
+       category varchar(80),
+       -- category varchar(80) references categories (name),
        description text,
        image_url varchar,
        price integer not null

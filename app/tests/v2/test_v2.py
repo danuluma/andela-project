@@ -30,15 +30,15 @@ class Apiv2Test(unittest.TestCase):
 
 
   # def test_connn(self):
-  #   conn = connect_db('DBASE')
-  #   cur = conn.cursor()
-  #   cur.execute(self.insertUserSQL, self.userData)
-  #   conn.commit()
-  #   cur.execute('select * from users')
-  #   rows = cur.fetchall()
-  #   for row in rows:
-  #     print(row[2])
-  #   print("got it")
+    # conn = connect_db('DBASE')
+    # cur = conn.cursor()
+    # cur.execute(self.insertUserSQL, self.userData)
+    # conn.commit()
+    # cur.execute('select * from users')
+    # rows = cur.fetchall()
+    # for row in rows:
+    #   print(row[2])
+    # print("got it")
 
 
   def test_user_reg(self):

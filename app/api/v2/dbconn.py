@@ -34,6 +34,23 @@ def createtables(mydb):
     except:
         print("failed creating")
 
+def insertintotable(mydb):
+    insertdata = ('dan', 'blah', 'dan', 'dan', 'blah', 'dan')
+    name = 'users'
+    insertsql = """
+    INSERT INTO users (first_name, last_name, username, email, password, phone)
+    VALUES (%s,%s,%s,%s,%s,%s);
+    """
+    conn = connect_db(mydb)
+    cur = conn.cursor()
+    cur.execute(insertsql, insertdata)
+    conn.commit()
+    cur.execute('select * from users')
+    rows = cur.fetchall()
+    for row in rows:
+      print(row)
+    print("got it")
+
 
 def droptables(mydb):
     try:
