@@ -30,10 +30,10 @@ def createtables(mydb):
         cur.execute(sql)
         conn.commit()
         print("created")
+        file.close()
     except:
         print("failed creating")
-    finally:
-        file.close()
+
 
 def droptables(mydb):
     try:

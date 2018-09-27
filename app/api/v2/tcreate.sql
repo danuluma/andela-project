@@ -14,6 +14,7 @@ CREATE TABLE orders (
        id serial primary key,
        -- title varchar(80),
        price integer not null,
+       description text,
        -- body text not null,
        ordered_by varchar(80) references users (username),
        order_date timestamp,
