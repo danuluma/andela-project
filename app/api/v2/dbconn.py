@@ -20,17 +20,32 @@ def connect_db(mydb):
     return conn
 
 
-def createdb(mydb):
+def createtables(mydb):
     try:
         conn = connect_db(mydb)
         cur = conn.cursor()
-        file = open("app/api/v2/dbsetup.sql", "r")
+        file = open("app/api/v2/tcreate.sql", "r")
         sql = file.read()
         print(sql)
         cur.execute(sql)
         conn.commit()
-        print("done")
+        print("created")
     except:
-        print("failed")
+        print("failed creating")
+    finally:
+        file.close()
+
+def droptables(mydb):
+    try:
+        conn = connect_db(mydb)
+        cur = conn.cursor()
+        file = open("app/api/v2/tdrop.sql", "r")
+        sql = file.read()
+        print(sql)
+        cur.execute(sql)
+        conn.commit()
+        print("dropped")
+    except:
+        print("failed dropping")
     finally:
         file.close()

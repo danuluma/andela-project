@@ -4,4 +4,4 @@ sys.path.insert(0, LOCALPATH + '/../../../')
 
 from app.api.v2.dbconn import *
 
-createdb('DBASE')
+droptables('DBASE')
