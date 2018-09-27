@@ -9,9 +9,10 @@ sys.path.insert(0, LOCALPATH + '/../../../')
 load_dotenv('.env')
 
 
-def connect_db():
+def connect_db(mydb):
+    dbase = os.getenv(mydb)
     try:
-        conn = psycopg2.connect('DBASE')
+        conn = psycopg2.connect(dbase)
         print("yeeah")
     except:
         print("Ayam suffering, can't connect to the database")
@@ -19,9 +20,9 @@ def connect_db():
     return conn
 
 
-def createdb():
+def createdb(mydb):
     try:
-        conn = connect_db()
+        conn = connect_db(mydb)
         cur = conn.cursor()
         file = open("app/api/v2/dbsetup.sql", "r")
         sql = file.read()
