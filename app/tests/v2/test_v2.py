@@ -19,11 +19,7 @@ class Apiv2Test(unittest.TestCase):
     self.test_user = { "first_name": "dan", "last_name": "rico", "username": "dan",
                         "email": "dan@dan.com", "password": "dann", "phone": "0798765432"}
     self.order = {"price": 50, "description": "kila kitu hapa", "ordered_by": "dan", "status": 0}
-    # self.userData = ('dan', 'blah', 'dan', 'dan', 'blah', 'dan')
-    # self.insertUserSQL = """
-    # INSERT INTO users (first_name, last_name, username, email, password, phone)
-    # VALUES (%s,%s,%s,%s,%s,%s);
-    # """
+    self.menu = {"title": "nyam chom", "category": "meat", "description": "grilled meat", "image_url": "loading", "price": 500}
 
     with self.app.app_context():
       createtables('DBASE')
@@ -248,6 +244,18 @@ class Apiv2Test(unittest.TestCase):
     print(json_data)
     self.assertTrue(json_data.get('Error'))
     self.assertEqual(response.status_code, 400)
+
+  def test_get_the_menu(self):
+    self.client().post('/dann/api/v2/signup', json=self.test_user)
+    response = self.client().post('/dann/api/v2/login', json=self.test_user)
+    json_data = json.loads(response.data)
+    access_token = json_data.get('access_token')
+    self.client().post('/dann/api/v2/menu',headers={"Authorization":"Bearer " + access_token}, json=self.menu)
+    response = self.client().get('/dann/api/v2/menu')
+    json_data = json.loads(response.data)
+    self.assertTrue(json_data.get('menu'))
+    self.assertEqual(response.status_code, 200)
+
 
 
   def tearDown(self):

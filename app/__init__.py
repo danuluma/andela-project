@@ -7,7 +7,7 @@ from flask_restful import Api
 # from instance.config import app_config
 from app.api.v1.views import Home, Orders, MyOrder
 from app.api.v1.auth import Reg, Login, Refresh
-from app.api.v2.menu_view import Menu, TestMe
+from app.api.v2.menu_view import Menu, TestMe, MenuItem
 
 
 api_bp = Blueprint('api', __name__)
@@ -25,3 +25,4 @@ api.add_resource(Login, '/login')
 api.add_resource(Refresh, '/refresh')
 api2.add_resource(Menu, '/menu')
 api2.add_resource(TestMe, '/hey')
+api2.add_resource(MenuItem, '/menu/<int:item_id>')

@@ -84,37 +84,48 @@ class Menu(Resource):
     return {'menu': menuitems}, 201
 
 
-# class MyOrder(Resource):
-#   """Endpoint for specific orders. ~/dann/api/v1/order/<int:order_id>"""
+class MenuItem(Resource):
+  """docstring for MenuItem"""
+  def put(self, item_id):
+    mydb = 'DBASE'
+    conn = connect_db(mydb)
+    cur = conn.cursor()
+    print("Table Before updating record ")
+    selectsql= """SELECT * FROM menu WHERE id = {0}""".format(item_id)
 
-#   """Endpoint for GET requests. Retrieves a specific order requested"""
-#   def get(self, order_id):
-#     order = [order for order in orders if order['id'] == order_id]
-#     if len(order) == 0:
-#       return {'Error':'Order does not exist'}, 404
-#     return {'order': order[0]}, 200
+    cur.execute(selectsql)
+    item = cur.fetchone()
+    print(item)
 
-#   """Endpoint for PUT requests. Edits a specific order with the new details passed in"""
-#   @jwt_required
-#   def put(self, order_id):
-#     order = [order for order in orders if order['id'] == order_id]
-#     args = parser.parse_args()
-#     title = args['title']
-#     description = args['description']
-#     price = args['price']
-#     if len(order) == 0:
-#       return {'Error':'That order does not exist'}, 400
+    args = parser.parse_args()
 
-#     if title == "":
-#       return {"Error": "Title can't be changed to null"}, 400
+    menu = [
+        args['title'],
+        args['category'],
+        args['description'],
+        args['image_url'],
+        args['price']
+    ]
 
-#     if description == "":
-#       return {"Error": "Description can't be changed to null"}, 400
+    # Update record now
+    updatesql = """UPDATE menu SET title = %s, category = %s, description = %s, image_url = %s, price = %s WHERE id = {0}""".format(item_id)
+    cur.execute(updatesql, menu)
+    conn.commit()
+    cur.execute(selectsql)
+    record = cur.fetchone()
+    print(record)
 
-#     if price < 0:
-#       return {"Error": "Price can't be less than zero"}, 400
+    return {'menu': record}, 201
 
-#     order[0]['title'] = title
-#     order[0]['description'] = description
-#     order[0]['price'] = price
-#     return {'order': order[0]}, 201
+
+  def delete(self, item_id):
+    mydb = 'DBASE'
+    conn = connect_db(mydb)
+    cur = conn.cursor()
+    print("Table Before updating record ")
+    delsql= """DELETE FROM menu WHERE id = {0}""".format(item_id)
+    cur.execute(delsql)
+    conn.commit()
+
+    return {"details":"done"},
+
