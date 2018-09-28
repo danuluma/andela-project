@@ -13,9 +13,6 @@ sys.path.insert(0, LOCALPATH + '/../../../')
 from app.api.v2.dbconn import *
 
 
-users = [
-]
-
 
 parser = reqparse.RequestParser(bundle_errors=True)
 parser.add_argument('first_name', type=str, required=True, help='please enter a first_name',  location='json')

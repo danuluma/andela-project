@@ -8,8 +8,6 @@ sys.path.insert(0, LOCALPATH + '/../../../')
 
 from app.api.v2.dbconn import *
 
-# createtables('DBASE')
-
 
 createtables("DBASE")
 
@@ -32,7 +30,7 @@ class TestMe(Resource):
     return {"message":"It works"}
 
 class Menu(Resource):
-  """Endpoint for orders. ~/dann/api/v1/orders"""
+  """Endpoint for orders. ~/dann/api/v2/menu"""
 
   """Endpoint for GET requests. Retrieves the menu"""
   def get(self):
@@ -49,7 +47,7 @@ class Menu(Resource):
     print(menu)
     return {'menu': menu}, 200
 
-  """Endpoint for POST requests. Creates a new order. Authentication is required"""
+  """Endpoint for POST requests. Creates a new item. Authentication is required"""
   # @jwt_required
   def post(self):
     mydb = 'DBASE'
