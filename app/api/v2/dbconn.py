@@ -26,7 +26,7 @@ def createtables(mydb):
         cur = conn.cursor()
         file = open("app/api/v2/tcreate.sql", "r")
         sql = file.read()
-        print(sql)
+        # print(sql)
         cur.execute(sql)
         conn.commit()
         print("created")
