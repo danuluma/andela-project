@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS users CASCADE;
-CREATE TABLE users (
+-- DROP TABLE IF EXISTS users CASCADE;
+CREATE TABLE users UNLESS EXISTS (
        id serial primary key,
        first_name varchar(20) not null,
        last_name varchar(20) not null,
@@ -10,8 +10,8 @@ CREATE TABLE users (
        role varchar(20) not null
 );
 
-DROP TABLE IF EXISTS orders;
-CREATE TABLE orders (
+-- DROP TABLE IF EXISTS orders;
+CREATE TABLE orders UNLESS EXISTS (
        id serial primary key,
        -- title varchar(80),
        price integer not null,
@@ -22,16 +22,16 @@ CREATE TABLE orders (
        status integer
 );
 
-DROP TABLE IF EXISTS categories CASCADE;
-CREATE TABLE categories (
+-- DROP TABLE IF EXISTS categories CASCADE;
+CREATE TABLE categories UNLESS EXISTS (
        id serial primary key,
        name varchar(80) unique not null,
        -- category varchar not null,
        description text
 );
 
-DROP TABLE IF EXISTS menu;
-CREATE TABLE menu (
+-- DROP TABLE IF EXISTS menu;
+CREATE TABLE menu UNLESS EXISTS (
        id serial primary key,
        title varchar not null,
        category varchar(80),

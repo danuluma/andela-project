@@ -33,9 +33,9 @@ class Db1(object):
         # print(sql)
         cur.execute(sql)
         conn2.commit()
-        conn2.close()
         # print("created2")
         file.close()
+        return conn2
     except:
         print("failed creating2")
 
