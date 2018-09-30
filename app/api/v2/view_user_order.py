@@ -23,7 +23,7 @@ class OrdersView(Resource):
   """Endpoints for menu. ~/dann/api/v2/menu"""
 
   """Endpoint for GET requests. Retrieves the menu"""
-  def get(self, ordered_by):
+  def get(self):
     ordered_by = "Dan"
     items = OrderModel.get_single_order(self, ordered_by)
     print(items)

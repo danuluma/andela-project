@@ -9,14 +9,6 @@ class MenuModel(Db1):
   """docstring for Menu"""
   def __init__(self):
     pass
-  # def __init__(self, title, category, description, image_url, price, item_id):
-  #   super(MenuModel, self).__init__()
-  #   self.title = title
-  #   self.category = category
-  #   self.description = description
-  #   self.image_url = image_url
-  #   self.price = price
-  #   self.item_id = item_id
 
   def get_all_menu(self):
     conn = Db1("DBASE").connect1()

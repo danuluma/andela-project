@@ -9,7 +9,6 @@ sys.path.insert(0, LOCALPATH + '/../../../')
 load_dotenv('.env')
 
 
-
 class Db1(object):
   """docstring for Db"""
   def __init__(self, mydb):

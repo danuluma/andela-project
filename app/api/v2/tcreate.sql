@@ -1,4 +1,3 @@
--- DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users UNLESS EXISTS (
        id serial primary key,
        first_name varchar(20) not null,
@@ -10,7 +9,6 @@ CREATE TABLE users UNLESS EXISTS (
        role varchar(20) not null
 );
 
--- DROP TABLE IF EXISTS orders;
 CREATE TABLE orders UNLESS EXISTS (
        id serial primary key,
        -- title varchar(80),
@@ -22,7 +20,6 @@ CREATE TABLE orders UNLESS EXISTS (
        status integer
 );
 
--- DROP TABLE IF EXISTS categories CASCADE;
 CREATE TABLE categories UNLESS EXISTS (
        id serial primary key,
        name varchar(80) unique not null,
@@ -30,7 +27,6 @@ CREATE TABLE categories UNLESS EXISTS (
        description text
 );
 
--- DROP TABLE IF EXISTS menu;
 CREATE TABLE menu UNLESS EXISTS (
        id serial primary key,
        title varchar not null,
