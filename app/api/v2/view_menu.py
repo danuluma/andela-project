@@ -13,7 +13,7 @@ parser.add_argument('description', type=str, location='json')
 parser.add_argument('price', type=int,
   help='price can\'t be empty', required=True, location='json')
 parser.add_argument('title', type=str,
-  help='enter a name for the order',
+  help='enter a name for the menu item',
   required=True, location='json')
 parser.add_argument('category', type=str, location='json')
 parser.add_argument('image_url', type=str, location='json')

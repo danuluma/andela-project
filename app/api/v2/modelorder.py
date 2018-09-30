@@ -37,11 +37,25 @@ class OrderModel(Db1):
     print(order)
     return order
 
+  def get_user_order(self, ordered_by):
+    conn = Db1("DBASE").connect1()
+    cur = conn.cursor()
+    cur.execute("""SELECT * FROM orders""")
+    rows = cur.fetchall()
+    orders = []
+    for row in rows:
+      print(row)
+      if row[3] == ordered_by :
+          item = {'id': row[0], 'price': row[1], 'description': row[2], 'ordered_by': row[3], 'order_date': row[4], 'status': row[5]}
+          orders.append(item)
+    print(orders)
+    return orders
+
   def add_new_order(self, order_details):
     print(order_details)
     insertsql = """
-    INSERT INTO orders (price, description, ordered_by, order_date, status)
-    VALUES (%s,%s,%s,%s,%s);
+    INSERT INTO orders (price, description, ordered_by, status)
+    VALUES (%s,%s,%s,%s);
     """
     conn = Db1("DBASE").connect1()
     cur = conn.cursor()
