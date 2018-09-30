@@ -20,7 +20,7 @@ class Apiv1Test(unittest.TestCase):
     self.app = create_app()
     self.client = self.app.test_client
     self.order = {"title": "edit2", "description": "Lorem ipsum", "price": 5}
-    self.test_user = {"username": "dan", "password": "dann"}
+    self.test_user = {"username": "dan", "email": "dan@dan.com", "password": "dann"}
 
   def tearDown(self):
     pass
@@ -28,10 +28,9 @@ class Apiv1Test(unittest.TestCase):
 
   def test_user_reg(self):
     """ test user registration with valid credentials """
-    test_user2 = {"username": "dan3", "password": "dann3"}
+    test_user2 = {"username": "dan3", "email": "dan1@dan.com", "password": "dann3"}
     response = self.client().post('/dann/api/v1/reg', json=test_user2)
     json_data = json.loads(response.data)
-
     self.assertTrue(json_data.get('users'))
     self.assertEqual(response.status_code, 200)
 
@@ -45,8 +44,7 @@ class Apiv1Test(unittest.TestCase):
 
   def test_user_reg_with_no_username(self):
     """ test user registration with null username """
-    test_user2 = {"username": "", "password": "dan"}
-
+    test_user2 = {"username": "", "email": "", "password": "dan"}
     response = self.client().post('/dann/api/v1/reg', json=test_user2)
     json_data = json.loads(response.data)
     self.assertTrue(json_data.get('Error'))
@@ -54,7 +52,7 @@ class Apiv1Test(unittest.TestCase):
 
   def test_user_reg_with_no_password(self):
     """ test user registration with null password """
-    test_user2 = {"username": "dan", "password": ""}
+    test_user2 = {"username": "dan", "email": "dan@dan.com", "password": ""}
 
     response = self.client().post('/dann/api/v1/reg', json=test_user2)
     json_data = json.loads(response.data)
@@ -73,7 +71,7 @@ class Apiv1Test(unittest.TestCase):
   def test_user_login_with_wrong_password(self):
     """ test user login with wring password """
     self.client().post('/dann/api/v1/reg', json=self.test_user)
-    test_user2 = {"username": "dan", "password": "wrong"}
+    test_user2 = {"username": "dan", "email": "dan@dan.com", "password": "wrong"}
     response = self.client().post('/dann/api/v1/login', json=test_user2)
     json_data = json.loads(response.data)
     self.assertTrue(json_data.get('Error'))
@@ -82,7 +80,7 @@ class Apiv1Test(unittest.TestCase):
   def test_user_login_with_wrong_username(self):
     """ test user login with wrong username """
     self.client().post('/dann/api/v1/reg', json=self.test_user)
-    test_user2 = {"username": "wrong", "password": "dann"}
+    test_user2 = {"username": "wrong", "email": "wrong@dan.com", "password": "dann"}
     response = self.client().post('/dann/api/v1/login', json=test_user2)
     json_data = json.loads(response.data)
     self.assertTrue(json_data.get('Error'))

@@ -13,6 +13,7 @@ users = [
 
 
 parser = reqparse.RequestParser(bundle_errors=True)
+parser.add_argument('email', type=str, required=True, help='please enter your email address',  location='json')
 parser.add_argument('username', type=str, required=True, help='please enter a username',  location='json')
 parser.add_argument('password', type=str,
   help='password can\'t be empty', required=True, location='json')
@@ -22,19 +23,23 @@ class Reg(Resource):
   """Endpoint to register a new user"""
   def post(self):
     args = parser.parse_args()
-    username = args['username']
-    password = args['password']
+    email = args['email'].strip()
+    username = args['username'].strip()
+    password = args['password'].strip()
 
-    user = [user for user in users if user['username'] == username]
+    user = [user for user in users if user['username'] == username or user['email'] == email]
     if len(user) != 0:
-      return {'Error':'Username already exists'}, 409
+      return {'Error':'Username/Email already exists'}, 409
     if username == "":
       return {'Error':'Please input a valid username'}, 400
+    if email == "":
+      return {'Error':'Please input a valid email'}, 400
     if password == "":
       return {'Error':'Please input a valid password'}, 400
     new_user = {
             'id': len(users) + 1,
             'username': username,
+            'email': email,
             'password': password
             }
     users.append(new_user)
@@ -47,12 +52,13 @@ class Login(Resource):
   """Endpoint to login a user and create an access token"""
   def post(self):
     args = parser.parse_args()
-    username = args['username']
-    password = args['password']
+    username = args['username'].strip()
+    password = args['password'].strip()
+    email = args['email'].strip()
 
-    user = [user for user in users if user['username'] == username]
+    user = [user for user in users if user['username'] == username or user['email'] == email]
     if len(user) == 0:
-      return {'Error':'Username does not exist'}, 404
+      return {'Error':'Username/Email does not exist'}, 404
 
 
     if password != user[0]['password']:

@@ -41,7 +41,7 @@ class Orders(Resource):
     order = [order for order in orders if order['title'] == args['title'] ]
     if len(order) != 0:
       return {'Error':'Order already exists'}, 409
-    if args['title'] == "":
+    if args['title'].strip() == "":
       return {'Error':'Order must have a valid title'}, 400
     order = {
         'id': len(orders) + 1,
@@ -68,8 +68,8 @@ class MyOrder(Resource):
   def put(self, order_id):
     order = [order for order in orders if order['id'] == order_id]
     args = parser.parse_args()
-    title = args['title']
-    description = args['description']
+    title = args['title'].strip()
+    description = args['description'].strip()
     price = args['price']
     if len(order) == 0:
       return {'Error':'That order does not exist'}, 404
