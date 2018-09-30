@@ -41,7 +41,7 @@ class Apiv1Test(unittest.TestCase):
     response = self.client().post('/dann/api/v1/reg', json=self.test_user)
     json_data = json.loads(response.data)
     self.assertTrue(json_data.get('Error'))
-    self.assertEqual(response.status_code, 400)
+    self.assertEqual(response.status_code, 409)
 
   def test_user_reg_with_no_username(self):
     """ test user registration with null username """
@@ -59,7 +59,7 @@ class Apiv1Test(unittest.TestCase):
     response = self.client().post('/dann/api/v1/reg', json=test_user2)
     json_data = json.loads(response.data)
     self.assertTrue(json_data.get('Error'))
-    self.assertEqual(response.status_code, 400)
+    self.assertEqual(response.status_code, 409)
 
 
   def test_user_login(self):
@@ -119,7 +119,7 @@ class Apiv1Test(unittest.TestCase):
     order2 = {"title": "another", "description": "Lorem ipsum", "price": 5}
     response = self.client().post('/dann/api/v1/orders',headers={"Authorization":"Bearer " + access_token}, json=order2)
     json_data = json.loads(response.data)
-    self.assertEqual(response.status_code, 201)
+    self.assertEqual(response.status_code, 200)
 
   def test_create_an_order_with_existing_title(self):
     """ assert that you can't create a duplicate order (asserts title must be unique) """
@@ -131,7 +131,7 @@ class Apiv1Test(unittest.TestCase):
     response = self.client().post('/dann/api/v1/orders',headers={"Authorization":"Bearer " + access_token}, json=self.order)
     json_data = json.loads(response.data)
     self.assertTrue(json_data.get("Error"))
-    self.assertEqual(response.status_code, 400)
+    self.assertEqual(response.status_code, 409)
 
   def test_create_an_order_with_without_title(self):
     """ assert that you can't create an order without a title) """
@@ -201,7 +201,7 @@ class Apiv1Test(unittest.TestCase):
     json_data = json.loads(response.data)
     print(json_data)
     self.assertTrue(json_data.get('order'))
-    self.assertEqual(response.status_code, 201)
+    self.assertEqual(response.status_code, 200)
 
   def test_edit_an_invalid_order(self):
     self.client().post('/dann/api/v1/reg', json=self.test_user)
@@ -214,7 +214,7 @@ class Apiv1Test(unittest.TestCase):
     json_data = json.loads(response.data)
     print(json_data)
     self.assertTrue(json_data.get('Error'))
-    self.assertEqual(response.status_code, 400)
+    self.assertEqual(response.status_code, 404)
 
   def test_edit_an_order_with_invalid_data(self):
     self.client().post('/dann/api/v1/reg', json=self.test_user)
@@ -227,7 +227,7 @@ class Apiv1Test(unittest.TestCase):
     json_data = json.loads(response.data)
     print(json_data)
     self.assertTrue(json_data.get('Error'))
-    self.assertEqual(response.status_code, 400)
+    self.assertEqual(response.status_code, 404)
 
 if __name__ == '__main__':
   unittest.main()

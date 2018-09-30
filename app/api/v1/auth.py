@@ -27,7 +27,7 @@ class Reg(Resource):
 
     user = [user for user in users if user['username'] == username]
     if len(user) != 0:
-      return {'Error':'Username already exists'}, 400
+      return {'Error':'Username already exists'}, 409
     if username == "":
       return {'Error':'Please input a valid username'}, 400
     if password == "":
@@ -41,7 +41,7 @@ class Reg(Resource):
     return {'users': users}, 200
   # @jwt_required
   def get(self):
-    return {'message':'hey'}, 203
+    return {'message':'hey'}, 200
 
 class Login(Resource):
   """Endpoint to login a user and create an access token"""
