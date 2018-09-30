@@ -19,10 +19,10 @@ parser.add_argument('order_date', type=str, location='json')
 parser.add_argument('status', type=str, default=0, location='json')
 
 
-class OrdersView(Resource):
-  """Endpoints for menu. ~/dann/api/v2/menu"""
+class UserOrder(Resource):
+  """Endpoints for a single user to view and place orders. ~/dann/api/v2/user/"""
 
-  """Endpoint for GET requests. Retrieves the menu"""
+  """Endpoint for GET requests. Retrieves the gets all oredrs for a user"""
   def get(self):
     ordered_by = "Dan"
     items = OrderModel.get_single_order(self, ordered_by)

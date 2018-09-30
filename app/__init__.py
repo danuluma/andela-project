@@ -11,6 +11,7 @@ from app.api.v2.auth import Signup, Loginv2
 # from app.api.v2.menu_view import Menu, TestMe, MenuItem
 from app.api.v2.view_menu import MenuView, MenuItem
 from app.api.v2.view_order import OrdersView, OrderItem
+from app.api.v2.view_user_order import UserOrder
 
 
 api_bp = Blueprint('api', __name__)
@@ -31,3 +32,6 @@ api2.add_resource(Signup, '/signup')
 api2.add_resource(Loginv2, '/login')
 api2.add_resource(MenuView, '/menu')
 api2.add_resource(MenuItem, '/menu/<int:item_id>')
+api2.add_resource(OrdersView, '/orders')
+api2.add_resource(OrderItem, '/orders/<int:orderId>')
+api2.add_resource(UserOrder, '/users/orders')

@@ -44,12 +44,12 @@ class OrdersView(Resource):
 
 class OrderItem(Resource):
   """docstring for ClassName"""
-  def get(self, order_id):
-    item = OrderModel.get_single_order(self, order_id)
+  def get(self, orderId):
+    item = OrderModel.get_single_order(self, orderId)
     print(item)
     return item
 
-  def put(self, order_id):
+  def put(self, orderId):
     args = parser.parse_args()
 
     order_details = [
@@ -59,7 +59,7 @@ class OrderItem(Resource):
         args['status']
     ]
 
-    OrderModel.update_order_details(self, order_id, order_details)
+    OrderModel.update_order_details(self, orderId, order_details)
     return {"Suceess":"Order has been updated"}
 
   def delete(self, order_id):
