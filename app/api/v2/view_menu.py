@@ -29,20 +29,24 @@ class MenuView(Resource):
     # return {"Menu":items}
     return items
 
-
+  @jwt_required
   def post(self):
-    args = parser.parse_args()
+    current_user = get_jwt_identity()
+    if current_user[2] == "admin":
+      args = parser.parse_args()
 
-    menu1 = [
-        args['title'],
-        args['category'],
-        args['description'],
-        args['image_url'],
-        args['price']
-    ]
+      menu1 = [
+          args['title'],
+          args['category'],
+          args['description'],
+          args['image_url'],
+          args['price']
+      ]
 
-    MenuModel.post_menu_item(self, menu1)
-    return {"Suceess":"Menu imeingia"}
+      MenuModel.post_menu_item(self, menu1)
+      return {"Suceess":"Menu imeingia"}, 200
+    else:
+      return {"Error":"Only admins are allowed to create menu"}, 403
 
 class MenuItem(Resource):
   """docstring for ClassName"""

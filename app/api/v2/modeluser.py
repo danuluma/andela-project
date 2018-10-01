@@ -36,7 +36,7 @@ class UserModel(Db1):
           item = {'id': row[0], 'first_name': row[1], 'last_name': row[2], 'username': row[3], 'email': row[4], 'password': row[5], 'phone': row[6], 'role': row[7]}
           user.append(item)
     print(user)
-    return user
+    return user[0]
 
   def add_new_user(self, user):
     print(user)

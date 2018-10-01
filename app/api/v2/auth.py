@@ -3,7 +3,7 @@ from flask import Flask, jsonify, request
 from flask_jwt_extended import (
     jwt_required, create_access_token,
     jwt_refresh_token_required, create_refresh_token,
-    get_jwt_identity,
+    get_jwt_identity
 )
 
 import os, sys
@@ -40,6 +40,7 @@ class Signup(Resource):
     email = args['email']
     password = args['password']
     phone = args['phone']
+    # role = args['role']
     role = "user"
 
     if username == "":
@@ -61,31 +62,52 @@ class Signup(Resource):
 
   # @jwt_required
   def get(self):
-    return {'message':'hey'}, 203
+    mess = UserModel.get_all_users(self)
+    return {'message':mess}, 203
 
 class Loginv2(Resource):
   """Endpoint to login a user and create an access token"""
+
   def post(self):
-    args = parser.parse_args()
+    parser2 = reqparse.RequestParser(bundle_errors=True)
+    parser2.add_argument('username', type=str,
+      help='username can\'t be empty', required=False, location='json')
+    parser2.add_argument('email', type=str,
+      help='email can\'t be empty', required=False, location='json')
+    parser2.add_argument('password', type=str,
+      help='password can\'t be empty', required=True, location='json')
+
+    args = parser2.parse_args()
     username = args['username']
     email = args['email']
     password = args['password']
 
     user = UserModel.get_single_user(self, username, email)
+    userdetails = [user['username'], user['id'], user['role']]
 
-    if password == user[5]:
-      access_token = create_access_token(identity=username)
-      refresh_token = create_refresh_token(identity=username)
+
+    if password == user['password']:
+      access_token = create_access_token(identity=userdetails)
+      refresh_token = create_refresh_token(identity=userdetails)
       current_user = get_jwt_identity()
+      current_user2 = username
 
       mesg = {
-          'message': 'Logged in as {}'.format(current_user),
           'access_token': access_token,
           'refresh_token': refresh_token
           }
       return mesg, 200
     else:
-      return {'Error': 'Wrong password'}, 200
+      return {'Error': 'Wrong password'}, 401
+      # return user[0]['password'], 200
+
+  @jwt_required
+  def get(self):
+    current_user = get_jwt_identity()
+    mesg = {
+      'current_user': current_user[2]
+    }
+    return mesg, 200
 
 
 class Refresh(Resource):
@@ -99,3 +121,4 @@ class Refresh(Resource):
       'access_token': access_token
     }
     return mesg, 200
+

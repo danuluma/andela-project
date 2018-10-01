@@ -8,7 +8,7 @@ LOCALPATH = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, LOCALPATH + '/../../../')
 
 from run import create_app
-from app.api.v2.dbconn import *
+from app.api.v2.db import Db1
 
 class Apiv2Test(unittest.TestCase):
   """ Tests for api v2 endpoints """
@@ -17,12 +17,15 @@ class Apiv2Test(unittest.TestCase):
     self.app = create_app()
     self.client = self.app.test_client
     self.test_user = { "first_name": "dan", "last_name": "rico", "username": "dan",
-                        "email": "dan@dan.com", "password": "dann", "phone": "0798765432"}
+                        "email": "dan@dan.com", "password": "dann", "phone": "0798765432", "role":"user"}
+    self.test_admin = { "first_name": "guest", "last_name": "user", "username": "guest",
+                        "email": "guest@dan.com", "password": "guest", "phone": "0798765431", "role": "admin" }
+    self.test_login = { "username": "guest", "password": "guest"}
     self.order = {"price": 50, "description": "kila kitu hapa", "ordered_by": "dan", "status": 0}
     self.menu = {"title": "nyam chom", "category": "meat", "description": "grilled meat", "image_url": "loading", "price": 500}
 
     with self.app.app_context():
-      createtables('DBASE')
+      Db1('TEST').create1()
 
 
   # def test_connn(self):

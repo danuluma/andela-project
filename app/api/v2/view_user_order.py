@@ -12,11 +12,6 @@ parser = reqparse.RequestParser(bundle_errors=True)
 parser.add_argument('description', type=str, location='json')
 parser.add_argument('price', type=int,
   help='price can\'t be empty', required=True, location='json')
-parser.add_argument('ordered_by', type=str,
-  help='enter a name for the orderer',
-  required=True, location='json')
-parser.add_argument('order_date', type=str, location='json')
-parser.add_argument('status', type=str, default=0, location='json')
 
 
 class UserOrder(Resource):

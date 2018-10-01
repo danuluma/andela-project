@@ -11,10 +11,10 @@ from app.api.v2.modelorder import OrderModel
 parser = reqparse.RequestParser(bundle_errors=True)
 parser.add_argument('description', type=str, location='json')
 parser.add_argument('price', type=int,
-  help='price can\'t be empty', required=True, location='json')
+                    help='price can\'t be empty', required=True, location='json')
 parser.add_argument('ordered_by', type=str,
-  help='enter a name for the orderer',
-  required=True, location='json')
+                    help='enter a name for the orderer',
+                    required=True, location='json')
 parser.add_argument('order_date', type=str, location='json')
 parser.add_argument('status', type=str, default=0, location='json')
 
@@ -24,44 +24,66 @@ class OrdersView(Resource):
 
   """Endpoint for GET requests. Retrieves the menu"""
   def get(self):
-    items = OrderModel.get_all_orders(self)
-    print(items)
-    return items
+    current_user = get_jwt_identity()
+    if current_user[2] == "admin":
+      items = OrderModel.get_all_orders(self)
+      return items
+    else:
+      return {"Error":"Only admins are allowed to view all orders"}, 403
 
 
   def post(self):
-    args = parser.parse_args()
+    current_user = get_jwt_identity()
+    if current_user[2] == "admin":
+      args = parser.parse_args()
 
-    order_details = [
-        args['price'],
-        args['description'],
-        args['ordered_by'],
-        args['status']
-    ]
+      order_details = [
+          args['price'],
+          args['description'],
+          args['ordered_by'],
+          args['status']
+      ]
 
-    OrderModel.add_new_order(self, order_details)
-    return {"Suceess":"Order placed"}
+      OrderModel.add_new_order(self, order_details)
+      return {"Suceess":"Order placed"}
+    else:
+      return {"Error":"Only admins are allowed to view this"}, 403
+
 
 class OrderItem(Resource):
   """docstring for ClassName"""
   def get(self, orderId):
-    item = OrderModel.get_single_order(self, orderId)
-    print(item)
-    return item
+    current_user = get_jwt_identity()
+    if current_user[2] == "admin":
+      item = OrderModel.get_single_order(self, orderId)
+      print(item)
+      return item
+    else:
+      return {"Error":"Only admins are allowed to view this"}, 403
+
 
   def put(self, orderId):
-    args = parser.parse_args()
+    current_user = get_jwt_identity()
+    if current_user[2] == "admin":
+      args = parser.parse_args()
 
-    order_details = [
-        args['price'],
-        args['description'],
-        args['ordered_by'],
-        args['status']
-    ]
+      order_details = [
+          args['price'],
+          args['description'],
+          args['ordered_by'],
+          args['status']
+      ]
 
-    OrderModel.update_order_details(self, orderId, order_details)
-    return {"Suceess":"Order has been updated"}
+      OrderModel.update_order_details(self, orderId, order_details)
+      return {"Suceess":"Order has been updated"}
+    else:
+      return {"Error":"Only admins are allowed to view this"}, 403
+
 
   def delete(self, order_id):
-    OrderModel.delete_order(self, order_id)
-    return {"Suceess":"Order has been dleted"}
+    current_user = get_jwt_identity()
+    if current_user[2] == "admin":
+      OrderModel.delete_order(self, order_id)
+      return {"Suceess":"Order has been dleted"}
+    else:
+      return {"Error":"Only admins are allowed to view this"}, 403
