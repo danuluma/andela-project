@@ -11,7 +11,7 @@ services:
   - postgresql
 
 before_script:
-  - psql -c 'create database mafast;' -U postgres
+  - psql -c 'create database mafast1;' -U postgres
 
 script:
   - python3 -m unittest
