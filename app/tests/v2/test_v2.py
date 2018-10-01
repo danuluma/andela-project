@@ -18,6 +18,9 @@ class Apiv2Test(unittest.TestCase):
     self.client = self.app.test_client
     self.test_user = { "first_name": "dan", "last_name": "rico", "username": "dan",
                         "email": "dan@dan.com", "password": "dann", "phone": "0798765432", "role":"user"}
+
+    self.test_user4 = { "first_name": "new", "last_name": "user", "username": "same",
+                        "email": "dan@dan.com", "password": "dann", "phone": "0798765632", "role":"user"}
     self.test_admin = { "first_name": "guest", "last_name": "user", "username": "guest",
                         "email": "guest@dan.com", "password": "guest", "phone": "0798765431", "role": "admin" }
     self.test_login = { "username": "guest", "password": "guest"}
@@ -25,20 +28,21 @@ class Apiv2Test(unittest.TestCase):
     self.menu = {"title": "nyam chom", "category": "meat", "description": "grilled meat", "image_url": "loading", "price": 500}
 
     with self.app.app_context():
-      Db1('TEST').create1()
+      print("Hello")
+      self.create_db = Db1('DBASE').create1()
+      # self.conn = Db1("DBASE").connect1()
+      # self.drop = Db1("DBASE").drop1()
 
+  def test_add_new_user(self):
+    response = self.client().post('/dann/api/v2/signup', json=self.test_admin)
+    json_data = json.loads(response.data)
+    self.assertEqual(response.status_code, 200)
 
-  # def test_connn(self):
-    # conn = connect_db('DBASE')
-    # cur = conn.cursor()
-    # cur.execute(self.insertUserSQL, self.userData)
-    # conn.commit()
-    # cur.execute('select * from users')
-    # rows = cur.fetchall()
-    # for row in rows:
-    #   print(row[2])
-    # print("got it")
-
+  def test_menu(self):
+    response = self.client().get('/dann/api/v2/menu')
+    json_data = json.loads(response.data)
+    # self.assertTrue(json_data.get('menu'))
+    self.assertEqual(response.status_code, 200)
 
   def test_user_reg(self):
     """ test user registration with valid credentials """
@@ -47,21 +51,35 @@ class Apiv2Test(unittest.TestCase):
     response = self.client().post('/dann/api/v2/signup', json=test_user2)
     json_data = json.loads(response.data)
 
-    self.assertTrue(json_data.get('users'))
+    self.assertTrue(json_data.get('mess'))
     self.assertEqual(response.status_code, 200)
 
   def test_user_reg_with_already_existing_username(self):
     """ test user registration with already registered username """
     self.client().post('/dann/api/v2/signup', json=self.test_user)
     response = self.client().post('/dann/api/v2/signup', json=self.test_user)
+    self.assertNotEqual(response.status_code, 200)
+
+  def test_user_reg_with_already_existing_email(self):
+    """ test user registration with already registered username """
+    self.client().post('/dann/api/v2/signup', json=self.test_user4)
+    response = self.client().post('/dann/api/v2/signup', json=self.test_user)
+    self.assertNotEqual(response.status_code, 200)
+
+  def test_user_reg_with_no_username(self):
+    """ test user registration with null username """
+    test_user9 = { "first_name": "guest", "last_name": "user", "username": "",
+                        "email": "guest@dan.com", "password": "guest", "phone": "0798765431"}
+
+    response = self.client().post('/dann/api/v2/signup', json=test_user9)
     json_data = json.loads(response.data)
     self.assertTrue(json_data.get('Error'))
     self.assertEqual(response.status_code, 400)
 
-  def test_user_reg_with_no_username(self):
-    """ test user registration with null username """
-    test_user2 = { "first_name": "guest", "last_name": "user", "": "guest",
-                        "email": "guest@dan.com", "password": "guest", "phone": "0798765431"}
+  def test_user_reg_with_no_email(self):
+    """ test user registration with null email """
+    test_user2 = { "first_name": "guest", "last_name": "user", "username": "guest",
+                        "email": "", "password": "guest", "phone": "0798765431"}
 
     response = self.client().post('/dann/api/v2/signup', json=test_user2)
     json_data = json.loads(response.data)
@@ -71,7 +89,7 @@ class Apiv2Test(unittest.TestCase):
   def test_user_reg_with_no_password(self):
     """ test user registration with null password """
     test_user2 = { "first_name": "guest", "last_name": "user", "username": "guest",
-                        "email": "guest@dan.com", "password": "guest", "phone": "0798765431"}
+                        "email": "guest@dan.com", "password": "", "phone": "0798765431"}
 
     response = self.client().post('/dann/api/v2/signup', json=test_user2)
     json_data = json.loads(response.data)
@@ -81,7 +99,7 @@ class Apiv2Test(unittest.TestCase):
 
   def test_user_login(self):
     """ test user login """
-    self.client().post('/dann/api/v1/register', json=self.test_user)
+    self.client().post('/dann/api/v2/signup', json=self.test_user)
     response = self.client().post('/dann/api/v2/login', json=self.test_user)
     json_data = json.loads(response.data)
     self.assertTrue(json_data.get('access_token'))
@@ -93,22 +111,18 @@ class Apiv2Test(unittest.TestCase):
     test_user2 = { "first_name": "guest", "last_name": "user", "username": "guest",
                         "email": "guest@dan.com", "password": "wrong", "phone": "0798765431"}
     response = self.client().post('/dann/api/v2/login', json=test_user2)
-    json_data = json.loads(response.data)
-    self.assertTrue(json_data.get('Error'))
-    self.assertEqual(response.status_code, 401)
+    self.assertNotEqual(response.status_code, 200)
 
-  def test_user_login_with_wrong_username(self):
+  def test_user_login_with_wrong_username_and_email(self):
     """ test user login with wrong username """
     self.client().post('/dann/api/v2/signup', json=self.test_user)
     test_user2 = { "first_name": "guest", "last_name": "user", "username": "wrong",
-                        "email": "guest@dan.com", "password": "guest", "phone": "0798765431"}
+                        "email": "wrong@dan.com", "password": "guest", "phone": "0798765431"}
     response = self.client().post('/dann/api/v2/login', json=test_user2)
-    json_data = json.loads(response.data)
-    self.assertTrue(json_data.get('Error'))
-    self.assertEqual(response.status_code, 404)
+    self.assertNotEqual(response.status_code, 200)
 
   def test_access_protected_endpoint_without_authorization(self):
-    response = self.client().post('/dann/api/v2/signup', json=self.test_user)
+    response = self.client().get('/dann/api/v2/signup')
     self.assertNotEqual(response.status_code, 200)
 
 
@@ -117,9 +131,9 @@ class Apiv2Test(unittest.TestCase):
     response = self.client().post('/dann/api/v2/login', json=self.test_user)
     json_data = json.loads(response.data)
     access_token = json_data.get('access_token')
-    response = self.client().get('/dann/api/v2/home', headers={"Authorization":"Bearer " + access_token})
+    response = self.client().get('/dann/api/v2/signup', headers={"Authorization":"Bearer " + access_token})
     json_data = json.loads(response.data)
-    self.assertEqual(json_data.get("message"), "Hello, there ;-)")
+    self.assertEqual(json_data.get("message"), "success")
     self.assertEqual(response.status_code, 200)
 
 
@@ -129,7 +143,7 @@ class Apiv2Test(unittest.TestCase):
     response = self.client().post('/dann/api/v2/orders', json=self.order)
     self.assertNotEqual(response.status_code, 400)
 
-  def test_order_creation_while_authenticated(self):
+  def test_order_creation_without_admin_rights(self):
     """ assert that you can create an order when authenticated """
     self.client().post('/dann/api/v2/signup', json=self.test_user)
     response = self.client().post('/dann/api/v2/login', json=self.test_user)
@@ -138,132 +152,20 @@ class Apiv2Test(unittest.TestCase):
     order2 = {"price": 50, "description": "kila kitu hapa", "ordered_by": "dan", "status": 0}
     response = self.client().post('/dann/api/v2/orders',headers={"Authorization":"Bearer " + access_token}, json=order2)
     json_data = json.loads(response.data)
-    self.assertEqual(response.status_code, 201)
-
-  # def test_create_an_order_with_existing_title(self):
-  #   """ assert that you can't create a duplicate order (asserts title must be unique) """
-  #   self.client().post('/dann/api/v2/signup', json=self.test_user)
-  #   response = self.client().post('/dann/api/v2/login', json=self.test_user)
-  #   json_data = json.loads(response.data)
-  #   access_token = json_data.get('access_token')
-  #   self.client().post('/dann/api/v2/orders',headers={"Authorization":"Bearer " + access_token}, json=self.order)
-  #   response = self.client().post('/dann/api/v2/orders',headers={"Authorization":"Bearer " + access_token}, json=self.order)
-  #   json_data = json.loads(response.data)
-  #   self.assertTrue(json_data.get("Error"))
-  #   self.assertEqual(response.status_code, 400)
-
-  # def test_create_an_order_with_without_title(self):
-  #   """ assert that you can't create an order without a title) """
-  #   self.client().post('/dann/api/v2/signup', json=self.test_user)
-  #   response = self.client().post('/dann/api/v2/login', json=self.test_user)
-  #   json_data = json.loads(response.data)
-  #   access_token = json_data.get('access_token')
-  #   order2 = {"title": "", "description": "Lorem ipsum", "price": 5}
-  #   response = self.client().post('/dann/api/v2/orders',headers={"Authorization":"Bearer " + access_token}, json=order2)
-  #   json_data = json.loads(response.data)
-  #   self.assertTrue(json_data.get("Error"))
-  #   self.assertEqual(response.status_code, 400)
-
-
-  def test_get_all_orders(self):
-    self.client().post('/dann/api/v2/signup', json=self.test_user)
-    response = self.client().post('/dann/api/v2/login', json=self.test_user)
-    json_data = json.loads(response.data)
-    access_token = json_data.get('access_token')
-    self.client().post('/dann/api/v2/orders',headers={"Authorization":"Bearer " + access_token}, json=self.order)
-    response = self.client().get('/dann/api/v2/orders')
-    json_data = json.loads(response.data)
-    self.assertTrue(json_data.get('orders'))
-    self.assertEqual(response.status_code, 200)
-
-  def test_get_a_single_order(self):
-    self.client().post('/dann/api/v2/signup', json=self.test_user)
-    response = self.client().post('/dann/api/v2/login', json=self.test_user)
-    json_data = json.loads(response.data)
-    access_token = json_data.get('access_token')
-    self.client().post('/dann/api/v2/orders',headers={"Authorization":"Bearer " + access_token}, json=self.order)
-    response = self.client().get('/dann/api/v2/orders/1')
-    json_data = json.loads(response.data)
-    print(json_data)
-    self.assertTrue(json_data.get('order'))
-    self.assertEqual(response.status_code, 200)
-
-
-  def test_get_a_non_existent_order(self):
-    self.client().post('/dann/api/v2/signup', json=self.test_user)
-    response = self.client().post('/dann/api/v2/login', json=self.test_user)
-    json_data = json.loads(response.data)
-    access_token = json_data.get('access_token')
-    self.client().post('/dann/api/v2/orders',headers={"Authorization":"Bearer " + access_token}, json=self.order)
-    response = self.client().get('/dann/api/v2/orders/0')
-    self.assertEqual(response.status_code, 404)
-
-  def test_to_edit_an_order_without_authentication(self):
-    self.client().post('/dann/api/v2/signup', json=self.test_user)
-    response = self.client().post('/dann/api/v2/login', json=self.test_user)
-    json_data = json.loads(response.data)
-    access_token = json_data.get('access_token')
-    self.client().post('/dann/api/v2/orders',headers={"Authorization":"Bearer " + access_token}, json=self.order)
-    data2 = {"price": 50, "description": "try edit", "ordered_by": "dan", "status": 0}
-    response = self.client().put('/dann/api/v2/orders/1',
-                                 json=data2)
-    self.assertNotEqual(response.status_code, 201)
-
-  def test_to_edit_an_order_with_authentication(self):
-    self.client().post('/dann/api/v2/signup', json=self.test_user)
-    response = self.client().post('/dann/api/v2/login', json=self.test_user)
-    json_data = json.loads(response.data)
-    access_token = json_data.get('access_token')
-    self.client().post('/dann/api/v2/orders',headers={"Authorization":"Bearer " + access_token}, json=self.order)
-    data2 = {"price": 50, "description": "edited lorem", "ordered_by": "dan", "status": 0}
-    response = self.client().put('/dann/api/v2/orders/1',headers={"Authorization":"Bearer " + access_token}, json=data2)
-    json_data = json.loads(response.data)
-    print(json_data)
-    self.assertTrue(json_data.get('order'))
-    self.assertEqual(response.status_code, 201)
-
-  def test_edit_an_invalid_order(self):
-    self.client().post('/dann/api/v2/signup', json=self.test_user)
-    response = self.client().post('/dann/api/v2/login', json=self.test_user)
-    json_data = json.loads(response.data)
-    access_token = json_data.get('access_token')
-    self.client().post('/dann/api/v2/orders',headers={"Authorization":"Bearer " + access_token}, json=self.order)
-    data2 = {"price": 50, "description": "kila kitu hapa", "ordered_by": "dan", "status": 0}
-    response = self.client().put('/dann/api/v2/orders/0',headers={"Authorization":"Bearer " + access_token}, json=data2)
-    json_data = json.loads(response.data)
-    print(json_data)
-    self.assertTrue(json_data.get('Error'))
-    self.assertEqual(response.status_code, 400)
-
-  def test_edit_an_order_with_invalid_data(self):
-    self.client().post('/dann/api/v2/signup', json=self.test_user)
-    response = self.client().post('/dann/api/v2/login', json=self.test_user)
-    json_data = json.loads(response.data)
-    access_token = json_data.get('access_token')
-    self.client().post('/dann/api/v2/orders',headers={"Authorization":"Bearer " + access_token}, json=self.order)
-    data2 = {"price": "", "description": "", "ordered_by": "dan", "status": 0}
-    response = self.client().put('/dann/api/v2/orders/1',headers={"Authorization":"Bearer " + access_token}, json=data2)
-    json_data = json.loads(response.data)
-    print(json_data)
-    self.assertTrue(json_data.get('Error'))
-    self.assertEqual(response.status_code, 400)
+    self.assertEqual(response.status_code, 403)
 
   def test_get_the_menu(self):
-    self.client().post('/dann/api/v2/signup', json=self.test_user)
-    response = self.client().post('/dann/api/v2/login', json=self.test_user)
-    json_data = json.loads(response.data)
-    access_token = json_data.get('access_token')
-    self.client().post('/dann/api/v2/menu',headers={"Authorization":"Bearer " + access_token}, json=self.menu)
     response = self.client().get('/dann/api/v2/menu')
-    json_data = json.loads(response.data)
-    self.assertTrue(json_data.get('menu'))
     self.assertEqual(response.status_code, 200)
 
 
 
   def tearDown(self):
     with self.app.app_context():
-      droptables('DBASE')
+      print('hey')
+      self.drop = Db1("DBASE").drop1()
+
+      # droptables('DBASE')
 
 if __name__ == '__main__':
   unittest.main()

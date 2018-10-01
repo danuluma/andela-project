@@ -8,3 +8,5 @@ instance/config.py
 *.pyc
 .env
 uwsgi.ini
+app/api/v2/create.py
+app/api/v2/cree.py

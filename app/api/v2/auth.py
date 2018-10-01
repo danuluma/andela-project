@@ -34,17 +34,19 @@ class Signup(Resource):
   """Endpoint to register a new user"""
   def post(self):
     args = parser.parse_args()
-    first_name = args['first_name']
-    last_name = args['last_name']
-    username = args['username']
-    email = args['email']
+    first_name = args['first_name'].strip()
+    last_name = args['last_name'].strip()
+    username = args['username'].strip()
+    email = args['email'].strip()
     password = args['password']
-    phone = args['phone']
+    phone = args['phone'].strip()
     # role = args['role']
     role = "user"
 
     if username == "":
       return {'Error':'Please input a valid username'}, 400
+    if email == "":
+      return {'Error':'Please input a valid email'}, 400
     if password == "":
       return {'Error':'Please input a valid password'}, 400
     new_user = [
@@ -60,10 +62,10 @@ class Signup(Resource):
     UserModel.add_new_user(self, new_user)
     return {'mess': "success"}, 200
 
-  # @jwt_required
+  @jwt_required
   def get(self):
     mess = UserModel.get_all_users(self)
-    return {'message':mess}, 203
+    return {'message':"success"}, 200
 
 class Loginv2(Resource):
   """Endpoint to login a user and create an access token"""
@@ -78,28 +80,30 @@ class Loginv2(Resource):
       help='password can\'t be empty', required=True, location='json')
 
     args = parser2.parse_args()
-    username = args['username']
-    email = args['email']
-    password = args['password']
+    username = args['username'].strip()
+    email = args['email'].strip()
+    password = args['password'].strip()
 
     user = UserModel.get_single_user(self, username, email)
-    userdetails = [user['username'], user['id'], user['role']]
-
-
-    if password == user['password']:
-      access_token = create_access_token(identity=userdetails)
-      refresh_token = create_refresh_token(identity=userdetails)
-      current_user = get_jwt_identity()
-      current_user2 = username
-
-      mesg = {
-          'access_token': access_token,
-          'refresh_token': refresh_token
-          }
-      return mesg, 200
+    if len(user) == 0:
+      return {'Error': 'User not found'}, 401
     else:
-      return {'Error': 'Wrong password'}, 401
-      # return user[0]['password'], 200
+
+      userdetails = [user['username'], user['id'], user['role']]
+      if password == user['password']:
+        access_token = create_access_token(identity=userdetails)
+        refresh_token = create_refresh_token(identity=userdetails)
+        current_user = get_jwt_identity()
+        # current_user2 = username
+
+        mesg = {
+            'access_token': access_token,
+            'refresh_token': refresh_token
+            }
+        return mesg, 200
+      else:
+        return {'Error': 'Wrong password'}, 401
+        # return user[0]['password'], 200
 
   @jwt_required
   def get(self):

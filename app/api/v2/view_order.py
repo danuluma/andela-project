@@ -23,15 +23,17 @@ class OrdersView(Resource):
   """Endpoints for menu. ~/dann/api/v2/menu"""
 
   """Endpoint for GET requests. Retrieves the menu"""
+  @jwt_required
   def get(self):
     current_user = get_jwt_identity()
     if current_user[2] == "admin":
       items = OrderModel.get_all_orders(self)
-      return items
+      return items, 200
     else:
       return {"Error":"Only admins are allowed to view all orders"}, 403
 
 
+  @jwt_required
   def post(self):
     current_user = get_jwt_identity()
     if current_user[2] == "admin":
@@ -45,23 +47,24 @@ class OrdersView(Resource):
       ]
 
       OrderModel.add_new_order(self, order_details)
-      return {"Suceess":"Order placed"}
+      return {"Suceess":"Order placed"}, 200
     else:
       return {"Error":"Only admins are allowed to view this"}, 403
 
 
 class OrderItem(Resource):
   """docstring for ClassName"""
+  @jwt_required
   def get(self, orderId):
     current_user = get_jwt_identity()
     if current_user[2] == "admin":
       item = OrderModel.get_single_order(self, orderId)
       print(item)
-      return item
+      return item, 200
     else:
       return {"Error":"Only admins are allowed to view this"}, 403
 
-
+  @jwt_required
   def put(self, orderId):
     current_user = get_jwt_identity()
     if current_user[2] == "admin":
@@ -75,15 +78,15 @@ class OrderItem(Resource):
       ]
 
       OrderModel.update_order_details(self, orderId, order_details)
-      return {"Suceess":"Order has been updated"}
+      return {"Suceess":"Order has been updated"}, 200
     else:
       return {"Error":"Only admins are allowed to view this"}, 403
 
-
+  @jwt_required
   def delete(self, order_id):
     current_user = get_jwt_identity()
     if current_user[2] == "admin":
       OrderModel.delete_order(self, order_id)
-      return {"Suceess":"Order has been dleted"}
+      return {"Suceess":"Order has been deleted"}, 200
     else:
       return {"Error":"Only admins are allowed to view this"}, 403

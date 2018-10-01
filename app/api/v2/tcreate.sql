@@ -1,4 +1,4 @@
-CREATE TABLE users UNLESS EXISTS (
+CREATE TABLE users (
        id serial primary key,
        first_name varchar(20) not null,
        last_name varchar(20) not null,
@@ -9,7 +9,7 @@ CREATE TABLE users UNLESS EXISTS (
        role varchar(20) not null
 );
 
-CREATE TABLE orders UNLESS EXISTS (
+CREATE TABLE orders (
        id serial primary key,
        -- title varchar(80),
        price integer not null,
@@ -20,14 +20,14 @@ CREATE TABLE orders UNLESS EXISTS (
        status integer
 );
 
-CREATE TABLE categories UNLESS EXISTS (
+CREATE TABLE categories (
        id serial primary key,
        name varchar(80) unique not null,
        -- category varchar not null,
        description text
 );
 
-CREATE TABLE menu UNLESS EXISTS (
+CREATE TABLE menu (
        id serial primary key,
        title varchar not null,
        category varchar(80),

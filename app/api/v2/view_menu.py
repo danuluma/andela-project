@@ -27,7 +27,7 @@ class MenuView(Resource):
     items = MenuModel.get_all_menu(self)
     print(items)
     # return {"Menu":items}
-    return items
+    return items, 200
 
   @jwt_required
   def post(self):
@@ -46,32 +46,47 @@ class MenuView(Resource):
       MenuModel.post_menu_item(self, menu1)
       return {"Suceess":"Menu imeingia"}, 200
     else:
-      return {"Error":"Only admins are allowed to create menu"}, 403
+      return {"Error":"Only admins are allowed to create menu on other's behalf"}, 403
 
 class MenuItem(Resource):
   """docstring for ClassName"""
+  @jwt_required
   def get(self, item_id):
-    items = MenuModel.get_menu_item(self, item_id)
-    print(items)
-    # return {"Menu":items}
-    return items
+    current_user = get_jwt_identity()
+    if current_user[2] == "admin":
+      items = MenuModel.get_menu_item(self, item_id)
+      print(items)
+      # return {"Menu":items}
+      return items, 200
+    else:
+      return {"Error":"Only admins are allowed to view this"}, 403
 
+  @jwt_required
   def put(self, item_id):
-    item = item_id
-    args = parser.parse_args()
+    current_user = get_jwt_identity()
+    if current_user[2] == "admin":
+      item = item_id
+      args = parser.parse_args()
 
-    menu1 = [
-        args['title'],
-        args['category'],
-        args['description'],
-        args['image_url'],
-        args['price']
-    ]
+      menu1 = [
+          args['title'],
+          args['category'],
+          args['description'],
+          args['image_url'],
+          args['price']
+      ]
 
-    MenuModel.update_menu_item(self, menu1, item)
-    return {"Suceess":"Menu has been updated"}
+      MenuModel.update_menu_item(self, menu1, item)
+      return {"Success":"Menu has been updated"}, 200
+    else:
+      return {"Error":"Only admins are allowed to edit this"}, 403
 
+  @jwt_required
   def delete(self, item_id):
-    item = item_id
-    MenuModel.delete_menu_item(self, item)
-    return {"Suceess":"Menu has been dleted"}
+    current_user = get_jwt_identity()
+    if current_user[2] == "admin":
+      item = item_id
+      MenuModel.delete_menu_item(self, item)
+      return {"Success":"Menu has been deleted"}, 200
+    else:
+      return {"Error":"Only admins are allowed to delete this"}, 403

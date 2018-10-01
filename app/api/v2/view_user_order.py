@@ -18,13 +18,14 @@ class UserOrder(Resource):
   """Endpoints for a single user to view and place orders. ~/dann/api/v2/user/"""
 
   """Endpoint for GET requests. Retrieves the gets all oredrs for a user"""
+  @jwt_required
   def get(self):
     ordered_by = "Dan"
     items = OrderModel.get_single_order(self, ordered_by)
     print(items)
-    return items
+    return items, 200
 
-
+  @jwt_required
   def post(self):
     ordered_by = "Dan"
     status = 0
@@ -39,4 +40,4 @@ class UserOrder(Resource):
     ]
 
     OrderModel.add_new_order(self, order_details)
-    return {"Suceess":"Order placed"}
+    return {"Suceess":"Order placed"}, 200
