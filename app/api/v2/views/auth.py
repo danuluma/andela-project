@@ -67,6 +67,7 @@ class Signup(Resource):
     mess = UserModel.get_all_users(self)
     return {'message':"success"}, 200
 
+
 class Loginv2(Resource):
   """Endpoint to login a user and create an access token"""
 
@@ -90,6 +91,7 @@ class Loginv2(Resource):
     else:
 
       userdetails = [user['username'], user['id'], user['role']]
+      # userdetails = [user]
       if password == user['password']:
         access_token = create_access_token(identity=userdetails)
         refresh_token = create_refresh_token(identity=userdetails)
@@ -97,8 +99,8 @@ class Loginv2(Resource):
         # current_user2 = username
 
         mesg = {
-            'access_token': access_token,
-            'refresh_token': refresh_token
+            'access_token': access_token
+            # 'refresh_token': refresh_token
             }
         return mesg, 200
       else:
@@ -114,15 +116,15 @@ class Loginv2(Resource):
     return mesg, 200
 
 
-class Refresh(Resource):
-  """Endpoint to create Refresh tokens. It is not to be accessed externally"""
-  @jwt_refresh_token_required
-  def post(self):
-    current_user = get_jwt_identity()
-    access_token = create_access_token(identity=current_user)
+# class Refresh(Resource):
+#   """Endpoint to create Refresh tokens. It is not to be accessed externally"""
+#   @jwt_refresh_token_required
+#   def post(self):
+#     current_user = get_jwt_identity()
+#     access_token = create_access_token(identity=current_user)
 
-    mesg = {
-      'access_token': access_token
-    }
-    return mesg, 200
+#     mesg = {
+#       'access_token': access_token
+#     }
+#     return mesg, 200
 
