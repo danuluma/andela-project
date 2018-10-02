@@ -62,7 +62,7 @@ class Apiv1Test(unittest.TestCase):
 
   def test_user_login(self):
     """ test user login """
-    self.client().post('/dann/api/v1/register', json=self.test_user)
+    self.client().post('/dann/api/v1/reg', json=self.test_user)
     response = self.client().post('/dann/api/v1/login', json=self.test_user)
     json_data = json.loads(response.data)
     self.assertTrue(json_data.get('access_token'))

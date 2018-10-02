@@ -7,6 +7,12 @@ install:
   - pip install -r requirements.txt
   - pip install coveralls codecov
 
+services:
+  - postgresql
+
+before_script:
+  - psql -c 'create database mafast1;' -U postgres
+
 script:
   - python3 -m unittest
   - coverage run --source=app -m unittest
