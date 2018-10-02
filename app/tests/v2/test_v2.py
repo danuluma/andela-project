@@ -8,7 +8,7 @@ LOCALPATH = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, LOCALPATH + '/../../../')
 
 from run import create_app
-from app.api.v2.db import Db1
+from app.api.v2.db import Db
 
 class Apiv2Test(unittest.TestCase):
   """ Tests for api v2 endpoints """
@@ -21,17 +21,18 @@ class Apiv2Test(unittest.TestCase):
 
     self.test_user4 = { "first_name": "new", "last_name": "user", "username": "same",
                         "email": "dan@dan.com", "password": "dann", "phone": "0798765632", "role":"user"}
-    self.test_admin = { "first_name": "guest", "last_name": "user", "username": "guest",
-                        "email": "guest@dan.com", "password": "guest", "phone": "0798765431", "role": "admin" }
+    self.test_admin = { "first_name": "admin", "last_name": "admin", "username": "admin",
+                        "email": "admin@dan.com", "password": "admin", "phone": "0798765422", "role": "admin" }
     self.test_login = { "username": "guest", "password": "guest"}
     self.order = {"price": 50, "description": "kila kitu hapa", "ordered_by": "dan", "status": 0}
     self.menu = {"title": "nyam chom", "category": "meat", "description": "grilled meat", "image_url": "loading", "price": 500}
 
     with self.app.app_context():
       print("Hello")
-      self.create_db = Db1('DBASE').create1()
+      Db().create()
       # self.conn = Db1("DBASE").connect1()
       # self.drop = Db1("DBASE").drop1()
+
 
   def test_add_new_user(self):
     response = self.client().post('/dann/api/v2/signup', json=self.test_admin)
@@ -154,18 +155,38 @@ class Apiv2Test(unittest.TestCase):
     json_data = json.loads(response.data)
     self.assertEqual(response.status_code, 403)
 
+  def test_order_creation_with_admin_rights(self):
+    """ assert that you can create an order when authenticated """
+    admin2 = {"username":"admin", "email":"secret@admin", "password":"admin"}
+    response = self.client().post('/dann/api/v2/login', json=admin2)
+    json_data = json.loads(response.data)
+    access_token = json_data.get('access_token')
+    order2 = {"price": 50, "description": "kila kitu hapa", "ordered_by": "dan", "status": 0}
+    response = self.client().post('/dann/api/v2/orders', headers={"Authorization":"Bearer " + access_token}, json=order2)
+    json_data = json.loads(response.data)
+    self.assertEqual(response.status_code, 403)
+
   def test_get_the_menu(self):
     response = self.client().get('/dann/api/v2/menu')
     self.assertEqual(response.status_code, 200)
 
-
+  # def test_get_item_in_menu(self):
+  #   admin2 = {"username":"admin", "email":"secret@admin", "password":"admin"}
+  #   self.client().post('/dann/api/v2/admin', json=admin2)
+  #   response = self.client().post('/dann/api/v2/login', json=admin2)
+  #   json_data = json.loads(response.data)
+  #   access_token = json_data.get('access_token')
+  #   response = self.client().get('/dann/api/v2/menu/1', headers={"Authorization":"Bearer " + access_token})
+  #   self.assertEqual(response.status_code, 200)
 
   def tearDown(self):
     with self.app.app_context():
       print('hey')
-      self.drop = Db1("DBASE").drop1()
+      Db().drop()
 
       # droptables('DBASE')
+
+
 
 if __name__ == '__main__':
   unittest.main()

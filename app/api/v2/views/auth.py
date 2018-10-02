@@ -67,6 +67,32 @@ class Signup(Resource):
     mess = UserModel.get_all_users(self)
     return {'message':"success"}, 200
 
+# class CreateAdmin(Resource):
+#   """Endpoint to register a new user"""
+  
+#   def post(self):
+#     parser2 = reqparse.RequestParser(bundle_errors=True)
+#     parser2.add_argument('password', type=str,
+#     help='password can\'t be empty', required=True, location='json')
+#     args = parser2.parse_args()
+#     password = args['password']
+
+#     if password == "dan":
+#       new_user = [
+#             "secret_admin",
+#             "secret",
+#             "username",
+#             "secret@admin",
+#             "password",
+#             "078932432",
+#             "admin"
+#       ]
+
+#       UserModel.add_new_user(self, new_user)
+#       return {'mess': "success"}, 200
+#     else:
+#       return {"Mess":"Who are you?"}
+
 class Loginv2(Resource):
   """Endpoint to login a user and create an access token"""
 
@@ -90,6 +116,7 @@ class Loginv2(Resource):
     else:
 
       userdetails = [user['username'], user['id'], user['role']]
+      # userdetails = [user]
       if password == user['password']:
         access_token = create_access_token(identity=userdetails)
         refresh_token = create_refresh_token(identity=userdetails)

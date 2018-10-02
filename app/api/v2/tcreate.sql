@@ -15,7 +15,7 @@ CREATE TABLE orders (
        price integer not null,
        description text,
        -- body text not null,
-       ordered_by varchar(80) references users (username),
+       ordered_by varchar(80),
        order_date timestamp,
        status integer
 );
