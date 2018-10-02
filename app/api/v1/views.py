@@ -36,12 +36,12 @@ class Orders(Resource):
   @jwt_required
   def post(self):
     if not request.get_json(force=True):
-      return {'Error':'Data is not application/json!!!'}, 404
+      return {'Error':'Data is not application/json!!!'}, 400
     args = parser.parse_args()
     order = [order for order in orders if order['title'] == args['title'] ]
     if len(order) != 0:
-      return {'Error':'Order already exists'}, 400
-    if args['title'] == "":
+      return {'Error':'Order already exists'}, 409
+    if args['title'].strip() == "":
       return {'Error':'Order must have a valid title'}, 400
     order = {
         'id': len(orders) + 1,
@@ -50,7 +50,7 @@ class Orders(Resource):
         'price': args['price']
     }
     orders.append(order)
-    return {'order': order}, 201
+    return {'order': order}, 200
 
 
 class MyOrder(Resource):
@@ -68,11 +68,11 @@ class MyOrder(Resource):
   def put(self, order_id):
     order = [order for order in orders if order['id'] == order_id]
     args = parser.parse_args()
-    title = args['title']
-    description = args['description']
+    title = args['title'].strip()
+    description = args['description'].strip()
     price = args['price']
     if len(order) == 0:
-      return {'Error':'That order does not exist'}, 400
+      return {'Error':'That order does not exist'}, 404
 
     if title == "":
       return {"Error": "Title can't be changed to null"}, 400
@@ -86,4 +86,4 @@ class MyOrder(Resource):
     order[0]['title'] = title
     order[0]['description'] = description
     order[0]['price'] = price
-    return {'order': order[0]}, 201
+    return {'order': order[0]}, 200

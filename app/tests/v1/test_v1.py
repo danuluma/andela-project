@@ -20,7 +20,7 @@ class Apiv1Test(unittest.TestCase):
     self.app = create_app()
     self.client = self.app.test_client
     self.order = {"title": "edit2", "description": "Lorem ipsum", "price": 5}
-    self.test_user = {"username": "dan", "password": "dann"}
+    self.test_user = {"username": "dan", "email": "dan@dan.com", "password": "dann"}
 
   def tearDown(self):
     pass
@@ -28,10 +28,9 @@ class Apiv1Test(unittest.TestCase):
 
   def test_user_reg(self):
     """ test user registration with valid credentials """
-    test_user2 = {"username": "dan3", "password": "dann3"}
+    test_user2 = {"username": "dan3", "email": "dan1@dan.com", "password": "dann3"}
     response = self.client().post('/dann/api/v1/reg', json=test_user2)
     json_data = json.loads(response.data)
-
     self.assertTrue(json_data.get('users'))
     self.assertEqual(response.status_code, 200)
 
@@ -41,12 +40,11 @@ class Apiv1Test(unittest.TestCase):
     response = self.client().post('/dann/api/v1/reg', json=self.test_user)
     json_data = json.loads(response.data)
     self.assertTrue(json_data.get('Error'))
-    self.assertEqual(response.status_code, 400)
+    self.assertEqual(response.status_code, 409)
 
   def test_user_reg_with_no_username(self):
     """ test user registration with null username """
-    test_user2 = {"username": "", "password": "dan"}
-
+    test_user2 = {"username": "", "email": "", "password": "dan"}
     response = self.client().post('/dann/api/v1/reg', json=test_user2)
     json_data = json.loads(response.data)
     self.assertTrue(json_data.get('Error'))
@@ -54,12 +52,12 @@ class Apiv1Test(unittest.TestCase):
 
   def test_user_reg_with_no_password(self):
     """ test user registration with null password """
-    test_user2 = {"username": "dan", "password": ""}
+    test_user2 = {"username": "dan", "email": "dan@dan.com", "password": ""}
 
     response = self.client().post('/dann/api/v1/reg', json=test_user2)
     json_data = json.loads(response.data)
     self.assertTrue(json_data.get('Error'))
-    self.assertEqual(response.status_code, 400)
+    self.assertEqual(response.status_code, 409)
 
 
   def test_user_login(self):
@@ -73,7 +71,7 @@ class Apiv1Test(unittest.TestCase):
   def test_user_login_with_wrong_password(self):
     """ test user login with wring password """
     self.client().post('/dann/api/v1/reg', json=self.test_user)
-    test_user2 = {"username": "dan", "password": "wrong"}
+    test_user2 = {"username": "dan", "email": "dan@dan.com", "password": "wrong"}
     response = self.client().post('/dann/api/v1/login', json=test_user2)
     json_data = json.loads(response.data)
     self.assertTrue(json_data.get('Error'))
@@ -82,7 +80,7 @@ class Apiv1Test(unittest.TestCase):
   def test_user_login_with_wrong_username(self):
     """ test user login with wrong username """
     self.client().post('/dann/api/v1/reg', json=self.test_user)
-    test_user2 = {"username": "wrong", "password": "dann"}
+    test_user2 = {"username": "wrong", "email": "wrong@dan.com", "password": "dann"}
     response = self.client().post('/dann/api/v1/login', json=test_user2)
     json_data = json.loads(response.data)
     self.assertTrue(json_data.get('Error'))
@@ -119,7 +117,7 @@ class Apiv1Test(unittest.TestCase):
     order2 = {"title": "another", "description": "Lorem ipsum", "price": 5}
     response = self.client().post('/dann/api/v1/orders',headers={"Authorization":"Bearer " + access_token}, json=order2)
     json_data = json.loads(response.data)
-    self.assertEqual(response.status_code, 201)
+    self.assertEqual(response.status_code, 200)
 
   def test_create_an_order_with_existing_title(self):
     """ assert that you can't create a duplicate order (asserts title must be unique) """
@@ -131,7 +129,7 @@ class Apiv1Test(unittest.TestCase):
     response = self.client().post('/dann/api/v1/orders',headers={"Authorization":"Bearer " + access_token}, json=self.order)
     json_data = json.loads(response.data)
     self.assertTrue(json_data.get("Error"))
-    self.assertEqual(response.status_code, 400)
+    self.assertEqual(response.status_code, 409)
 
   def test_create_an_order_with_without_title(self):
     """ assert that you can't create an order without a title) """
@@ -201,7 +199,7 @@ class Apiv1Test(unittest.TestCase):
     json_data = json.loads(response.data)
     print(json_data)
     self.assertTrue(json_data.get('order'))
-    self.assertEqual(response.status_code, 201)
+    self.assertEqual(response.status_code, 200)
 
   def test_edit_an_invalid_order(self):
     self.client().post('/dann/api/v1/reg', json=self.test_user)
@@ -214,7 +212,7 @@ class Apiv1Test(unittest.TestCase):
     json_data = json.loads(response.data)
     print(json_data)
     self.assertTrue(json_data.get('Error'))
-    self.assertEqual(response.status_code, 400)
+    self.assertEqual(response.status_code, 404)
 
   def test_edit_an_order_with_invalid_data(self):
     self.client().post('/dann/api/v1/reg', json=self.test_user)
@@ -227,7 +225,7 @@ class Apiv1Test(unittest.TestCase):
     json_data = json.loads(response.data)
     print(json_data)
     self.assertTrue(json_data.get('Error'))
-    self.assertEqual(response.status_code, 400)
+    self.assertEqual(response.status_code, 404)
 
 if __name__ == '__main__':
   unittest.main()
