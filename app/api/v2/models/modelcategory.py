@@ -40,25 +40,10 @@ class CategoryModel(Db):
     VALUES (%s,%s);
     """, category_details)
 
-  def update_category_details(self, category_id, categorydetails):
-
+  def update_category_details(self, category_id, data):
     updatesql = """UPDATE categories SET name = %s, description = %s WHERE id = {}""".format(category_id)
-    conn = Db().connect()
-    cur = conn.cursor()
-    cur.execute(updatesql, categorydetails)
-    conn.commit()
     selectsql = """SELECT * FROM categories WHERE id = {}""".format(category_id)
-    cur.execute(selectsql)
-    record = cur.fetchone()
-    print(record)
-    return record
+    return Db().put_query(updatesql, data, selectsql)
 
   def delete_category(self, category_id):
-    conn = Db().connect()
-    cur = conn.cursor()
-    print("I'm about to delete")
-    delsql = """DELETE FROM categories WHERE id = {}""".format(category_id)
-    cur.execute(delsql)
-    conn.commit()
-
-    return {"details":"done"},
+    Db().delete_query("""DELETE FROM categories WHERE id = {}""".format(category_id))

@@ -48,22 +48,8 @@ class OrderModel(Db):
   def update_order_details(self, order_id, orderdetails):
 
     updatesql = """UPDATE orders SET price = %s, description = %s, ordered_by = %s, order_date = %s, status = %s WHERE id = {}""".format(order_id)
-    conn = Db().connect()
-    cur = conn.cursor()
-    cur.execute(updatesql, orderdetails)
-    conn.commit()
     selectsql = """SELECT * FROM orders WHERE id = {}""".format(order_id)
-    cur.execute(selectsql)
-    record = cur.fetchone()
-    print(record)
-    return record
+    return Db().put_query(updatesql, orderdetails, selectsql)
 
   def delete_order(self, order_id):
-    conn = Db().connect()
-    cur = conn.cursor()
-    print("I'm about to delete")
-    delsql = """DELETE FROM orders WHERE id = {0}""".format(order_id)
-    cur.execute(delsql)
-    conn.commit()
-
-    return {"details":"done"},
+    Db().delete_query("""DELETE FROM orders WHERE id = {0}""".format(order_id))

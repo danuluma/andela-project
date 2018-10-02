@@ -67,31 +67,6 @@ class Signup(Resource):
     mess = UserModel.get_all_users(self)
     return {'message':"success"}, 200
 
-# class CreateAdmin(Resource):
-#   """Endpoint to register a new user"""
-  
-#   def post(self):
-#     parser2 = reqparse.RequestParser(bundle_errors=True)
-#     parser2.add_argument('password', type=str,
-#     help='password can\'t be empty', required=True, location='json')
-#     args = parser2.parse_args()
-#     password = args['password']
-
-#     if password == "dan":
-#       new_user = [
-#             "secret_admin",
-#             "secret",
-#             "username",
-#             "secret@admin",
-#             "password",
-#             "078932432",
-#             "admin"
-#       ]
-
-#       UserModel.add_new_user(self, new_user)
-#       return {'mess': "success"}, 200
-#     else:
-#       return {"Mess":"Who are you?"}
 
 class Loginv2(Resource):
   """Endpoint to login a user and create an access token"""
@@ -124,8 +99,8 @@ class Loginv2(Resource):
         # current_user2 = username
 
         mesg = {
-            'access_token': access_token,
-            'refresh_token': refresh_token
+            'access_token': access_token
+            # 'refresh_token': refresh_token
             }
         return mesg, 200
       else:
@@ -141,15 +116,15 @@ class Loginv2(Resource):
     return mesg, 200
 
 
-class Refresh(Resource):
-  """Endpoint to create Refresh tokens. It is not to be accessed externally"""
-  @jwt_refresh_token_required
-  def post(self):
-    current_user = get_jwt_identity()
-    access_token = create_access_token(identity=current_user)
+# class Refresh(Resource):
+#   """Endpoint to create Refresh tokens. It is not to be accessed externally"""
+#   @jwt_refresh_token_required
+#   def post(self):
+#     current_user = get_jwt_identity()
+#     access_token = create_access_token(identity=current_user)
 
-    mesg = {
-      'access_token': access_token
-    }
-    return mesg, 200
+#     mesg = {
+#       'access_token': access_token
+#     }
+#     return mesg, 200
 

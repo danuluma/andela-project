@@ -60,9 +60,19 @@ class Db(object):
     conn.commit()
     conn.close()
 
-  def put_query(self, put_query, data):
+  def put_query(self, put_query, data, get_query):
     conn = self.connect()
     cur = conn.cursor()
     cur.execute(put_query, data)
     conn.commit()
+    cur.execute(get_query)
+    return cur.fetchone()
+
+  def delete_query(self, delete_query):
+    conn = self.connect()
+    cur = conn.cursor()
+    cur.execute(delete_query)
+    conn.commit()
+    conn.close()
+
 

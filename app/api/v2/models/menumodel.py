@@ -34,22 +34,9 @@ class MenuModel(Db):
   def update_menu_item(self, menu, item_id):
 
     updatesql = """UPDATE menu SET title = %s, category = %s, description = %s, image_url = %s, price = %s WHERE id = {}""".format(item_id)
-    conn = Db().connect()
-    cur = conn.cursor()
-    cur.execute(updatesql, menu)
-    conn.commit()
     selectsql= """SELECT * FROM menu WHERE id = {}""".format(item_id)
-    cur.execute(selectsql)
-    record = cur.fetchone()
-    print(record)
-    return record
+    return Db().put_query(updatesql, menu, selectsql)
 
   def delete_menu_item(self, item_id):
-    conn = Db().connect()
-    cur = conn.cursor()
-    print("I'm about to delete")
-    delsql= """DELETE FROM menu WHERE id = {}""".format(item_id)
-    cur.execute(delsql)
-    conn.commit()
+    Db().delete_query("""DELETE FROM menu WHERE id = {}""".format(item_id))
 
-    return {"details":"done"},

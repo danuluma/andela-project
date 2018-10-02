@@ -40,22 +40,8 @@ class UserModel(Db):
   def update_user_details(self, username, userdetails):
 
     updatesql = """UPDATE users SET first_name = %s, last_name = %s, username = %s, email = %s, password = %s, phone = %s, phone = %s WHERE username = {}""".format(username)
-    conn = Db().connect()
-    cur = conn.cursor()
-    cur.execute(updatesql, userdetails)
-    conn.commit()
     selectsql = """SELECT * FROM users WHERE username = {}""".format(username)
-    cur.execute(selectsql)
-    record = cur.fetchone()
-    print(record)
-    return record
+    return Db().put_query(updatesql, userdetails, selectsql)
 
   def delete_user(self, username):
-    conn = Db().connect()
-    cur = conn.cursor()
-    print("I'm about to delete")
-    delsql = """DELETE FROM users WHERE username = {0}""".format(username)
-    cur.execute(delsql)
-    conn.commit()
-
-    return {"details":"done"},
+    Db().delete_query("""DELETE FROM users WHERE username = {0}""".format(username))
