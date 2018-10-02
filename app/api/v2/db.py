@@ -20,7 +20,6 @@ class Db(object):
         print(" connection OK")
     except:
         print("can't connect to the database")
-
     return conn
 
 
@@ -29,14 +28,13 @@ class Db(object):
         conn = self.connect()
         cur = conn.cursor()
         sql = file.read()
-        # print(sql)
         cur.execute(sql)
         conn.commit()
         print("query ran successfully")
         file.close()
         conn.close()
     except:
-        print("failed creating2")
+        print("failed....")
 
 
   def create(self):
@@ -74,5 +72,3 @@ class Db(object):
     cur.execute(delete_query)
     conn.commit()
     conn.close()
-
-

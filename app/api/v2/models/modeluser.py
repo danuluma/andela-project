@@ -34,7 +34,7 @@ class UserModel(Db):
   def add_admin_user(self):
     Db().post_query("""
     INSERT INTO users (first_name, last_name, username, email, password, phone, role)
-    VALUES ('admin','user','admin','secret@admin','admin','0701234567','admin');
+    VALUES ('admin1','user','admin1','secret@admin.com','admin','0701234567','admin');
     """, None)
 
   def update_user_details(self, username, userdetails):
