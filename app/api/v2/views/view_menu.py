@@ -4,9 +4,9 @@ from flask_restful import Resource, reqparse
 from run import *
 import os, sys
 LOCALPATH = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, LOCALPATH + '/../../../')
+sys.path.insert(0, LOCALPATH + '/../../../../')
 
-from app.api.v2.menumodel import MenuModel
+from app.api.v2.models.menumodel import MenuModel
 
 parser = reqparse.RequestParser(bundle_errors=True)
 parser.add_argument('description', type=str, location='json')
