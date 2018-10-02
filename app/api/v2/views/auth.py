@@ -67,6 +67,10 @@ class Signup(Resource):
     mess = UserModel.get_all_users(self)
     return {'message':"success"}, 200
 
+  def put(self):
+    UserModel().add_admin_user()
+    return {'mess': "alert!!! admin created!"}, 200
+
 
 class Loginv2(Resource):
   """Endpoint to login a user and create an access token"""
