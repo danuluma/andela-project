@@ -6,13 +6,14 @@ from dotenv import load_dotenv
 LOCALPATH = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, LOCALPATH + '/../../../')
 
+
 load_dotenv('.env')
 
 
 class Db(object):
   """docstring for Db"""
-  def __init__(self):
-    self.dbase = os.getenv("DBASE")
+  def __init__(self, config):
+    self.dbase =os.getenv("DBASE")
 
   def connect(self):
     try:

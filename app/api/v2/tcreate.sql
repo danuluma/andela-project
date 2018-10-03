@@ -6,7 +6,20 @@ CREATE TABLE users (
        email varchar(80) unique not null,
        password varchar(80) not null,
        phone varchar(12) unique,
-       role varchar(20) not null
+);
+
+CREATE TABLE  roles (
+       id serial primary key,
+       role_id varchar not null,
+       access_level varchar not null
+
+);
+
+CREATE TABLE  users_roles (
+       id serial primary key,
+       roles_id varchar not null,
+       users_id varchar not null
+
 );
 
 CREATE TABLE orders (
