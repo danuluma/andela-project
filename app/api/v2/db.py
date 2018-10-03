@@ -16,7 +16,7 @@ class Db(object):
 
   def connect(self):
     try:
-        conn = psycopg2.connect(database = 'mafast1', user='postgres', host='localhost', password='postgres')
+        conn = psycopg2.connect(self.dbase)
         print(" connection OK")
     except:
         print("can't connect to the database")

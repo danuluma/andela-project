@@ -54,7 +54,7 @@ class Apiv2Test(unittest.TestCase):
 
   def test_admin_creation(self):
     """ test user registration with valid credentials """
-    response = self.client().put('/dann/api/v2/signup', json={"":""})
+    response = self.client().put('/dann/api/v2/signup', json={"password":"mysecret!"})
     json_data = json.loads(response.data)
     self.assertTrue(json_data.get('mess'))
     self.assertEqual(json_data.get("mess"), "alert!!! admin created!")
