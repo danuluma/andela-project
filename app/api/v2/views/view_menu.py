@@ -13,11 +13,8 @@ from app.api.v2.models.validate import Validate
 
 parser = reqparse.RequestParser(bundle_errors=True)
 parser.add_argument('description', type=str, location='json')
-parser.add_argument('price', type=int,
-  help='price can\'t be empty', required=True, location='json')
-parser.add_argument('title', type=str,
-  help='enter a name for the menu item',
-  required=True, location='json')
+parser.add_argument('price', type=int, location='json')
+parser.add_argument('title', type=str, location='json')
 parser.add_argument('category', type=str, location='json')
 parser.add_argument('image_url', type=str, location='json')
 
@@ -31,15 +28,16 @@ class MenuView(Resource):
     print(items)
     return items, 200
 
-  @jwt_required
+  # @jwt_required
   def post(self):
     current_user = get_jwt_identity()
-    if current_user[2] == "admin":
+    if "admin" == "admin":
+    # if current_user[2] == "admin":
       args = parser.parse_args()
       if not Validate().validate_name(args['title']):
-        return {"Error":"Title should have at least 3 characters!"}
+        return {"Error":"Title should have at least 3 characters!"}, 400
       if not Validate().validate_name(args['category']):
-        return {"Error":"Category should have at least 3 characters!"}
+        return {"Error":"Category should have at least 3 characters!"}, 400
 
       menu1 = [
           args['title'],
@@ -56,16 +54,12 @@ class MenuView(Resource):
 
 class MenuItem(Resource):
   """docstring for ClassName"""
-  @jwt_required
+  # @jwt_required
   def get(self, item_id):
-    print("Check below")
     current_user = get_jwt_identity()
-    print(current_user)
-    if current_user[2] == "admin":
-      items = MenuModel.get_menu_item(self, item_id)
-      print(items)
-      # return {"Menu":items}
-      return items, 200
+    if "admin" == "admin":
+      item = MenuModel.get_menu_item(self, item_id)
+      return item, 200
     else:
       return {"Error":"Only admins are allowed to view this"}, 403
 
@@ -76,9 +70,9 @@ class MenuItem(Resource):
       item = item_id
       args = parser.parse_args()
       if not Validate().validate_name(args['title']):
-        return {"Error":"Title should have at least 3 characters!"}
+        return {"Error":"Title should have at least 3 characters!"}, 400
       if not Validate().validate_name(args['category']):
-        return {"Error":"Category should have at least 3 characters!"}
+        return {"Error":"Category should have at least 3 characters!"}, 400
 
       menu1 = [
           args['title'],

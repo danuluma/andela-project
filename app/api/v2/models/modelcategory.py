@@ -11,24 +11,10 @@ class CategoryModel(Db):
     pass
 
   def get_all_categories(self):
-    Db().get_query("categories")
-    # orders = []
-    # for row in Db().get_query("""SELECT * FROM categories"""):
-    #   print(row)
-    #   item = {'id': row[0], 'name': row[1], 'description': row[2]}
-    #   orders.append(item)
-    # print(orders)
-    # return orders
+    return Db().get_query('categories')
 
   def get_single_category(self, category_id):
-    order = []
-    for row in Db().get_query("""SELECT * FROM categories"""):
-      print(row)
-      if row[0] == category_id :
-          item = {'id': row[0], 'name': row[1], 'description': row[2]}
-          order.append(item)
-    print(order)
-    return order
+    return [row for row in Db().get_query('categories') if row[0]==category_id]
 
   def add_new_category(self, category_details):
     Db().post_query("""

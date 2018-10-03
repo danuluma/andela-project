@@ -13,21 +13,10 @@ class MenuModel(Db):
 
 
   def get_all_menu(self):
-   return Db().get_all("categories")
-
-    # menu = []
-    # for row in Db().get_query("""SELECT * FROM menu"""):
-    #   item = {'id': row[0], 'title': row[1], 'category': row[2], 'description': row[3], 'image_url': row[4], 'price': row[5]}
-    #   menu.append(item)
-    # return menu
+    return Db().get_query('menu')
 
   def get_menu_item(self, item_id):
-    menu_item = []
-    for row in Db().get_query("""SELECT * FROM menu"""):
-      if row[0] == item_id:
-          item = {'id': row[0], 'title': row[1], 'category': row[2], 'description': row[3], 'image_url': row[4], 'price': row[5]}
-          menu_item.append(item)
-    return menu_item
+    return [row for row in Db().get_query('menu') if row[0]==item_id]
 
   def post_menu_item(self, menu1):
     Db().post_query("""

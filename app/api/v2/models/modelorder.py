@@ -11,23 +11,10 @@ class OrderModel(Db):
     pass
 
   def get_all_orders(self):
-    orders = []
-    for row in Db().get_query("""SELECT * FROM orders"""):
-      print(row)
-      item = {'id': row[0], 'price': row[1], 'description': row[2], 'ordered_by': row[3], 'order_date': row[4], 'status': row[5]}
-      orders.append(item)
-    print(orders)
-    return orders
+    return Db().get_query('orders')
 
   def get_single_order(self, order_id):
-    order = []
-    for row in Db().get_query("""SELECT * FROM orders"""):
-      print(row)
-      if row[0] == order_id :
-          item = {'id': row[0], 'price': row[1], 'description': row[2], 'ordered_by': row[3], 'order_date': row[4], 'status': row[5]}
-          order.append(item)
-    print(order)
-    return order
+    return [row for row in Db().get_query('orders') if row[0]==order_id]
 
   def get_user_order(self, ordered_by):
     orders = []
