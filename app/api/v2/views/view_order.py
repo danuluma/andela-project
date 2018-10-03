@@ -1,5 +1,6 @@
 from flask import abort
 from flask import request
+from flask_jwt_extended import jwt_required
 from flask_restful import Resource, reqparse
 from run import *
 import os, sys
@@ -36,7 +37,7 @@ class OrdersView(Resource):
   @jwt_required
   def post(self):
     current_user = get_jwt_identity()
-    if current_user[2] == "admin":
+    if current_user[0] == "dan":
       args = parser.parse_args()
 
       order_details = [

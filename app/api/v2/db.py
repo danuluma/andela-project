@@ -9,47 +9,66 @@ sys.path.insert(0, LOCALPATH + '/../../../')
 load_dotenv('.env')
 
 
-class Db1(object):
+class Db(object):
   """docstring for Db"""
-  def __init__(self, mydb):
-    self.dbase = os.getenv(mydb)
+  def __init__(self):
+    self.dbase = os.getenv("DBASE")
 
-  def connect1(self):
+  def connect(self):
     try:
-        conn2 = psycopg2.connect(self.dbase)
-        print("what")
+        conn = psycopg2.connect(self.dbase)
+        print(" connection OK")
     except:
-        print("Ayam suffering, can't connect to the database2")
+        print("can't connect to the database")
+    return conn
 
-    return conn2
 
-  def create1(self):
+  def run_query(self, file):
     try:
-        conn2 = self.connect1()
-        cur = conn2.cursor()
-        file = open("app/api/v2/tcreate.sql", "r")
+        conn = self.connect()
+        cur = conn.cursor()
         sql = file.read()
-        # print(sql)
         cur.execute(sql)
-        conn2.commit()
-        # print("created2")
+        conn.commit()
+        print("query ran successfully")
         file.close()
-        return conn2
+        conn.close()
     except:
-        print("failed creating2")
+        print("failed....")
 
-  def drop1(self):
-    try:
-        conn2 = self.connect1()
-        cur = conn2.cursor()
-        file = open("app/api/v2/tdrop.sql", "r")
-        sql = file.read()
-        # print(sql)
-        cur.execute(sql)
-        conn2.commit()
-        print("dropped2")
-    except:
-        print("failed dropping2")
-    finally:
-        file.close()
 
+  def create(self):
+    file = open("app/api/v2/tcreate.sql", "r")
+    return self.run_query(file)
+
+  def drop(self):
+    file = open("app/api/v2/tdrop.sql", "r")
+    return self.run_query(file)
+
+  def get_query(self, get_query):
+    conn = self.connect()
+    cur = conn.cursor()
+    cur.execute(get_query)
+    return cur.fetchall()
+
+  def post_query(self, post_query, data):
+    conn = self.connect()
+    cur = conn.cursor()
+    cur.execute(post_query, data)
+    conn.commit()
+    conn.close()
+
+  def put_query(self, put_query, data, get_query):
+    conn = self.connect()
+    cur = conn.cursor()
+    cur.execute(put_query, data)
+    conn.commit()
+    cur.execute(get_query)
+    return cur.fetchone()
+
+  def delete_query(self, delete_query):
+    conn = self.connect()
+    cur = conn.cursor()
+    cur.execute(delete_query)
+    conn.commit()
+    conn.close()

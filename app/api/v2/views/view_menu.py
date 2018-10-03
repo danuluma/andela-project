@@ -1,5 +1,6 @@
 from flask import abort
 from flask import request
+from flask_jwt_extended import jwt_required
 from flask_restful import Resource, reqparse
 from run import *
 import os, sys
@@ -26,7 +27,6 @@ class MenuView(Resource):
   def get(self):
     items = MenuModel.get_all_menu(self)
     print(items)
-    # return {"Menu":items}
     return items, 200
 
   @jwt_required
@@ -44,15 +44,17 @@ class MenuView(Resource):
       ]
 
       MenuModel.post_menu_item(self, menu1)
-      return {"Suceess":"Menu imeingia"}, 200
+      return {"Mess":"Menu created sucessfully"}, 200
     else:
-      return {"Error":"Only admins are allowed to create menu on other's behalf"}, 403
+      return {"Error":"Only admins are allowed to create menu on other's behalf"}, 401
 
 class MenuItem(Resource):
   """docstring for ClassName"""
   @jwt_required
   def get(self, item_id):
+    print("Check below")
     current_user = get_jwt_identity()
+    print(current_user)
     if current_user[2] == "admin":
       items = MenuModel.get_menu_item(self, item_id)
       print(items)

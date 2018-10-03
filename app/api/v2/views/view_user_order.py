@@ -1,5 +1,6 @@
 from flask import abort
 from flask import request
+from flask_jwt_extended import jwt_required
 from flask_restful import Resource, reqparse
 from run import *
 import os, sys
@@ -15,21 +16,24 @@ parser.add_argument('price', type=int,
 
 
 class UserOrder(Resource):
-  """Endpoints for a single user to view and place orders. ~/dann/api/v2/user/"""
+  """Endpoints for a single user to view and place orders. ~/dann/api/v2/user/orders"""
 
   """Endpoint for GET requests. Retrieves the gets all oredrs for a user"""
   @jwt_required
   def get(self):
-    ordered_by = "Dan"
-    items = OrderModel.get_single_order(self, ordered_by)
+    current_user = get_jwt_identity()
+    print("below")
+    print(current_user)
+    ordered_by = current_user[0]
+    items = OrderModel.get_user_order(self, ordered_by)
     print(items)
-    return items, 200
+    return {"My orders": items}, 200
 
   @jwt_required
   def post(self):
-    ordered_by = "Dan"
+    current_user = get_jwt_identity()
+    ordered_by = current_user[0]
     status = 0
-
     args = parser.parse_args()
 
     order_details = [
@@ -38,6 +42,5 @@ class UserOrder(Resource):
         ordered_by,
         status
     ]
-
     OrderModel.add_new_order(self, order_details)
-    return {"Suceess":"Order placed"}, 200
+    return {"Success":"Order placed"}, 200
