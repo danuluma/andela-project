@@ -37,8 +37,6 @@ class OrdersView(Resource):
   @jwt_required
   def post(self):
     current_user = get_jwt_identity()
-    print("Below")
-    print(current_user)
     if current_user[0] == "dan":
       args = parser.parse_args()
 

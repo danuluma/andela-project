@@ -66,6 +66,18 @@ class Signup(Resource):
     mess = UserModel.get_all_users(self)
     return {'message':"success"}, 200
 
+  def put(self):
+    parser2 = reqparse.RequestParser(bundle_errors=True)
+    parser2.add_argument('password', type=str,
+      help='password can\'t be empty', required=True, location='json')
+    args = parser2.parse_args()
+    password = args['password'].strip()
+    if password == "mysecret!":
+      UserModel().add_admin_user()
+      return {'mess': "alert!!! admin created!"}, 200
+    else:
+      return {"mess":"Wrong password"}, 401
+
 
 class Loginv2(Resource):
   """Endpoint to login a user and create an access token"""

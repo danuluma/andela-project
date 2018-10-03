@@ -24,9 +24,11 @@ class Apiv2Test(unittest.TestCase):
     self.test_login = { "username": "guest", "password": "guest"}
     self.order = {"price": 50, "description": "kila kitu hapa", "ordered_by": "dan", "status": 0}
     self.menu = {"title": "nyam chom", "category": "meat", "description": "grilled meat", "image_url": "loading", "price": 500}
+    self.menu2 = {"title": "pizza", "category": "meat", "description": "wheat", "image_url": "loading", "price": 5000}
 
     with self.app.app_context():
       print("Hello")
+      Db().drop()
       Db().create()
 
   def test_add_new_user(self):
@@ -34,7 +36,7 @@ class Apiv2Test(unittest.TestCase):
     json_data = json.loads(response.data)
     self.assertEqual(response.status_code, 200)
 
-  def test_menu(self):
+  def test_get_menu(self):
     response = self.client().get('/dann/api/v2/menu')
     json_data = json.loads(response.data)
     self.assertEqual(response.status_code, 200)
@@ -47,6 +49,14 @@ class Apiv2Test(unittest.TestCase):
     json_data = json.loads(response.data)
 
     self.assertTrue(json_data.get('mess'))
+    self.assertEqual(response.status_code, 200)
+
+  def test_admin_creation(self):
+    """ test user registration with valid credentials """
+    response = self.client().put('/dann/api/v2/signup', json={"password":"mysecret!"})
+    json_data = json.loads(response.data)
+    self.assertTrue(json_data.get('mess'))
+    self.assertEqual(json_data.get("mess"), "alert!!! admin created!")
     self.assertEqual(response.status_code, 200)
 
   def test_user_reg_with_already_existing_username(self):
@@ -138,14 +148,86 @@ class Apiv2Test(unittest.TestCase):
     response = self.client().post('/dann/api/v2/orders', json=self.order)
     self.assertNotEqual(response.status_code, 400)
 
+
+
+  def test_order_creation_with_admin_rights(self):
+    """ assert that you can create an order when authenticated """
+    self.client().post('/dann/api/v2/signup', json=self.test_user)
+    response = self.client().post('/dann/api/v2/login', json=self.test_user)
+    json_data = json.loads(response.data)
+    access_token = json_data.get('access_token')
+    order2 = {"price": 50, "description": "kila kitu hapa", "ordered_by": "dan", "status": 0}
+    response = self.client().post('/dann/api/v2/orders',headers={"Authorization":"Bearer " + access_token}, json=order2)
+    json_data = json.loads(response.data)
+    self.assertEqual(response.status_code, 200)
+
+
   def test_get_the_menu(self):
     response = self.client().get('/dann/api/v2/menu')
     self.assertEqual(response.status_code, 200)
+
+  def test_create_user_order(self):
+    self.client().post('/dann/api/v2/signup', json=self.test_user)
+    response = self.client().post('/dann/api/v2/login', json=self.test_user)
+    json_data = json.loads(response.data)
+    access_token = json_data.get('access_token')
+    order2 = {"price": 50, "description": "kila kitu hapa", "ordered_by": "dan", "status": 0}
+    response = self.client().post('/dann/api/v2/users/orders',headers={"Authorization":"Bearer " + access_token}, json=order2)
+    # json_data = json.loads(response.data)
+    # self.assertTrue(json_data.get("Success"))
+    # self.assertEqual(json_data.get("Success"), "Order placed")
+    self.assertEqual(response.status_code, 200)
+
+  def test_get_user_order(self):
+    self.client().post('/dann/api/v2/signup', json=self.test_user)
+    response = self.client().post('/dann/api/v2/login', json=self.test_user)
+    json_data = json.loads(response.data)
+    access_token = json_data.get('access_token')
+    order2 = {"price": 50, "description": "kila kitu hapa", "ordered_by": "dan", "status": 0}
+    self.client().get('/dann/api/v2/user/orders',headers={"Authorization":"Bearer " + access_token}, json=order2)
+    response = self.client().get('/dann/api/v2/users/orders',headers={"Authorization":"Bearer " + access_token})
+    # json_data = json.loads(response.data)
+    # self.assertTrue(json_data.get("My orders"))
+    self.assertEqual(response.status_code, 200)
+
+  def test_create_menu_item(self):
+    self.client().post('/dann/api/v2/signup', json=self.test_user)
+    response = self.client().post('/dann/api/v2/login', json=self.test_user)
+    json_data = json.loads(response.data)
+    access_token = json_data.get('access_token')
+    response = self.client().post('/dann/api/v2/menu',headers={"Authorization":"Bearer " + access_token}, json=self.menu)
+    json_data = json.loads(response.data)
+    self.assertTrue(json_data.get("Mess"))
+    self.assertEqual(json_data.get("Mess"), "Menu created sucessfully")
+    self.assertEqual(response.status_code, 200)
+
+  def test_user_edit_menu_item(self):
+    self.client().post('/dann/api/v2/signup', json=self.test_user)
+    response = self.client().post('/dann/api/v2/login', json=self.test_user)
+    json_data = json.loads(response.data)
+    access_token = json_data.get('access_token')
+    self.client().post('/dann/api/v2/menu', headers={"Authorization":"Bearer " + access_token}, json=self.menu)
+    response = self.client().put('/dann/api/v2/menu/1', headers={"Authorization":"Bearer " + access_token}, json=self.menu2)
+
+    self.assertEqual(response.status_code, 403)
+
+  def test_admin_delete_menu_item(self):
+    self.client().post('/dann/api/v2/signup', json=self.test_user)
+    response = self.client().post('/dann/api/v2/login', json=self.test_user)
+    json_data = json.loads(response.data)
+    access_token = json_data.get('access_token')
+    self.client().post('/dann/api/v2/menu',headers={"Authorization":"Bearer " + access_token}, json=self.menu)
+    self.client().delete('/dann/api/v2/menu/1',headers={"Authorization":"Bearer " + access_token})
+
+    self.assertEqual(response.status_code, 200)
+
+
 
   def tearDown(self):
     with self.app.app_context():
       print('hey')
       Db().drop()
+      Db().create()
 
 
 if __name__ == '__main__':

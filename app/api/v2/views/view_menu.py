@@ -55,7 +55,7 @@ class MenuItem(Resource):
     print("Check below")
     current_user = get_jwt_identity()
     print(current_user)
-    if "admin" == "admin":
+    if current_user[2] == "admin":
       items = MenuModel.get_menu_item(self, item_id)
       print(items)
       # return {"Menu":items}
@@ -66,7 +66,7 @@ class MenuItem(Resource):
   @jwt_required
   def put(self, item_id):
     current_user = get_jwt_identity()
-    if "admin" == "admin":
+    if current_user[2] == "admin":
       item = item_id
       args = parser.parse_args()
 
