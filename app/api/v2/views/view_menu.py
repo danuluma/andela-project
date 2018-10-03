@@ -32,7 +32,7 @@ class MenuView(Resource):
   @jwt_required
   def post(self):
     current_user = get_jwt_identity()
-    if "admin" == "admin":
+    if current_user[2] == "admin":
       args = parser.parse_args()
 
       menu1 = [
@@ -46,7 +46,7 @@ class MenuView(Resource):
       MenuModel.post_menu_item(self, menu1)
       return {"Mess":"Menu created sucessfully"}, 200
     else:
-      return {"Error":"Only admins are allowed to create menu on other's behalf"}, 403
+      return {"Error":"Only admins are allowed to create menu on other's behalf"}, 401
 
 class MenuItem(Resource):
   """docstring for ClassName"""
