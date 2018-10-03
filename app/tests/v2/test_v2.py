@@ -39,7 +39,6 @@ class Apiv2Test(unittest.TestCase):
   def test_get_menu(self):
     response = self.client().get('/dann/api/v2/menu')
     json_data = json.loads(response.data)
-    # self.assertTrue(json_data.get('menu'))
     self.assertEqual(response.status_code, 200)
 
   def test_user_reg(self):
@@ -150,6 +149,7 @@ class Apiv2Test(unittest.TestCase):
     self.assertNotEqual(response.status_code, 400)
 
 
+
   def test_order_creation_with_admin_rights(self):
     """ assert that you can create an order when authenticated """
     self.client().post('/dann/api/v2/signup', json=self.test_user)
@@ -160,6 +160,7 @@ class Apiv2Test(unittest.TestCase):
     response = self.client().post('/dann/api/v2/orders',headers={"Authorization":"Bearer " + access_token}, json=order2)
     json_data = json.loads(response.data)
     self.assertEqual(response.status_code, 200)
+
 
   def test_get_the_menu(self):
     response = self.client().get('/dann/api/v2/menu')

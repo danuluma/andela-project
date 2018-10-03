@@ -40,7 +40,6 @@ class Signup(Resource):
     email = args['email'].strip()
     password = args['password']
     phone = args['phone'].strip()
-    # role = args['role']
     role = "user"
 
     if username == "":
@@ -103,21 +102,17 @@ class Loginv2(Resource):
     else:
 
       userdetails = [user['username'], user['id'], user['role']]
-      # userdetails = [user]
       if password == user['password']:
         access_token = create_access_token(identity=userdetails)
         refresh_token = create_refresh_token(identity=userdetails)
         current_user = get_jwt_identity()
-        # current_user2 = username
 
         mesg = {
             'access_token': access_token
-            # 'refresh_token': refresh_token
             }
         return mesg, 200
       else:
         return {'Error': 'Wrong password'}, 401
-        # return user[0]['password'], 200
 
   @jwt_required
   def get(self):
@@ -127,16 +122,4 @@ class Loginv2(Resource):
     }
     return mesg, 200
 
-
-# class Refresh(Resource):
-#   """Endpoint to create Refresh tokens. It is not to be accessed externally"""
-#   @jwt_refresh_token_required
-#   def post(self):
-#     current_user = get_jwt_identity()
-#     access_token = create_access_token(identity=current_user)
-
-#     mesg = {
-#       'access_token': access_token
-#     }
-#     return mesg, 200
 
