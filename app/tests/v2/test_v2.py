@@ -37,7 +37,6 @@ class Apiv2Test(unittest.TestCase):
   def test_menu(self):
     response = self.client().get('/dann/api/v2/menu')
     json_data = json.loads(response.data)
-    # self.assertTrue(json_data.get('menu'))
     self.assertEqual(response.status_code, 200)
 
   def test_user_reg(self):
@@ -138,28 +137,6 @@ class Apiv2Test(unittest.TestCase):
     self.client().post('/dann/api/v2/signup', json=self.order)
     response = self.client().post('/dann/api/v2/orders', json=self.order)
     self.assertNotEqual(response.status_code, 400)
-
-  # def test_order_creation_without_admin_rights(self):
-  #   """ assert that you can create an order when authenticated """
-  #   self.client().post('/dann/api/v2/signup', json=self.test_user)
-  #   response = self.client().post('/dann/api/v2/login', json=self.test_user)
-  #   json_data = json.loads(response.data)
-  #   access_token = json_data.get('access_token')
-  #   order2 = {"price": 50, "description": "kila kitu hapa", "ordered_by": "dan", "status": 0}
-  #   response = self.client().post('/dann/api/v2/orders',headers={"Authorization":"Bearer " + access_token}, json=order2)
-  #   json_data = json.loads(response.data)
-  #   self.assertEqual(response.status_code, 403)
-
-  # def test_order_creation_with_admin_rights(self):
-  #   """ assert that you can create an order when authenticated """
-  #   admin2 = {"username":"admin", "email":"secret@admin", "password":"admin"}
-  #   response = self.client().post('/dann/api/v2/login', json=admin2)
-  #   json_data = json.loads(response.data)
-  #   access_token = json_data.get('access_token')
-  #   order2 = {"price": 50, "description": "kila kitu hapa", "ordered_by": "dan", "status": 0}
-  #   response = self.client().post('/dann/api/v2/orders', headers={"Authorization":"Bearer " + access_token}, json=order2)
-  #   json_data = json.loads(response.data)
-  #   self.assertEqual(response.status_code, 403)
 
   def test_get_the_menu(self):
     response = self.client().get('/dann/api/v2/menu')
