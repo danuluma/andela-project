@@ -5,6 +5,7 @@ from flask_jwt_extended import (
     jwt_refresh_token_required, create_refresh_token,
     get_jwt_identity
 )
+from app.api.v2.db import Db
 import os
 
 def create_app():
@@ -16,7 +17,8 @@ def create_app():
 
     app.register_blueprint(api_bp, url_prefix='/dann/api/v1')
     app.register_blueprint(api_bp2, url_prefix='/dann/api/v2')
-
+    Db().drop()
+    Db().create()
     return app
 
 # application = create_app()
