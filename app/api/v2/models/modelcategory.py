@@ -10,19 +10,15 @@ class CategoryModel(Db):
   def __init__(self):
     pass
 
-  def run_db_query(self, sql):
-    conn = Db().connect()
-    cur = conn.cursor()
-    cur.execute(sql)
-
   def get_all_categories(self):
-    orders = []
-    for row in Db().get_query("""SELECT * FROM categories"""):
-      print(row)
-      item = {'id': row[0], 'name': row[1], 'description': row[2]}
-      orders.append(item)
-    print(orders)
-    return orders
+    Db().get_query("categories")
+    # orders = []
+    # for row in Db().get_query("""SELECT * FROM categories"""):
+    #   print(row)
+    #   item = {'id': row[0], 'name': row[1], 'description': row[2]}
+    #   orders.append(item)
+    # print(orders)
+    # return orders
 
   def get_single_category(self, category_id):
     order = []

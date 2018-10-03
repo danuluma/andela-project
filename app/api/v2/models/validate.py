@@ -18,4 +18,4 @@ class Validate(object):
     return True if re.match("^[\.|[0-9]|\w]{5,10}$", username) else False
 
   def validate_name(self, name):
-    return True if re.match("^([a-z]|[A-Z]){2,20}$", name) else False
+    return True if re.match("^([a-z]|[A-Z]){3,20}$", name) else False

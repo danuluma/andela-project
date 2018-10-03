@@ -8,6 +8,8 @@ LOCALPATH = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, LOCALPATH + '/../../../../')
 
 from app.api.v2.models.modelorder import OrderModel
+from app.api.v2.models.validate import Validate
+
 
 parser = reqparse.RequestParser(bundle_errors=True)
 parser.add_argument('description', type=str, location='json')
@@ -27,7 +29,7 @@ class OrdersView(Resource):
   @jwt_required
   def get(self):
     current_user = get_jwt_identity()
-    if current_user[2] == "admin":
+    if current_user[2] == 1:
       items = OrderModel.get_all_orders(self)
       return items, 200
     else:
@@ -39,6 +41,11 @@ class OrdersView(Resource):
     current_user = get_jwt_identity()
     if current_user[0] == "dan":
       args = parser.parse_args()
+      if not Validate().validate_name(args['title']):
+        return {"Error":"Title should have at least 3 characters!"}
+      if not Validate().validate_email(args['email']):
+        return {"Error":"Title should have at least 3 characters!"}
+
 
       order_details = [
           args['price'],
@@ -70,6 +77,9 @@ class OrderItem(Resource):
     current_user = get_jwt_identity()
     if current_user[2] == "admin":
       args = parser.parse_args()
+      if not Validate().validate_email(args['ordered_by']):
+        return {"Error":"Title should have at least 3 characters!"}
+
 
       order_details = [
           args['price'],

@@ -1,26 +1,35 @@
 import psycopg2
 import psycopg2.extras
 import os, sys
+from flask import Flask
+
 from dotenv import load_dotenv
 
 LOCALPATH = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, LOCALPATH + '/../../../')
-
+from instance.config import app_config
 
 load_dotenv('.env')
 
 
+
+
 class Db(object):
   """docstring for Db"""
-  def __init__(self, config):
-    self.dbase =os.getenv("DBASE")
+  def __init__(self):
+    self.dbase = app_config["development"].DB_URI
 
   def connect(self):
     try:
         conn = psycopg2.connect(self.dbase)
         print(" connection OK")
+        print(app_config["development"].DB_URI)
+        print("up")
+
     except:
         print("can't connect to the database")
+        print(app_config["development"].DB_URI)
+        print("up")
     return conn
 
 
@@ -73,3 +82,10 @@ class Db(object):
     cur.execute(delete_query)
     conn.commit()
     conn.close()
+
+  def get_all(self, name):
+    items = []
+    for row in self.get_query("""SELECT * FROM {}""".format(name)):
+      item = {row}
+      items.append(item)
+    return items

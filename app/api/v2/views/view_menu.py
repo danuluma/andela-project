@@ -8,6 +8,8 @@ LOCALPATH = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, LOCALPATH + '/../../../../')
 
 from app.api.v2.models.menumodel import MenuModel
+from app.api.v2.models.validate import Validate
+
 
 parser = reqparse.RequestParser(bundle_errors=True)
 parser.add_argument('description', type=str, location='json')
@@ -34,6 +36,10 @@ class MenuView(Resource):
     current_user = get_jwt_identity()
     if current_user[2] == "admin":
       args = parser.parse_args()
+      if not Validate().validate_name(args['title']):
+        return {"Error":"Title should have at least 3 characters!"}
+      if not Validate().validate_name(args['category']):
+        return {"Error":"Category should have at least 3 characters!"}
 
       menu1 = [
           args['title'],
@@ -69,6 +75,10 @@ class MenuItem(Resource):
     if current_user[2] == "admin":
       item = item_id
       args = parser.parse_args()
+      if not Validate().validate_name(args['title']):
+        return {"Error":"Title should have at least 3 characters!"}
+      if not Validate().validate_name(args['category']):
+        return {"Error":"Category should have at least 3 characters!"}
 
       menu1 = [
           args['title'],

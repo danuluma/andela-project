@@ -9,4 +9,5 @@ from app.api.v2.models.validate import Validate
 # print(Validate().validate_pass("wfduvbfehT6"))
 # print(Validate().validate_phone("54377774346"))
 # print(Validate().validate_username("5434346"))
-print(Validate().validate_name("masd"))
+if not Validate().validate_name('u'):
+  print("bdh")

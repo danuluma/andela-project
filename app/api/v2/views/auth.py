@@ -11,6 +11,7 @@ LOCALPATH = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, LOCALPATH + '/../../../../')
 
 from app.api.v2.models.modeluser import UserModel
+from app.api.v2.models.validate import Validate
 
 
 
@@ -41,6 +42,12 @@ class Signup(Resource):
     password = args['password']
     phone = args['phone'].strip()
     role = "user"
+
+    if not Validate().validate_name(args['title']):
+      return {"Error":"Title should have at least 3 characters!"}
+    if not Validate().validate_name(args['category']):
+      return {"Error":"Category should have at least 3 characters!"}
+
 
     if username == "":
       return {'Error':'Please input a valid username'}, 400

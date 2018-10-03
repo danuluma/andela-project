@@ -8,19 +8,19 @@ CREATE TABLE users (
        phone varchar(12) unique,
 );
 
-CREATE TABLE  roles (
-       id serial primary key,
-       role_id varchar not null,
-       access_level varchar not null
+-- CREATE TABLE  roles (
+--        id serial primary key,
+--        role_id varchar not null,
+--        access_level varchar not null
 
-);
+-- );
 
-CREATE TABLE  users_roles (
-       id serial primary key,
-       roles_id varchar not null,
-       users_id varchar not null
+-- CREATE TABLE  users_roles (
+--        id serial primary key,
+--        roles_id varchar ,
+--        users_id varchar
 
-);
+-- );
 
 CREATE TABLE orders (
        id serial primary key,
