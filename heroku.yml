@@ -2,4 +2,4 @@ setup:
   config: {}
 build:
   languages:
-    - python
+    - python3

@@ -11,7 +11,7 @@ from app.api.v2.models.modeluser import UserModel
 import os
 
 def create_app():
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__)
     # app.config.from_object(app_config[config_name])
     from app import api_bp, api_bp2
     app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
