@@ -25,7 +25,17 @@ class OrdersView(Resource):
     current_user = get_jwt_identity()
     if current_user[2] == 1:
       items = OrderModel.get_all_orders(self)
-      return items, 200
+      hist = []
+      for item in items:
+        m_item = {
+        "order_id": item[0],
+        "order_price": item[1],
+        "orderer": item[2],
+        "date_ordered": item[3],
+        "order_status": item[4]
+        }
+        hist.append(m_item)
+      return hist, 200
     else:
       return {"Error":"Only admins are allowed to view all orders"}, 401
 

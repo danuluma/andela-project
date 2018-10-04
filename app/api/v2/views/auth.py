@@ -112,7 +112,7 @@ class Loginv2(Resource):
     else:
       userdetails = [user[0][4], user[0][0], user[0][7]]
       if password == user[0][5]:
-        access_token = create_access_token(identity=userdetails)
+        access_token = create_access_token(identity=userdetails, expires_delta=False)
         refresh_token = create_refresh_token(identity=userdetails)
         current_user = get_jwt_identity()
 

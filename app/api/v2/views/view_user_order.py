@@ -24,7 +24,17 @@ class UserOrder(Resource):
     current_user = get_jwt_identity()
     ordered_by = current_user[1]
     items = OrderModel.get_user_order(self, ordered_by)
-    return {"My orders": items}, 200
+    hist = []
+    for item in items:
+      m_item = {
+      "order_id": item[0],
+      "order_price": item[1],
+      "orderer": item[2],
+      "date_ordered": item[3],
+      "order_status": item[4]
+      }
+      hist.append(m_item)
+    return hist, 200
 
   @jwt_required
   def post(self):

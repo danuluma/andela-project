@@ -25,8 +25,20 @@ class MenuView(Resource):
   """Endpoint for GET requests. Retrieves the menu"""
   def get(self):
     items = MenuModel.get_all_menu(self)
-    print(items)
-    return items, 200
+    menu = []
+    for item in items:
+      menuitem = {
+
+      "id": item[0],
+      "food-name": item[1],
+      "food-category": item[2],
+      "description": item[3],
+      "image": item[4],
+      "price": item[5]
+      }
+
+      menu.append(menuitem)
+    return menu, 200
 
   @jwt_required
   def post(self):
@@ -58,7 +70,15 @@ class MenuItem(Resource):
     current_user = get_jwt_identity()
     if current_user[2] == 1:
       item = MenuModel.get_menu_item(self, item_id)
-      return item, 200
+      return {
+
+      "id": item[0][0],
+      "food-name": item[0][1],
+      "food-category": item[0][2],
+      "description": item[0][3],
+      "image": item[0][4],
+      "price": item[0][5]
+      }, 200
     else:
       return {"Error":"Only admins are allowed to view this"}, 401
 
