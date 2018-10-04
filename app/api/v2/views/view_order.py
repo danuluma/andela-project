@@ -40,7 +40,7 @@ class OrderItem(Resource):
       print(item)
       return item, 200
     else:
-      return {"Error":"Only admins are allowed to view this"}, 401
+      return {"Error":"Only admins are allowed to view a specific item"}, 401
 
   @jwt_required
   def put(self, orderId):
@@ -53,7 +53,7 @@ class OrderItem(Resource):
       OrderModel.update_order_status(self, orderId, args['status'])
       return {"Suceess":"Order has been updated"}, 200
     else:
-      return {"Error":"Only admins are allowed to view this"}, 401
+      return {"Error":"Only admins are allowed to update the status of an order"}, 401
 
   @jwt_required
   def delete(self, order_id):
@@ -62,4 +62,4 @@ class OrderItem(Resource):
       OrderModel.delete_order(self, order_id)
       return {"Success":"Order has been deleted"}, 200
     else:
-      return {"Error":"Only admins are allowed to view this"}, 401
+      return {"Error":"Only admins are allowed to delete an order"}, 401

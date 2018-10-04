@@ -51,4 +51,4 @@ q7 = """
        INSERT INTO categories (name, description)VALUES ('fish', 'Lorem ipsum');
     """
 
-create_tables = [q1, q5, q2, q3, q4, q7 ]
+create_tables = [q1, q5, q2, q3, q4, q7]

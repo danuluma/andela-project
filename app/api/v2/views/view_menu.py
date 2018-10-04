@@ -49,7 +49,7 @@ class MenuView(Resource):
       MenuModel.post_menu_item(self, menu1)
       return {"Mess":"Menu created sucessfully"}, 200
     else:
-      return {"Error":"Only admins are allowed to create menu on other's behalf"}, 401
+      return {"Error":"Only admins are allowed to create a menu item"}, 401
 
 class MenuItem(Resource):
   """docstring for ClassName"""

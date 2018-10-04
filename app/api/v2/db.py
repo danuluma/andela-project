@@ -22,9 +22,7 @@ class Db(object):
 
   def connect(self):
     try:
-        conn = psycopg2.connect(self.dbase)
-        print(" connection OK")
-
+        conn = psycopg2.connect(os.getenv("DBASE"))
     except:
         print("can't connect to the database")
     return conn
@@ -52,7 +50,7 @@ class Db(object):
         conn.commit()
         conn.close()
         cur.close
-        print("created successfully")
+        # print("created successfully")
       except:
         print("Error occurred creation failed")
         print(query)
@@ -66,7 +64,7 @@ class Db(object):
         conn.commit()
         conn.close()
         cur.close
-        print("table dropped successfully")
+        # print("table dropped successfully")
       except:
         print("Error occurred dropping failed")
 
