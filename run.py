@@ -6,7 +6,7 @@ from flask_jwt_extended import (
     get_jwt_identity
 )
 from app.api.v2.db import Db
-from instance.config import *
+from instance.config import app_config
 from app.api.v2.models.modeluser import UserModel
 import os
 
@@ -14,11 +14,11 @@ mee = []
 def create_app(config_name):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(app_config[config_name])
+    from app import api_bp, api_bp2
+    app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
+    jwt = JWTManager(app)
     Db().drops()
     Db().creates()
-    from app import api_bp, api_bp2
-    app.config['JWT_SECRET_instance_relative_config=TrueKEY'] = os.getenv('JWT_SECRET_KEY')
-    jwt = JWTManager(app)
     app.register_blueprint(api_bp, url_prefix='/dann/api/v1')
     app.register_blueprint(api_bp2, url_prefix='/dann/api/v2')
 
@@ -27,7 +27,6 @@ def create_app(config_name):
     return app
 
 # application = create_app("testing")
-
 
 
 if __name__ == "__main__":

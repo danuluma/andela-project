@@ -17,14 +17,8 @@ class OrderModel(Db):
     return [row for row in Db().get_query('orders') if row[0]==order_id]
 
   def get_user_order(self, ordered_by):
-    orders = []
-    for row in Db().get_query("""SELECT * FROM orders"""):
-      print(row)
-      if row[3] == ordered_by :
-          item = {'id': row[0], 'price': row[1], 'description': row[2], 'ordered_by': row[3], 'order_date': row[4], 'status': row[5]}
-          orders.append(item)
-    print(orders)
-    return orders
+    rows = [row for row in Db().get_query('orders')]
+    return [my_order for my_order in rows if my_order[3]==ordered_by]
 
   def add_new_order(self, order_details):
     Db().post_query("""
@@ -35,8 +29,12 @@ class OrderModel(Db):
   def update_order_details(self, order_id, orderdetails):
 
     updatesql = """UPDATE orders SET price = %s, description = %s, ordered_by = %s, order_date = %s, status = %s WHERE id = {}""".format(order_id)
-    selectsql = """SELECT * FROM orders WHERE id = {}""".format(order_id)
-    return Db().put_query(updatesql, orderdetails, selectsql)
+    return Db().put_query(updatesql, orderdetails)
+
+  def update_order_status(self, order_id, status):
+
+    updatesql = """UPDATE orders SET status = %s WHERE id = {}""".format(order_id)
+    return Db().put_query(updatesql, status)
 
   def delete_order(self, order_id):
     Db().delete_query("""DELETE FROM orders WHERE id = {0}""".format(order_id))

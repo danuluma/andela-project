@@ -60,7 +60,7 @@ class MenuItem(Resource):
       item = MenuModel.get_menu_item(self, item_id)
       return item, 200
     else:
-      return {"Error":"Only admins are allowed to view this"}, 403
+      return {"Error":"Only admins are allowed to view this"}, 401
 
   @jwt_required
   def put(self, item_id):
@@ -84,7 +84,7 @@ class MenuItem(Resource):
       MenuModel.update_menu_item(self, menu1, item)
       return {"Success":"Menu has been updated"}, 200
     else:
-      return {"Error":"Only admins are allowed to edit this"}, 403
+      return {"Error":"Only admins are allowed to edit this"}, 401
 
   @jwt_required
   def delete(self, item_id):
@@ -94,4 +94,4 @@ class MenuItem(Resource):
       MenuModel.delete_menu_item(self, item)
       return {"Success":"Menu has been deleted"}, 200
     else:
-      return {"Error":"Only admins are allowed to delete this"}, 403
+      return {"Error":"Only admins are allowed to delete this"}, 401

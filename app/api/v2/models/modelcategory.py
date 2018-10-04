@@ -24,8 +24,7 @@ class CategoryModel(Db):
 
   def update_category_details(self, category_id, data):
     updatesql = """UPDATE categories SET name = %s, description = %s WHERE id = {}""".format(category_id)
-    selectsql = """SELECT * FROM categories WHERE id = {}""".format(category_id)
-    return Db().put_query(updatesql, data, selectsql)
+    return Db().put_query(updatesql, data)
 
   def delete_category(self, category_id):
     Db().delete_query("""DELETE FROM categories WHERE id = {}""".format(category_id))

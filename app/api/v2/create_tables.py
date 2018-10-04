@@ -48,6 +48,7 @@ q7 = """
        INSERT INTO users (first_name, last_name, username, email, password, phone, role) VALUES ('admin1', 'user', 'admin1', 'secret@admin.com', 'admin', '0701234567', 1);
        INSERT INTO roles (id, access_level)VALUES (1, 'admin');
        INSERT INTO roles (id, access_level)VALUES (2, 'user');
+       INSERT INTO categories (name, description)VALUES ('fish', 'Lorem ipsum');
     """
 
 create_tables = [q1, q5, q2, q3, q4, q7 ]

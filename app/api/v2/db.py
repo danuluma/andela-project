@@ -92,13 +92,11 @@ class Db(object):
     conn.commit()
     conn.close()
 
-  def put_query(self, put_query, data, get_query):
+  def put_query(self, put_query, data):
     conn = self.connect()
     cur = conn.cursor()
     cur.execute(put_query, data)
     conn.commit()
-    cur.execute(get_query)
-    return cur.fetchone()
 
   def delete_query(self, delete_query):
     conn = self.connect()
@@ -107,12 +105,3 @@ class Db(object):
     conn.commit()
     conn.close()
 
-  def get_all(self, name):
-    items = []
-    print("row")
-    for row in self.get_query("""SELECT * FROM {}""".format(name)):
-      item = row
-      print(row)
-      print("row")
-      items.append(item)
-    return items

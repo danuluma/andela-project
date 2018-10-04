@@ -19,8 +19,8 @@ class Apiv2Test(unittest.TestCase):
     self.test_user = { "first_name": "dan", "last_name": "rico", "username": "dan",
                         "email": "dan@dan.com", "password": "dann", "phone": "0798765432", "role":"user"}
 
-    self.test_user4 = { "first_name": "new", "last_name": "user", "username": "same", "email": "dan@dan.com", "password": "dann", "phone": "0798765632", "role":"user"}
-    self.secret_admin = { "first_name": "admin1", "last_name": "user", "username": "admin1", "email": "secret@admin.com", "password": "admin", "phone": "0701234567", "role": "admin"}
+    self.test_user4 = { "first_name": "new", "last_name": "user", "username": "same", "email": "dan@dan.com", "password": "dann", "phone": "0798765632", "role": 2}
+    self.secret_admin = { "first_name": "admin1", "last_name": "user", "username": "admin1", "email": "secret@admin.com", "password": "admin", "phone": "0701234567", "role": 1}
     self.test_login = { "username": "guest", "password": "guest"}
     self.order = {"price": 50, "description": "kila kitu hapa", "ordered_by": "dan", "status": 0}
     self.menu = {"title": "nyam chom", "category": "meat", "description": "grilled meat", "image_url": "loading", "price": 500}
