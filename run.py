@@ -6,14 +6,14 @@ from flask_jwt_extended import (
     get_jwt_identity
 )
 from app.api.v2.db import Db
-from instance.config import app_config
+# from instance.config import app_config
 from app.api.v2.models.modeluser import UserModel
 import os
 
 mee = []
-def create_app(config_name):
+def create_app():
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_object(app_config[config_name])
+    # app.config.from_object(app_config[config_name])
     from app import api_bp, api_bp2
     app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
     jwt = JWTManager(app)
@@ -32,6 +32,6 @@ def create_app(config_name):
 if __name__ == "__main__":
     # config_name = "testing"
     config_name = os.getenv('APP_SETTINGS')
-    app = create_app(config_name)
+    app = create_app()
     port = int(os.environ.get('PORT', 5000))
     app.run(port=port)
