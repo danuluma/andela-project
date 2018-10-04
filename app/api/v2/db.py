@@ -24,13 +24,9 @@ class Db(object):
     try:
         conn = psycopg2.connect(self.dbase)
         print(" connection OK")
-        print(app_config["development"].DB_URI)
-        print("up")
 
     except:
         print("can't connect to the database")
-        print(app_config["development"].DB_URI)
-        print("up")
     return conn
 
 
