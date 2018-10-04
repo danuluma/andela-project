@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 LOCALPATH = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, LOCALPATH + '/../../../')
-from instance.config import app_config
+# from instance.config import app_config
 from app.api.v2.create_tables import create_tables
 from app.api.v2.drop_tables import drop_tables
 
@@ -18,7 +18,8 @@ load_dotenv('.env')
 class Db(object):
   """docstring for Db"""
   def __init__(self):
-    self.dbase = app_config["development"].DB_URI
+    pass
+    # self.dbase = app_config["development"].DB_URI
 
   def connect(self):
     try:
