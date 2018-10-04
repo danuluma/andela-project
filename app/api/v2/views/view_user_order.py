@@ -19,17 +19,17 @@ class UserOrder(Resource):
   """Endpoints for a single user to view and place orders. ~/dann/api/v2/user/orders"""
 
   """Endpoint for GET requests. Retrieves the gets all oredrs for a user"""
-  # @jwt_required
+  @jwt_required
   def get(self):
     current_user = get_jwt_identity()
-    ordered_by = "dan"
+    ordered_by = current_user[1]
     items = OrderModel.get_user_order(self, ordered_by)
     return {"My orders": items}, 200
 
-  # @jwt_required
+  @jwt_required
   def post(self):
     current_user = get_jwt_identity()
-    ordered_by = "dan"
+    ordered_by = current_user[1]
     status = 0
     args = parser.parse_args()
     item = MenuModel.get_menu_item(self, 1)

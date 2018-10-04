@@ -35,7 +35,7 @@ class Signup(Resource):
     email = args['email'].strip()
     password = args['password']
     phone = args['phone'].strip()
-    role = "user"
+    role = 2
 
     if not Validate().validate_name(first_name):
       return {"Error":"Name should have at least 3 characters!"}, 400

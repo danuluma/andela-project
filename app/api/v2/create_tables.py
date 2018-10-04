@@ -5,7 +5,8 @@ q1 = """CREATE TABLE users (
        username varchar(80) unique not null,
        email varchar(80) unique not null,
        password varchar(80) not null,
-       phone varchar(12) unique
+       phone varchar(12) unique,
+       role integer
 );"""
 
 q5 = """CREATE TABLE  roles (
@@ -16,7 +17,7 @@ q5 = """CREATE TABLE  roles (
 
 q6 = """CREATE TABLE  users_roles (
        users_id integer references users(id),
-       roles_id varchar references roles(id)
+       roles_id integer references roles(id)
 );"""
 
 
@@ -30,24 +31,23 @@ q2 = """CREATE TABLE orders (
 );"""
 
 q3 = """CREATE TABLE categories (
-       id serial primary key,
-       name varchar(80) unique not null,
+       name varchar(80) primary key,
        description text
 );"""
 
 q4 = """CREATE TABLE menu (
        id serial primary key,
        title varchar not null,
-       category varchar(80),
+       category varchar(80) references categories(name),
        description text,
        image_url varchar,
        price integer not null
 );"""
 
 q7 = """
-       INSERT INTO users (first_name, last_name, username, email, password, phone) VALUES ('admin1', 'user', 'admin1', 'secret@admin.com', 'admin', '0701234567');
-       INSERT INTO roles (id, access_level)VALUES (1, 'user');
-       INSERT INTO roles (id, access_level)VALUES (2, 'admin');
+       INSERT INTO users (first_name, last_name, username, email, password, phone, role) VALUES ('admin1', 'user', 'admin1', 'secret@admin.com', 'admin', '0701234567', 1);
+       INSERT INTO roles (id, access_level)VALUES (1, 'admin');
+       INSERT INTO roles (id, access_level)VALUES (2, 'user');
     """
 
 create_tables = [q1, q5, q2, q3, q4, q7 ]

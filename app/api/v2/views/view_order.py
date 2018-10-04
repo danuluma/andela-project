@@ -37,7 +37,7 @@ class OrdersView(Resource):
   @jwt_required
   def post(self):
     current_user = get_jwt_identity()
-    if current_user[2] == "admin":
+    if current_user[2] == 1:
       args = parser.parse_args()
       if not Validate().validate_name(args['title']):
         return {"Error":"Title should have at least 3 characters!"}, 400
@@ -60,7 +60,7 @@ class OrderItem(Resource):
   @jwt_required
   def get(self, orderId):
     current_user = get_jwt_identity()
-    if current_user[2] == "admin":
+    if current_user[2] == 1:
       item = OrderModel.get_single_order(self, orderId)
       print(item)
       return item, 200
@@ -70,7 +70,7 @@ class OrderItem(Resource):
   @jwt_required
   def put(self, orderId):
     current_user = get_jwt_identity()
-    if current_user[2] == "admin":
+    if current_user[2] == 1:
       args = parser.parse_args()
       if not Validate().validate_email(args['ordered_by']):
         return {"Error":"Title should have at least 3 characters!"}, 400
@@ -88,7 +88,7 @@ class OrderItem(Resource):
   @jwt_required
   def delete(self, order_id):
     current_user = get_jwt_identity()
-    if current_user[2] == "admin":
+    if current_user[2] == 1:
       OrderModel.delete_order(self, order_id)
       return {"Suceess":"Order has been deleted"}, 200
     else:

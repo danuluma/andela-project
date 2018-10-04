@@ -28,11 +28,10 @@ class MenuView(Resource):
     print(items)
     return items, 200
 
-  # @jwt_required
+  @jwt_required
   def post(self):
     current_user = get_jwt_identity()
-    if "admin" == "admin":
-    # if current_user[2] == "admin":
+    if current_user[2] == 1:
       args = parser.parse_args()
       if not Validate().validate_name(args['title']):
         return {"Error":"Title should have at least 3 characters!"}, 400
@@ -54,10 +53,10 @@ class MenuView(Resource):
 
 class MenuItem(Resource):
   """docstring for ClassName"""
-  # @jwt_required
+  @jwt_required
   def get(self, item_id):
     current_user = get_jwt_identity()
-    if "admin" == "admin":
+    if current_user[2] == 1:
       item = MenuModel.get_menu_item(self, item_id)
       return item, 200
     else:
@@ -66,7 +65,7 @@ class MenuItem(Resource):
   @jwt_required
   def put(self, item_id):
     current_user = get_jwt_identity()
-    if current_user[2] == "admin":
+    if current_user[2] == 1:
       item = item_id
       args = parser.parse_args()
       if not Validate().validate_name(args['title']):
@@ -90,7 +89,7 @@ class MenuItem(Resource):
   @jwt_required
   def delete(self, item_id):
     current_user = get_jwt_identity()
-    if current_user[2] == "admin":
+    if current_user[2] == 1:
       item = item_id
       MenuModel.delete_menu_item(self, item)
       return {"Success":"Menu has been deleted"}, 200
