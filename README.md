@@ -7,10 +7,11 @@
 
 <!-- # WIP -->
 
+# Version 1
+|---|
+This is the api backend for dann's fast foods site. Dann's fasts foods fast it a website where customers can order for fast foods online and it gets delivered to them fast. The api provides access to all the necessary features required by the frontend. Customers are able to view all the available foods and place an order. Admins, (from dann's fast foods) can view the orders and either accept or reject if its an invalid order. When the order has been delivered, they can also update its status to 'delivered'. Customers can also view the previous orders they have made on the site.
 
-This is the api backend for dann's fast foods site. Dann's fasts foods fast it a website where customers can order for fast foods online and it gets delivered to them fast. The api provides access to all the necessary feature required by the frontend. Customers are able to view all the available foods and place an order. Admins, (from dann's fast foods) can view the orders and either accept or reject if its an invalid order. When the order has been delivered, they can also update its status to 'delivered'. Customers can also view the previous orders they have made on the site.
-
-# Orders API endpoints
+### Orders API endpoints
 
 |  URL Endpoint | HTTP Request  |  Access | Status  |
 |---|---|---|---|
@@ -19,7 +20,7 @@ This is the api backend for dann's fast foods site. Dann's fasts foods fast it a
 |  /dann/api/v1/orders/<int:order_id> |   GET|  Retrives a specific order with the specified ID |  Public |
 |  /dann/api/v1/orders/<int:order_id> |   PUT|  Edits a specific order with the specified ID |  Private |
 
-# Authentication API endpoints
+### Authentication API endpoints
 
 |  URL Endpoint | HTTP Request  |  Access | Status  |
 |---|---|---|---|
@@ -102,6 +103,55 @@ If using postman, please select 'Bearer Token' as the authorization type and ins
 
 ![Postman example](https://res.cloudinary.com/danuluma/image/upload/v1537900187/postmanex.png)
 ![Postman example](https://res.cloudinary.com/danuluma/image/upload/v1537900242/postmanex2.png)
+
+
+# Version 2
+|---|
+
+
+This is the second version of the api backend for dann's fast foods site. It's a major upgrade from v1. The api provides access to all the features prevously available in v1, and a few additions. Customers are able to view all the available foods and place an order. Admins, (from dann's fast foods) can view the orders and either accept or reject if its an invalid order. When the order has been delivered, they can also update its status to 'delivered'. Customers can also view the previous orders they have made on the site.
+
+### Table of content
+
+#### [The Endpoints](#Endpoints)
+#### [Installation Instructions](#Installation)
+#### [Usage](#Usage)
+#### [Testing](#Testing)
+#### [Demo](#Demo)
+#### [Credits](#Credit)
+#### [Licence](#Licence)
+
+
+### Endpoints
+|  URL Endpoint | HTTP Request  |  Access | Status  |
+|---|---|---|---|
+|  /auth/signup |  POST |  registers a user | Public  |
+| /auth/lgin  | POST  |  logs in a user |  Public |
+|  /users/orders | POST  |  creates an order |  Private(Must be logged in) |
+|  /users/orders |  GET | retrieves order history  | Private(Must be logged in)  |
+|  /orders  |  GET |  retrieves all the orders |  Private(Must be logged in as admin) |
+|  /orders/<orderID> |  GET |  retrieves a specific order | Private(Must be logged in as admin)   |
+|  /orders/<orderID> |  PUT |  updates the status of an order |  Private(Must be logged in as admin) |
+|  /menu |  GET |  Retrieves all the menu items |  Public |
+|  /menu | POST  |  Creates a new menu item |  Private(Must be logged in as admin) |
+
+## Installation
+* First, one needs to install all the requirements specified here (#Requirements)
+
+##Usage
+* Clone this repo to your local computer using ```git clone https://github.com/danuluma/andela-project.git```
+* Switch into the project directory ```cd andela-project```
+* Create a virtual environment ```mkvirtualenv dannvenv```. You can replace ```danvenv``` with a name of your liking.
+* Install the project's dependencies by running ```pip install -r requirements.txt```
+* Run the app locally with ```python run.py``` or ```python3 run.py```
+
+## Testing
+* Ensure the app is running locally before testing. Start the app by typing ```python run.py``` or ```python3 run.py```
+* To run automatic tests on the project, simply run ```python -m unittest``` or ```python3 -m unittest```
+* Check on the terminal output for the test results
+* Use postman to test each of the endpoints
+
+## Demo
 
 ## Credits
 
