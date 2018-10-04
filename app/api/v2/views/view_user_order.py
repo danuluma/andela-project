@@ -8,11 +8,11 @@ LOCALPATH = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, LOCALPATH + '/../../../../')
 
 from app.api.v2.models.modelorder import OrderModel
+from app.api.v2.models.menumodel import MenuModel
+
 
 parser = reqparse.RequestParser(bundle_errors=True)
-parser.add_argument('description', type=str, location='json')
-parser.add_argument('price', type=int,
-  help='price can\'t be empty', required=True, location='json')
+parser.add_argument('item_id', type=str, location='json')
 
 
 class UserOrder(Resource):
@@ -22,23 +22,32 @@ class UserOrder(Resource):
   @jwt_required
   def get(self):
     current_user = get_jwt_identity()
-    print("below")
-    print(current_user)
-    ordered_by = current_user[0]
+    ordered_by = current_user[1]
     items = OrderModel.get_user_order(self, ordered_by)
-    print(items)
-    return {"My orders": items}, 200
+    hist = []
+    for item in items:
+      m_item = {
+      "order_id": item[0],
+      "order_price": item[1],
+      "orderer": item[2],
+      "date_ordered": item[3],
+      "order_status": item[4]
+      }
+      hist.append(m_item)
+    return hist, 200
 
   @jwt_required
   def post(self):
     current_user = get_jwt_identity()
-    ordered_by = current_user[0]
+    ordered_by = current_user[1]
     status = 0
     args = parser.parse_args()
+    item = MenuModel.get_menu_item(self, 1)
+    print(item)
 
     order_details = [
-        args['price'],
-        args['description'],
+        50,
+        "haha",
         ordered_by,
         status
     ]

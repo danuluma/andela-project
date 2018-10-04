@@ -44,7 +44,7 @@ class Reg(Resource):
             }
     users.append(new_user)
     return {'users': users}, 200
-  # @jwt_required
+  @jwt_required
   def get(self):
     return {'message':'hey'}, 200
 

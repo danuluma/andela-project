@@ -6,7 +6,7 @@ from flask_restful import Api
 # local imports
 from app.api.v1.views import Home, Orders, MyOrder
 from app.api.v1.auth import Reg, Login, Refresh
-from app.api.v2.views.auth import Signup, Loginv2, Admin
+from app.api.v2.views.auth import Signup, Loginv2
 from app.api.v2.views.view_menu import MenuView, MenuItem
 from app.api.v2.views.view_order import OrdersView, OrderItem
 from app.api.v2.views.view_user_order import UserOrder
@@ -26,7 +26,6 @@ api.add_resource(Reg, '/reg')
 api.add_resource(Login, '/login')
 api.add_resource(Refresh, '/refresh')
 api2.add_resource(Signup, '/signup')
-api2.add_resource(Admin, '/admin')
 api2.add_resource(Loginv2, '/login')
 api2.add_resource(MenuView, '/menu')
 api2.add_resource(MenuItem, '/menu/<int:item_id>')
