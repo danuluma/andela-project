@@ -36,7 +36,6 @@ class Db(object):
         sql = file.read()
         cur.execute(sql)
         conn.commit()
-        print("query ran successfully")
         file.close()
         conn.close()
     except:
@@ -51,7 +50,6 @@ class Db(object):
         conn.commit()
         conn.close()
         cur.close
-        # print("created successfully")
       except:
         print("Error occurred creation failed")
         print(query)
@@ -68,15 +66,6 @@ class Db(object):
         # print("table dropped successfully")
       except:
         print("Error occurred dropping failed")
-
-
-  def create(self):
-    file = open("app/api/v2/tcreate.sql", "r")
-    return self.run_query(file)
-
-  def drop(self):
-    file = open("app/api/v2/tdrop.sql", "r")
-    return self.run_query(file)
 
   def get_query(self, table):
     conn = self.connect()

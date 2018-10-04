@@ -10,7 +10,6 @@ from app.api.v2.db import Db
 from app.api.v2.models.modeluser import UserModel
 import os
 
-mee = []
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
     # app.config.from_object(app_config[config_name])
@@ -23,10 +22,10 @@ def create_app():
     app.register_blueprint(api_bp2, url_prefix='/dann/api/v2')
 
     # print(app.config.get("DB_URI"))
-    # UserModel().add_admin_user()
     return app
 
-# application = create_app("testing")
+
+application = create_app()
 
 
 if __name__ == "__main__":
