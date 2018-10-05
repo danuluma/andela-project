@@ -59,47 +59,45 @@ class Apiv2Test(unittest.TestCase):
     self.assertEqual(json_data.get("mess"), "alert!!! admin created!")
     self.assertEqual(response.status_code, 200)
 
-  # def test_user_reg_with_already_existing_username(self):
-  #   """ test user registration with already registered username """
-  #   self.client().post('/dann/api/v2/signup', json=self.test_user)
-  #   response = self.client().post('/dann/api/v2/signup', json=self.test_user)
-  #   self.assertNotEqual(response.status_code, 200)
+  def test_user_reg_with_already_existing_username(self):
+    """ test user registration with already registered username """
+    self.client().post('/dann/api/v2/signup', json=self.test_user)
+    response = self.client().post('/dann/api/v2/signup', json=self.test_user)
+    self.assertNotEqual(response.status_code, 200)
 
-  # def test_user_reg_with_already_existing_email(self):
-  #   """ test user registration with already registered username """
-  #   self.client().post('/dann/api/v2/signup', json=self.test_user4)
-  #   response = self.client().post('/dann/api/v2/signup', json=self.test_user)
-  #   self.assertNotEqual(response.status_code, 200)
+  def test_user_reg_with_already_existing_email(self):
+    """ test user registration with already registered username """
+    self.client().post('/dann/api/v2/signup', json=self.test_user4)
+    response = self.client().post('/dann/api/v2/signup', json=self.test_user)
+    self.assertNotEqual(response.status_code, 200)
 
-  # def test_user_reg_with_no_username(self):
-  #   """ test user registration with null username """
-  #   test_user9 = { "first_name": "guest", "last_name": "user", "username": "",
-  #                       "email": "guest@dan.com", "password": "guest", "phone": "0798765431"}
+  def test_user_reg_with_no_username(self):
+    """ test user registration with null username """
+    test_user9 = { "first_name": "guest", "last_name": "user", "username": "",
+                        "email": "guest@dan.com", "password": "guest", "phone": "0798765431"}
 
-  #   response = self.client().post('/dann/api/v2/signup', json=test_user9)
-  #   json_data = json.loads(response.data)
-  #   self.assertTrue(json_data.get('Error'))
-  #   self.assertEqual(response.status_code, 400)
+    response = self.client().post('/dann/api/v2/signup', json=test_user9)
+    json_data = json.loads(response.data)
+    self.assertTrue(json_data.get('Error'))
+    self.assertEqual(response.status_code, 400)
 
-  # def test_user_reg_with_no_email(self):
-  #   """ test user registration with null email """
-  #   test_user2 = { "first_name": "guest", "last_name": "user", "username": "guest",
-  #                       "email": "", "password": "guest", "phone": "0798765431"}
+  def test_user_reg_with_no_email(self):
+    """ test user registration with null email """
+    test_user2 = { "first_name": "guest", "last_name": "user", "username": "guest",
+                        "email": "", "password": "guest", "phone": "0798765431"}
 
-  #   response = self.client().post('/dann/api/v2/signup', json=test_user2)
-  #   json_data = json.loads(response.data)
-  #   self.assertTrue(json_data.get('Error'))
-  #   self.assertEqual(response.status_code, 400)
+    response = self.client().post('/dann/api/v2/signup', json=test_user2)
+    json_data = json.loads(response.data)
+    self.assertTrue(json_data.get('Error'))
+    self.assertEqual(response.status_code, 400)
 
-  # def test_user_reg_with_no_password(self):
-  #   """ test user registration with null password """
-  #   test_user2 = { "first_name": "guest", "last_name": "user", "username": "guest",
-  #                       "email": "guest@dan.com", "password": "", "phone": "0798765431"}
+  def test_user_reg_with_no_password(self):
+    """ test user registration with null password """
+    test_user2 = { "first_name": "guest", "last_name": "user", "username": "guest",
+                        "email": "guest@dan.com", "password": "", "phone": "0798765431"}
 
-  #   response = self.client().post('/dann/api/v2/signup', json=test_user2)
-  #   json_data = json.loads(response.data)
-  #   self.assertTrue(json_data.get('Error'))
-  #   self.assertEqual(response.status_code, 400)
+    response = self.client().post('/dann/api/v2/signup', json=test_user2)
+    self.assertEqual(response.status_code, 400)
 
 
   def test_user_login(self):

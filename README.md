@@ -106,20 +106,11 @@ If using postman, please select 'Bearer Token' as the authorization type and ins
 
 
 # Version 2
-|---|
 
 
 This is the second version of the api backend for dann's fast foods site. It's a major upgrade from v1. The api provides access to all the features prevously available in v1, and a few additions. Customers are able to view all the available foods and place an order. Admins, (from dann's fast foods) can view the orders and either accept or reject if its an invalid order. When the order has been delivered, they can also update its status to 'delivered'. Customers can also view the previous orders they have made on the site.
 
 ### Table of content
-
-#### [The Endpoints](#endpoints)
-#### [Installation Instructions](#installation)
-#### [Usage](#usage)
-#### [Testing](#testing)
-#### [Demo](#demo)
-#### [Credits](#credit)
-#### [Licence](#licence)
 
 
 ### Endpoints
@@ -138,7 +129,7 @@ This is the second version of the api backend for dann's fast foods site. It's a
 ## Installation
 * First, one needs to install all the requirements specified here (#Requirements)
 
-##Usage
+## Usage
 * Clone this repo to your local computer using ```git clone https://github.com/danuluma/andela-project.git```
 * Switch into the project directory ```cd andela-project```
 * Create a virtual environment ```mkvirtualenv dannvenv```. You can replace ```danvenv``` with a name of your liking.
