@@ -45,7 +45,7 @@ q4 = """CREATE TABLE menu (
 );"""
 
 q7 = """
-       INSERT INTO users (first_name, last_name, username, email, password, phone, role) VALUES ('admin1', 'user', 'admin1', 'secret@admin.com', 'admin', '0701234567', 1);
+       INSERT INTO users (first_name, last_name, username, email, password, phone, role) VALUES ('admin', 'user', 'admin1', 'secret@admin.com', 'admintest', '0701234567', 1);
        INSERT INTO roles (id, access_level)VALUES (1, 'admin');
        INSERT INTO roles (id, access_level)VALUES (2, 'user');
        INSERT INTO categories (name, description)VALUES ('fish', 'Lorem ipsum');

@@ -68,10 +68,7 @@ class MenuItem(Resource):
   """docstring for ClassName"""
 
   """Endpoint for GET requests. Retrieves a single menu item"""
-  @jwt_required
   def get(self, item_id):
-    current_user = get_jwt_identity()
-    if current_user[2] == 1:
       item = MenuModel.get_menu_item(self, item_id)
       return {
 
@@ -82,8 +79,6 @@ class MenuItem(Resource):
       "image": item[0][4],
       "price": item[0][5]
       }, 200
-    else:
-      return {"Error":"Only admins are allowed to view this"}, 401
 
   """Endpoint for PUT requests. Edits a menu item"""
   @jwt_required

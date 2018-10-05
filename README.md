@@ -123,8 +123,12 @@ This is the second version of the api backend for dann's fast foods site. It's a
 |  /orders  |  GET |  retrieves all the orders |  Private(Must be logged in as admin) |
 |  /orders/<orderID> |  GET |  retrieves a specific order | Private(Must be logged in as admin)   |
 |  /orders/<orderID> |  PUT |  updates the status of an order |  Private(Must be logged in as admin) |
+|  /orders/<orderID> |  DELETE |  deletes an order |  Private(Must be logged in as admin) |
 |  /menu |  GET |  Retrieves all the menu items |  Public |
+|  /menu/<itemID> |  GET |  Retrieves a single menu item |  Public |
 |  /menu | POST  |  Creates a new menu item |  Private(Must be logged in as admin) |
+|  /menu/<itemID> | PUT  |  Edits a menu item |  Private(Must be logged in as admin) |
+|  /menu/<itemID> | DELETE  |  Deletes a menu item |  Private(Must be logged in as admin) |
 
 ## Installation
 * First, one needs to install all the requirements specified here (#Requirements)
