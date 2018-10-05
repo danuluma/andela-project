@@ -34,6 +34,9 @@ class UserOrder(Resource):
       "order_status": item[5]
       }
       hist.append(m_item)
+
+    if len(hist)==0:
+      return {"Message":"There's no history to show"},404
     return hist, 200
 
   """Endpoint for POST requests. Retrieves the creates an order for a user"""

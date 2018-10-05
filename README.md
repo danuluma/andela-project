@@ -117,21 +117,21 @@ This is the second version of the api backend for dann's fast foods site. It's a
 |  URL Endpoint | HTTP Request  |  Access | Status  |
 |---|---|---|---|
 |  /auth/signup |  POST |  registers a user | Public  |
-| /auth/lgin  | POST  |  logs in a user |  Public |
+| /auth/login  | POST  |  logs in a user |  Public |
 |  /users/orders | POST  |  creates an order |  Private(Must be logged in) |
 |  /users/orders |  GET | retrieves order history  | Private(Must be logged in)  |
 |  /orders  |  GET |  retrieves all the orders |  Private(Must be logged in as admin) |
-|  /orders/<orderID> |  GET |  retrieves a specific order | Private(Must be logged in as admin)   |
-|  /orders/<orderID> |  PUT |  updates the status of an order |  Private(Must be logged in as admin) |
-|  /orders/<orderID> |  DELETE |  deletes an order |  Private(Must be logged in as admin) |
+|  /orders/<int:orderID> |  GET |  retrieves a specific order | Private(Must be logged in as admin)   |
+|  /orders/<int:orderID> |  PUT |  updates the status of an order |  Private(Must be logged in as admin) |
+|  /orders/<int:orderID> |  DELETE |  deletes an order |  Private(Must be logged in as admin) |
 |  /menu |  GET |  Retrieves all the menu items |  Public |
-|  /menu/<itemID> |  GET |  Retrieves a single menu item |  Public |
+|  /menu/<int:itemID> |  GET |  Retrieves a single menu item |  Public |
 |  /menu | POST  |  Creates a new menu item |  Private(Must be logged in as admin) |
-|  /menu/<itemID> | PUT  |  Edits a menu item |  Private(Must be logged in as admin) |
-|  /menu/<itemID> | DELETE  |  Deletes a menu item |  Private(Must be logged in as admin) |
+|  /menu/<int:itemID> | PUT  |  Edits a menu item |  Private(Must be logged in as admin) |
+|  /menu/<int:itemID> | DELETE  |  Deletes a menu item |  Private(Must be logged in as admin) |
 
 ## Installation
-* First, one needs to install all the requirements specified here (#Requirements)
+* First, one needs to install all the requirements specified here **[Requirements](#Requirements)**
 
 ## Usage
 * Clone this repo to your local computer using ```git clone https://github.com/danuluma/andela-project.git```

@@ -38,6 +38,8 @@ class MenuView(Resource):
       }
 
       menu.append(menuitem)
+    if len(menu) == 0:
+      return {"Message":"No menu item present"}, 404
     return menu, 200
 
   """Endpoint for POST requests. Creates a menu item"""
