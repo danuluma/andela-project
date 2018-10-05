@@ -19,7 +19,7 @@ parser.add_argument('status', type=str, default=0, location='json')
 class OrdersView(Resource):
   """Endpoints for menu. ~/dann/api/v2/menu"""
 
-  """Endpoint for GET requests. Retrieves the menu"""
+  """Endpoint for GET requests. Retrieves all orders"""
   @jwt_required
   def get(self):
     current_user = get_jwt_identity()
@@ -30,9 +30,9 @@ class OrdersView(Resource):
         m_item = {
         "order_id": item[0],
         "order_price": item[1],
-        "orderer": item[2],
-        "date_ordered": item[3],
-        "order_status": item[4]
+        "details": item[2],
+        "ordered_by": item[3],
+        "order_status": item[5]
         }
         hist.append(m_item)
       return hist, 200
@@ -42,16 +42,29 @@ class OrdersView(Resource):
 
 class OrderItem(Resource):
   """docstring for ClassName"""
+
+  """Endpoint for GET requests. Retrieves a single order """
+
   @jwt_required
   def get(self, orderId):
     current_user = get_jwt_identity()
     if current_user[2] == 1:
-      item = OrderModel.get_single_order(self, orderId)
-      print(item)
-      return item, 200
+      items = OrderModel.get_single_order(self, orderId)
+      m_order = []
+      for item in items:
+        m_item = {
+        "order_id": item[0],
+        "order_price": item[1],
+        "details": item[2],
+        "ordered_by": item[3],
+        "order_status": item[5]
+        }
+        m_order.append(m_item)
+      return m_order, 200
     else:
       return {"Error":"Only admins are allowed to view a specific item"}, 401
 
+  """Endpoint for PUT requests. Updates status of an order"""
   @jwt_required
   def put(self, orderId):
     current_user = get_jwt_identity()
@@ -61,15 +74,16 @@ class OrderItem(Resource):
       args['status']
 
       OrderModel.update_order_status(self, orderId, args['status'])
-      return {"Suceess":"Order has been updated"}, 200
+      return {"Suceess":"Order status has been updated"}, 200
     else:
       return {"Error":"Only admins are allowed to update the status of an order"}, 401
 
+  """Endpoint for DELETE requests. Deletes an order"""
   @jwt_required
-  def delete(self, order_id):
+  def delete(self, orderId):
     current_user = get_jwt_identity()
     if current_user[2] == 1:
-      OrderModel.delete_order(self, order_id)
+      OrderModel.delete_order(self, orderId)
       return {"Success":"Order has been deleted"}, 200
     else:
       return {"Error":"Only admins are allowed to delete an order"}, 401

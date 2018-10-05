@@ -113,13 +113,13 @@ This is the second version of the api backend for dann's fast foods site. It's a
 
 ### Table of content
 
-#### [The Endpoints](#Endpoints)
-#### [Installation Instructions](#Installation)
-#### [Usage](#Usage)
-#### [Testing](#Testing)
-#### [Demo](#Demo)
-#### [Credits](#Credit)
-#### [Licence](#Licence)
+#### [The Endpoints](#endpoints)
+#### [Installation Instructions](#installation)
+#### [Usage](#usage)
+#### [Testing](#testing)
+#### [Demo](#demo)
+#### [Credits](#credit)
+#### [Licence](#licence)
 
 
 ### Endpoints

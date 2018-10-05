@@ -18,7 +18,7 @@ parser.add_argument('item_id', type=str, location='json')
 class UserOrder(Resource):
   """Endpoints for a single user to view and place orders. ~/dann/api/v2/user/orders"""
 
-  """Endpoint for GET requests. Retrieves the gets all oredrs for a user"""
+  """Endpoint for GET requests. Retrieves the gets all orders for a user"""
   @jwt_required
   def get(self):
     current_user = get_jwt_identity()
@@ -29,27 +29,33 @@ class UserOrder(Resource):
       m_item = {
       "order_id": item[0],
       "order_price": item[1],
-      "orderer": item[2],
-      "date_ordered": item[3],
-      "order_status": item[4]
+      "details": item[2],
+      "ordered_by": item[3],
+      "order_status": item[5]
       }
       hist.append(m_item)
     return hist, 200
 
+  """Endpoint for POST requests. Retrieves the creates an order for a user"""
   @jwt_required
   def post(self):
     current_user = get_jwt_identity()
     ordered_by = current_user[1]
     status = 0
     args = parser.parse_args()
-    item = MenuModel.get_menu_item(self, 1)
+    args['item_id']
+    item = MenuModel.get_menu_item(self, args['item_id'])
+    args = parser.parse_args()
     print(item)
 
     order_details = [
         50,
-        "haha",
+        item,
         ordered_by,
         status
     ]
-    OrderModel.add_new_order(self, order_details)
-    return {"Success":"Order placed"}, 200
+    try:
+      OrderModel.add_new_order(self, order_details)
+      return {"Success":"Order placed"}, 200
+    except:
+      return {"Error":"Item does not exist in menu"}

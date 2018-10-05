@@ -22,8 +22,6 @@ def create_app():
     app.register_blueprint(api_bp, url_prefix='/dann/api/v1')
     app.register_blueprint(api_bp2, url_prefix='/dann/api/v2')
 
-    # print(app.config.get("DB_URI"))
-    # UserModel().add_admin_user()
     return app
 
 # application = create_app("testing")
