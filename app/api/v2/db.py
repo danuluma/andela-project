@@ -23,7 +23,7 @@ class Db(object):
 
   def connect(self):
     try:
-        conn = psycopg2.connect(os.getenv("DBASE"))
+        conn = psycopg2.connect(os.getenv("PBASE"))
     except:
         print("can't connect to the database")
     return conn

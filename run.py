@@ -25,12 +25,12 @@ def create_app():
     return app
 
 
-# application = create_app()
+application = create_app()
 
 
-if __name__ == "__main__":
-    # config_name = "testing"
-    config_name = os.getenv('APP_SETTINGS')
-    app = create_app()
-    port = int(os.environ.get('PORT', 5000))
-    app.run(port=port)
+# if __name__ == "__main__":
+#     # config_name = "testing"
+#     config_name = os.getenv('APP_SETTINGS')
+#     app = create_app()
+#     port = int(os.environ.get('PORT', 5000))
+#     app.run(port=port)
