@@ -36,7 +36,6 @@ class Db(object):
         sql = file.read()
         cur.execute(sql)
         conn.commit()
-        print("query ran successfully")
         file.close()
         conn.close()
     except:
@@ -51,7 +50,6 @@ class Db(object):
         conn.commit()
         conn.close()
         cur.close
-        # print("created successfully")
       except:
         print("Error occurred creation failed")
         print(query)
