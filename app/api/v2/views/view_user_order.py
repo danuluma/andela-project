@@ -12,7 +12,7 @@ from app.api.v2.models.menumodel import MenuModel
 
 
 parser = reqparse.RequestParser(bundle_errors=True)
-parser.add_argument('item_id', type=str, location='json')
+parser.add_argument('item_id', type=str, required=True, location='json')
 
 
 class UserOrder(Resource):
