@@ -24,7 +24,8 @@ def create_app():
 
     return app
 
-# application = create_app("testing")
+
+application = create_app()
 
 
 if __name__ == "__main__":
