@@ -69,15 +69,6 @@ class Db(object):
       except:
         print("Error occurred dropping failed")
 
-
-  def create(self):
-    file = open("app/api/v2/tcreate.sql", "r")
-    return self.run_query(file)
-
-  def drop(self):
-    file = open("app/api/v2/tdrop.sql", "r")
-    return self.run_query(file)
-
   def get_query(self, table):
     conn = self.connect()
     cur = conn.cursor()

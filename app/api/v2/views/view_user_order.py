@@ -44,18 +44,18 @@ class UserOrder(Resource):
     status = 0
     args = parser.parse_args()
     args['item_id']
-    item = MenuModel.get_menu_item(self, args['item_id'])
-    args = parser.parse_args()
-    print(item)
+    if MenuModel.get_menu_item(self, args['item_id']):
+      item = MenuModel.get_menu_item(self, args['item_id'])
+      args = parser.parse_args()
+      print(item)
 
-    order_details = [
-        50,
-        item,
-        ordered_by,
-        status
-    ]
-    try:
+      order_details = [
+          50,
+          item,
+          ordered_by,
+          status
+      ]
       OrderModel.add_new_order(self, order_details)
       return {"Success":"Order placed"}, 200
-    except:
-      return {"Error":"Item does not exist in menu"}
+    else:
+      return {"Error":"Item does not exist in menu"}, 404

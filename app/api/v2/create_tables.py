@@ -30,15 +30,11 @@ q2 = """CREATE TABLE orders (
        status integer
 );"""
 
-q3 = """CREATE TABLE categories (
-       name varchar(80) primary key,
-       description text
-);"""
 
 q4 = """CREATE TABLE menu (
        id serial primary key,
        title varchar not null,
-       category varchar(80) references categories(name),
+       category varchar(80),
        description text,
        image_url varchar,
        price integer not null
@@ -48,7 +44,6 @@ q7 = """
        INSERT INTO users (first_name, last_name, username, email, password, phone, role) VALUES ('admin', 'user', 'admin1', 'secret@admin.com', 'admintest', '0701234567', 1);
        INSERT INTO roles (id, access_level)VALUES (1, 'admin');
        INSERT INTO roles (id, access_level)VALUES (2, 'user');
-       INSERT INTO categories (name, description)VALUES ('fish', 'Lorem ipsum');
     """
 
-create_tables = [q1, q5, q2, q3, q4, q7]
+create_tables = [q1, q5, q2, q4, q7]

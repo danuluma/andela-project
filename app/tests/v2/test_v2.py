@@ -119,14 +119,14 @@ class Apiv2Test(unittest.TestCase):
     response = self.client().get('/dann/api/v2/menu')
     self.assertEqual(response.status_code, 200)
 
-  def test_create_user_order(self):
+  def test_order_non_existent_item(self):
     self.client().post('/dann/api/v2/signup', json=self.test_user)
     response = self.client().post('/dann/api/v2/login', json=self.test_user)
     json_data = json.loads(response.data)
     access_token = json_data.get('access_token')
-    order2 = {"price": 50, "description": "kila kitu hapa", "ordered_by": "dan", "status": 0}
+    order2 = {}
     response = self.client().post('/dann/api/v2/users/orders',headers={"Authorization":"Bearer " + access_token}, json=order2)
-    self.assertEqual(response.status_code, 200)
+    self.assertEqual(response.status_code, 400)
 
   def test_get_user_order(self):
     self.client().post('/dann/api/v2/signup', json=self.test_user)
