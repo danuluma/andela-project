@@ -38,8 +38,11 @@ class MenuView(Resource):
       }
 
       menu.append(menuitem)
+    if len(menu) == 0:
+      return {"Message":"No menu item present"}, 404
     return menu, 200
 
+  """Endpoint for POST requests. Creates a menu item"""
   @jwt_required
   def post(self):
     current_user = get_jwt_identity()
@@ -65,10 +68,9 @@ class MenuView(Resource):
 
 class MenuItem(Resource):
   """docstring for ClassName"""
-  @jwt_required
+
+  """Endpoint for GET requests. Retrieves a single menu item"""
   def get(self, item_id):
-    current_user = get_jwt_identity()
-    if current_user[2] == 1:
       item = MenuModel.get_menu_item(self, item_id)
       return {
 
@@ -79,9 +81,8 @@ class MenuItem(Resource):
       "image": item[0][4],
       "price": item[0][5]
       }, 200
-    else:
-      return {"Error":"Only admins are allowed to view this"}, 401
 
+  """Endpoint for PUT requests. Edits a menu item"""
   @jwt_required
   def put(self, item_id):
     current_user = get_jwt_identity()
@@ -106,6 +107,7 @@ class MenuItem(Resource):
     else:
       return {"Error":"Only admins are allowed to edit this"}, 401
 
+  """Endpoint for DELETE requests. Deletes menu item"""
   @jwt_required
   def delete(self, item_id):
     current_user = get_jwt_identity()
@@ -114,4 +116,4 @@ class MenuItem(Resource):
       MenuModel.delete_menu_item(self, item)
       return {"Success":"Menu has been deleted"}, 200
     else:
-      return {"Error":"Only admins are allowed to delete this"}, 401
+      return {"Error":"Only admins are allowed to delete a menu item"}, 401

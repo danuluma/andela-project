@@ -21,11 +21,9 @@ def create_app():
     app.register_blueprint(api_bp, url_prefix='/dann/api/v1')
     app.register_blueprint(api_bp2, url_prefix='/dann/api/v2')
 
-    # print(app.config.get("DB_URI"))
+
     return app
 
-
-application = create_app()
 
 
 if __name__ == "__main__":
@@ -33,4 +31,4 @@ if __name__ == "__main__":
     config_name = os.getenv('APP_SETTINGS')
     app = create_app()
     port = int(os.environ.get('PORT', 5000))
-    app.run(port=port)
+    app.run(port=port, debug=True)

@@ -39,23 +39,23 @@ class Signup(Resource):
     phone = args['phone'].strip()
     role = 2
 
-    # if not Validate().validate_name(first_name):
-    #   return {"Error":"Name should have at least 3 characters!"}, 400
+    if not Validate().validate_name(first_name):
+      return {"Error":"Name should have at least 3 characters!"}, 400
 
-    # if not Validate().validate_name(last_name):
-    #   return {"Error":"Name should have at least 3 characters!"}, 400
+    if not Validate().validate_name(last_name):
+      return {"Error":"Name should have at least 3 characters!"}, 400
 
-    # if not Validate().validate_username(username):
-    #   return {"Error":"Username should have between 5-10 characters!"}, 400
+    if not Validate().validate_username(username):
+      return {"Error":"Username should have between 5-10 characters!"}, 400
 
-    # if not Validate().validate_email(email):
-    #   return {"Error":"Enter a valid email"}, 400
+    if not Validate().validate_email(email):
+      return {"Error":"Enter a valid email"}, 400
 
-    # if not Validate().validate_password(password):
-    #   return {"Error":"Password should have 6-12 characters and contain an least 1 letter and 1 digit or special character"}, 400
+    if not Validate().validate_password(password):
+      return {"Error":"Password should have 6-12 characters and contain only letters and numbers"}, 400
 
-    # if not Validate().validate_phone(phone):
-    #   return {"Error":"Phone number should have 10-12 digits"}, 400
+    if not Validate().validate_phone(phone):
+      return {"Error":"Phone number should have 10-12 digits"}, 400
 
 
     new_user = [
@@ -97,14 +97,14 @@ class Loginv2(Resource):
     email = args['email'].strip()
     password = args['password'].strip()
 
-    # if not Validate().validate_username(username):
-    #   return {"Error":"Username should have between 5-10 characters!"}, 400
+    if not Validate().validate_username(username):
+      return {"Error":"Username should have between 5-10 characters!"}, 400
 
-    # if not Validate().validate_email(email):
-    #   return {"Error":"Enter a valid email"}, 400
+    if not Validate().validate_email(email):
+      return {"Error":"Enter a valid email"}, 400
 
-    # if not Validate().validate_password(password):
-    #   return {"Error":"Password should have 6-12 characters and contain an least 1 letter and 1 digit or special character"}, 400
+    if not Validate().validate_password(password):
+      return {"Error":"Password should have 6-12 characters"}, 400
 
     user = UserModel.get_single_user(self, username, email)
     if len(user) == 0:
