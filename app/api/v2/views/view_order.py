@@ -6,7 +6,7 @@ from run import *
 import os, sys
 LOCALPATH = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, LOCALPATH + '/../../../../')
-
+# Local imports here
 from app.api.v2.models.modelorder import OrderModel
 from app.api.v2.models.validate import Validate
 
@@ -17,7 +17,7 @@ parser.add_argument('status', type=str, default=0, location='json')
 
 
 class OrdersView(Resource):
-  """Endpoints for menu. ~/dann/api/v2/menu"""
+  """Endpoints for orders. ~/dann/api/v2/orders"""
 
   """Endpoint for GET requests. Retrieves all orders"""
   @jwt_required
@@ -41,7 +41,7 @@ class OrdersView(Resource):
 
 
 class OrderItem(Resource):
-  """docstring for ClassName"""
+  """docstring for OrderItem"""
 
   """Endpoint for GET requests. Retrieves a single order """
 
