@@ -13,7 +13,7 @@ sys.path.insert(0, LOCALPATH + '/../../../')
 # Local imports now
 
 from app.api.v2.db import Db
-from instance.config import app_config
+from app.config import app_config
 
 def create_app(config_name):
     app = Flask(__name__)
