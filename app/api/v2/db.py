@@ -24,7 +24,6 @@ class Db(object):
 
   def connect(self):
     try:
-        print(self.dbase)
         conn = psycopg2.connect(self.dbase)
     except:
         print("can't connect to the database")
@@ -54,7 +53,6 @@ class Db(object):
         cur.close
       except:
         print("Error occurred creation failed")
-        print(query)
 
   def drops(self):
     for query in drop_tables:

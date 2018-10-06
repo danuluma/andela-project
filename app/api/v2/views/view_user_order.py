@@ -13,7 +13,7 @@ from app.api.v2.models.menumodel import MenuModel
 
 
 parser = reqparse.RequestParser(bundle_errors=True)
-parser.add_argument('item_id', type=str, required=True, location='json')
+parser.add_argument('item_id', type=int, required=True, location='json')
 
 
 class UserOrder(Resource):
@@ -51,7 +51,6 @@ class UserOrder(Resource):
     item = MenuModel.get_menu_item(self, args['item_id'])
     if len(item) != 0:
       args = parser.parse_args()
-      print(item)
 
       order_details = [
           50,
