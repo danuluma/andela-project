@@ -23,17 +23,7 @@ class UserOrder(Resource):
   def get(self):
     current_user = get_jwt_identity()
     ordered_by = current_user[1]
-    items = OrderModel.get_user_order(self, ordered_by)
-    hist = []
-    for item in items:
-      m_item = {
-      "order_id": item[0],
-      "order_price": item[1],
-      "details": item[2],
-      "ordered_by": item[3],
-      "order_status": item[5]
-      }
-      hist.append(m_item)
+    hist = OrderModel.get_user_order(self, ordered_by)
 
     if len(hist)==0:
       return {"Message":"There's no history to show"},404

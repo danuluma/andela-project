@@ -46,7 +46,8 @@ class MenuView(Resource):
   @jwt_required
   def post(self):
     current_user = get_jwt_identity()
-    if current_user[2] == 1:
+    role = current_user[2]
+    if role == 1:
       args = parser.parse_args()
       if not Validate().validate_name(args['title']):
         return {"Error":"Title should have at least 3 characters!"}, 400
@@ -86,7 +87,8 @@ class MenuItem(Resource):
   @jwt_required
   def put(self, item_id):
     current_user = get_jwt_identity()
-    if current_user[2] == 1:
+    role = current_user[2]
+    if role == 1:
       item = item_id
       args = parser.parse_args()
       if not Validate().validate_name(args['title']):

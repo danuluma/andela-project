@@ -19,6 +19,13 @@ parser.add_argument('password', type=str,
   help='password can\'t be empty', required=True, location='json')
 parser.add_argument('access_token', location='json')
 
+def find_user():
+  args = parser.parse_args()
+  email = args['email'].strip()
+  username = args['username'].strip()
+  user = [user for user in users if user['username'] == username or user['email'] == email]
+  return user
+
 class Reg(Resource):
   """Endpoint to register a new user"""
   def post(self):
@@ -27,7 +34,8 @@ class Reg(Resource):
     username = args['username'].strip()
     password = args['password'].strip()
 
-    user = [user for user in users if user['username'] == username or user['email'] == email]
+    user = find_user()
+    print(user)
     if len(user) != 0:
       return {'Error':'Username/Email already exists'}, 409
     if username == "":
@@ -54,9 +62,9 @@ class Login(Resource):
     args = parser.parse_args()
     username = args['username'].strip()
     password = args['password'].strip()
-    email = args['email'].strip()
 
-    user = [user for user in users if user['username'] == username or user['email'] == email]
+    user = find_user()
+    print(user)
     if len(user) == 0:
       return {'Error':'Username/Email does not exist'}, 404
 
@@ -77,7 +85,7 @@ class Login(Resource):
 
 
 class Refresh(Resource):
-  """Endpoint to create Refresh tokens. It is not to be accessed externally"""
+  """Endpoint to create Refresh tokens."""
   @jwt_refresh_token_required
   def post(self):
     current_user = get_jwt_identity()

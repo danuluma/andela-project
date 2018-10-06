@@ -31,12 +31,12 @@ class Signup(Resource):
   """Endpoint to register a new user"""
   def post(self):
     args = parser.parse_args()
-    first_name = args['first_name'].strip()
-    last_name = args['last_name'].strip()
-    username = args['username'].strip()
-    email = args['email'].strip()
+    first_name = args['first_name']
+    last_name = args['last_name']
+    username = args['username']
+    email = args['email']
     password = args['password']
-    phone = args['phone'].strip()
+    phone = args['phone']
     role = 2
 
     if not Validate().validate_name(first_name):
@@ -93,9 +93,9 @@ class Loginv2(Resource):
 
   def post(self):
     args = parser.parse_args()
-    username = args['username'].strip()
-    email = args['email'].strip()
-    password = args['password'].strip()
+    username = args['username']
+    email = args['email']
+    password = args['password']
 
     if not Validate().validate_username(username):
       return {"Error":"Username should have between 5-10 characters!"}, 400
@@ -110,10 +110,14 @@ class Loginv2(Resource):
     if len(user) == 0:
       return {'Error': 'User not found'}, 404
     else:
-      userdetails = [user[0][4], user[0][0], user[0][7]]
-      if password == user[0][5]:
+      u_id = user[0][0]
+      u_username = user[0][3]
+      u_role = user[0][7]
+      u_password = user[0][5]
+
+      userdetails = [u_id, u_username, u_role]
+      if password == u_password:
         access_token = create_access_token(identity=userdetails, expires_delta=False)
-        refresh_token = create_refresh_token(identity=userdetails)
         current_user = get_jwt_identity()
 
         mesg = {
