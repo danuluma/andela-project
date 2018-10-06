@@ -16,6 +16,8 @@ parser = reqparse.RequestParser(bundle_errors=True)
 parser.add_argument('status', type=str, default=0, location='json')
 
 
+
+
 class OrdersView(Resource):
   """Endpoints for orders. ~/dann/api/v2/orders"""
 
@@ -24,18 +26,7 @@ class OrdersView(Resource):
   def get(self):
     current_user = get_jwt_identity()
     if current_user[2] == 1:
-      items = OrderModel.get_all_orders(self)
-      hist = []
-      for item in items:
-        m_item = {
-        "order_id": item[0],
-        "order_price": item[1],
-        "details": item[2],
-        "ordered_by": item[3],
-        "order_status": item[5]
-        }
-        hist.append(m_item)
-      return hist, 200
+      return OrderModel.get_all_orders(self), 200
     else:
       return {"Error":"Only admins are allowed to view all orders"}, 401
 
@@ -49,18 +40,7 @@ class OrderItem(Resource):
   def get(self, orderId):
     current_user = get_jwt_identity()
     if current_user[2] == 1:
-      items = OrderModel.get_single_order(self, orderId)
-      m_order = []
-      for item in items:
-        m_item = {
-        "order_id": item[0],
-        "order_price": item[1],
-        "details": item[2],
-        "ordered_by": item[3],
-        "order_status": item[5]
-        }
-        m_order.append(m_item)
-      return m_order, 200
+      return OrderModel.get_single_order(self, orderId), 200
     else:
       return {"Error":"Only admins are allowed to view a specific item"}, 401
 

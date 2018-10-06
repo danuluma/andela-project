@@ -163,7 +163,6 @@ class Apiv1Test(unittest.TestCase):
     self.client().post('/dann/api/v1/orders',headers={"Authorization":"Bearer " + access_token}, json=self.order)
     response = self.client().get('/dann/api/v1/order/1')
     json_data = json.loads(response.data)
-    print(json_data)
     self.assertTrue(json_data.get('order'))
     self.assertEqual(response.status_code, 200)
 
@@ -197,7 +196,6 @@ class Apiv1Test(unittest.TestCase):
     data2 = {"title": "testagain", "description": "Lorem ipsum", "price": 10}
     response = self.client().put('/dann/api/v1/order/1',headers={"Authorization":"Bearer " + access_token}, json=data2)
     json_data = json.loads(response.data)
-    print(json_data)
     self.assertTrue(json_data.get('order'))
     self.assertEqual(response.status_code, 200)
 
@@ -210,7 +208,6 @@ class Apiv1Test(unittest.TestCase):
     data2 = {"title": "testagain", "description": "Lorem ipsum", "price": 10}
     response = self.client().put('/dann/api/v1/order/0',headers={"Authorization":"Bearer " + access_token}, json=data2)
     json_data = json.loads(response.data)
-    print(json_data)
     self.assertTrue(json_data.get('Error'))
     self.assertEqual(response.status_code, 404)
 
@@ -223,7 +220,6 @@ class Apiv1Test(unittest.TestCase):
     data2 = {"title": "", "description": "", "price": -4}
     response = self.client().put('/dann/api/v1/order/0',headers={"Authorization":"Bearer " + access_token}, json=data2)
     json_data = json.loads(response.data)
-    print(json_data)
     self.assertTrue(json_data.get('Error'))
     self.assertEqual(response.status_code, 404)
 

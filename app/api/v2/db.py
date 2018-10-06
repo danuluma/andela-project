@@ -31,40 +31,21 @@ class Db(object):
 
 
   def run_query(self, file):
-    try:
-        conn = self.connect()
-        cur = conn.cursor()
-        sql = file.read()
-        cur.execute(sql)
-        conn.commit()
-        file.close()
-        conn.close()
-    except:
-        print("failed....")
-
-  def creates(self):
-    for query in create_tables:
+    for query in file:
       try:
-        conn = self.connect()
-        cur = conn.cursor()
-        cur.execute(query)
-        conn.commit()
-        conn.close()
-        cur.close
+          conn = self.connect()
+          cur = conn.cursor()
+          cur.execute(query)
+          conn.commit()
+          file.close()
+          conn.close()
       except:
-        print("Error occurred creation failed")
+        pass
+  def creates(self):
+    self.run_query(create_tables)
 
   def drops(self):
-    for query in drop_tables:
-      try:
-        conn = self.connect()
-        cur = conn.cursor()
-        cur.execute(query)
-        conn.commit()
-        conn.close()
-        cur.close
-      except:
-        print("Error occurred dropping failed")
+    self.run_query(create_tables)
 
   def get_query(self, table):
     conn = self.connect()
