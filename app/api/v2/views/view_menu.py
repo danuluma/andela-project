@@ -1,12 +1,12 @@
 from flask import abort
 from flask import request
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_restful import Resource, reqparse
-from run import *
 import os, sys
+
 LOCALPATH = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, LOCALPATH + '/../../../../')
-
+# Local imports now
 from app.api.v2.models.menumodel import MenuModel
 from app.api.v2.models.validate import Validate
 
@@ -62,12 +62,12 @@ class MenuView(Resource):
       ]
 
       MenuModel.post_menu_item(self, menu1)
-      return {"Mess":"Menu created sucessfully"}, 200
+      return {"Mess":"Menu item added successfully"}, 200
     else:
       return {"Error":"Only admins are allowed to create a menu item"}, 401
 
 class MenuItem(Resource):
-  """docstring for ClassName"""
+  """docstring for MenuItem"""
 
   """Endpoint for GET requests. Retrieves a single menu item"""
   def get(self, item_id):
@@ -107,7 +107,7 @@ class MenuItem(Resource):
     else:
       return {"Error":"Only admins are allowed to edit this"}, 401
 
-  """Endpoint for DELETE requests. Deletes menu item"""
+  """Endpoint for DELETE requests. Deletes a menu item"""
   @jwt_required
   def delete(self, item_id):
     current_user = get_jwt_identity()

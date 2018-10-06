@@ -17,7 +17,7 @@ class Apiv1Test(unittest.TestCase):
   """ Tests for api endpoints """
 
   def setUp(self):
-    self.app = create_app()
+    self.app = create_app("testing")
     self.client = self.app.test_client
     self.order = {"title": "edit2", "description": "Lorem ipsum", "price": 5}
     self.test_user = {"username": "dan", "email": "dan@dan.com", "password": "dann"}
