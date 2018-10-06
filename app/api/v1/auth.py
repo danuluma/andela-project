@@ -35,7 +35,6 @@ class Reg(Resource):
     password = args['password'].strip()
 
     user = find_user()
-    print(user)
     if len(user) != 0:
       return {'Error':'Username/Email already exists'}, 409
     if username == "":
@@ -64,7 +63,6 @@ class Login(Resource):
     password = args['password'].strip()
 
     user = find_user()
-    print(user)
     if len(user) == 0:
       return {'Error':'Username/Email does not exist'}, 404
 

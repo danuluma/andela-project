@@ -18,10 +18,10 @@ class Apiv2Test(unittest.TestCase):
     self.app = create_app("testing")
     self.client = self.app.test_client
     self.test_user = { "first_name": "dan", "last_name": "rico", "username": "dancan",
-                        "email": "dan@dan.com", "password": "admintest", "phone": "0798765432", "role":"user"}
+                        "email": "dan@dan.com", "password": "Admintest1", "phone": "0798765432", "role":"user"}
 
-    self.test_user4 = { "first_name": "new", "last_name": "user", "username": "dancan1", "email": "dan@dan.com", "password": "admintest", "phone": "0798765632", "role": 2}
-    self.secret_admin = { "first_name": "admin", "last_name": "user", "username": "admin13", "email": "secret@admin.com", "password": "admintest", "phone": "0701234567", "role": 1}
+    self.test_user4 = { "first_name": "new", "last_name": "user", "username": "dancan1", "email": "dan@dan.com", "password": "Admintest1", "phone": "0798765632", "role": 2}
+    self.secret_admin = { "first_name": "admin", "last_name": "user", "username": "admin13", "email": "secret@admin.com", "password": "Admintest1", "phone": "0701234567", "role": 1}
     self.test_login = { "username": "guest", "password": "admintest"}
     self.order = {"price": 50, "description": "kila kitu hapa", "ordered_by": "dan", "status": 0}
     self.menu = {"title": "nyam chom", "category": "meat", "description": "grilled meat", "image_url": "loading", "price": 500}
@@ -44,7 +44,7 @@ class Apiv2Test(unittest.TestCase):
   def test_user_reg(self):
     """ test user registration with valid credentials """
     test_user2 = { "first_name": "guest", "last_name": "user", "username": "guest1",
-                        "email": "guest@dan.com", "password": "guest12", "phone": "0798765431"}
+                        "email": "guest@dan.com", "password": "Guest12", "phone": "0798765431"}
     response = self.client().post('/dann/api/v2/signup', json=test_user2)
     json_data = json.loads(response.data)
     self.assertEqual(response.status_code, 200)

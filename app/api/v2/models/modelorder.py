@@ -14,7 +14,6 @@ class OrderModel(Db):
   def format_order(self, items):
     order = []
     for item in items:
-      print(item)
       m_item = {
       "order_id": item[0],
       "order_price": item[1],
@@ -36,7 +35,6 @@ class OrderModel(Db):
 
   def get_user_order(self, ordered_by):
     rows = [row for row in Db().get_query('orders')]
-    print("heyy")
     return OrderModel().format_order(rows)
 
   def add_new_order(self, order_details):

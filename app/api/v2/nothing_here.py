@@ -10,6 +10,3 @@ from app.api.v2.models.validate import Validate
 
 load_dotenv('.env')
 
-
-
-print(Validate().validate_password("Ww      3"))
