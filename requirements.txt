@@ -29,7 +29,6 @@ pluggy==0.7.1
 psycopg2==2.7.5
 psycopg2-binary==2.7.5
 py==1.6.0
-PyAutoGUI==0.9.36
 pycrypto==2.6.1
 PyJWT==1.4.2
 PyMsgBox==1.0.6
