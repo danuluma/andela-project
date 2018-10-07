@@ -36,7 +36,7 @@ class Db(object):
           cur = conn.cursor()
           cur.execute(query)
           conn.commit()
-          file.close()
+          cur.close()
           conn.close()
       except:
         pass
@@ -44,7 +44,7 @@ class Db(object):
     Db().run_query(create_tables)
 
   def drops(self):
-    Db().run_query(create_tables)
+    Db().run_query(drop_tables)
 
   def get_query(self, table):
     conn = Db().connect()

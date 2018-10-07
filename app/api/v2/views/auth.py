@@ -82,14 +82,6 @@ class Signup(Resource):
     mess = UserModel.get_all_users(self)
     return {'message': mess}, 200
 
-  def put(self):
-    args = parser.parse_args()
-    password = args['password'].strip()
-    if password == "mysecret!":
-      return {'mess': "alert!!! admin created!"}, 200
-    else:
-      return {"mess":"Wrong password"}, 401
-
 
 class Loginv2(Resource):
   """Endpoint to login a user and create an access token"""

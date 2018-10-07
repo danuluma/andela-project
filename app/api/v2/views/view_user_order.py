@@ -33,7 +33,7 @@ class UserOrder(Resource):
   @jwt_required
   def post(self):
     current_user = get_jwt_identity()
-    ordered_by = current_user[1]
+    ordered_by = current_user[0]
     status = 0
     args = parser.parse_args()
     args['item_id']
@@ -48,7 +48,7 @@ class UserOrder(Resource):
           status
       ]
       OrderModel.add_new_order(self, order_details)
-      return {"Success":"Order placed"}, 200
+      return {"Success":"Order placed"}, 201
     else:
       return {"Error":"Item does not exist in menu"}, 404
 

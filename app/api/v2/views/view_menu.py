@@ -39,6 +39,7 @@ def check_valid(self):
     errors.append({"Error":"Category should have at least 3 characters!"})
   return errors
 
+
 class MenuView(Resource):
   """Endpoints for menu. ~/dann/api/v2/menu"""
 
