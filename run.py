@@ -28,6 +28,8 @@ def create_app(config_name):
 
     return app
 
+application = create_app(os.getenv('APP_SETTINGS'))
+
 if __name__ == "__main__":
     # config_name = "testing"
     config_name = os.getenv('APP_SETTINGS')
