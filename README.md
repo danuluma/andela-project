@@ -60,8 +60,7 @@ There are currently six working endpoints in version 1:
 
 
 ## Testing
-* Ensure the app is running locally before testing. Start the app by typing ```python run.py``` or ```python3 run.py```
-* To run automatic tests on the project, simply run ```python -m unittest``` or ```python3 -m unittest```
+* To run automatic tests on the project, simply run ```python -m unittest``` or ```python3 -m unittest``` while in the project's root directory.
 * Check on the terminal output for the test results
 
 You can manually test using curl or postman
@@ -118,40 +117,59 @@ This is the second version of the api backend for dann's fast foods site. It's a
 |---|---|---|---|
 |  /auth/signup |  POST |  registers a user | Public  |
 | /auth/login  | POST  |  logs in a user |  Public |
-|  /users/orders | POST  |  creates an order |  Private(Must be logged in) |
-|  /users/orders |  GET | retrieves order history  | Private(Must be logged in)  |
-|  /orders  |  GET |  retrieves all the orders |  Private(Must be logged in as admin) |
-|  /orders/<int:orderID> |  GET |  retrieves a specific order | Private(Must be logged in as admin)   |
-|  /orders/<int:orderID> |  PUT |  updates the status of an order |  Private(Must be logged in as admin) |
-|  /orders/<int:orderID> |  DELETE |  deletes an order |  Private(Must be logged in as admin) |
+|  /users/orders | POST  |  creates an order |  Private\ (Must be logged in) |
+|  /users/orders |  GET | retrieves order history  | Private\ (Must be logged in)  |
+|  /orders  |  GET |  retrieves all the orders |  Private\ (Must be logged in as admin) |
+|  /orders/<int:orderID> |  GET |  retrieves a specific order | Private\ (Must be logged in as admin)   |
+|  /orders/<int:orderID> |  PUT |  updates the status of an order |  Private\ (Must be logged in as admin) |
+|  /orders/<int:orderID> |  DELETE |  deletes an order |  Private\ (Must be logged in as admin) |
 |  /menu |  GET |  Retrieves all the menu items |  Public |
 |  /menu/<int:itemID> |  GET |  Retrieves a single menu item |  Public |
-|  /menu | POST  |  Creates a new menu item |  Private(Must be logged in as admin) |
-|  /menu/<int:itemID> | PUT  |  Edits a menu item |  Private(Must be logged in as admin) |
-|  /menu/<int:itemID> | DELETE  |  Deletes a menu item |  Private(Must be logged in as admin) |
+|  /menu | POST  |  Creates a new menu item |  Private\ (Must be logged in as admin) |
+|  /menu/<int:itemID> | PUT  |  Edits a menu item |  Private\ (Must be logged in as admin) |
+|  /menu/<int:itemID> | DELETE  |  Deletes a menu item |  Private\ (Must be logged in as admin) |
 
 ## Installation
-* First, one needs to install all the requirements specified here **[Requirements](#Requirements)**
+* First, one needs to have postgresql, python and git on their computer. Please grab the latest versions from:
+* [Git](https://git-scm.com/downloads)
+* [Postgresql](https://www.postgresql.org/)
+* [Python](https://www.python.org/downloads)
+* Detailed installation procedures can be found on their respective pages
+* It is recommended to set postgresql to start at boot
+
+It's best to install this project in a virtual environment. Please first install virtualenv package which we'll use to create a virtual environment later by running in terminal
+```pip install virtualenv```.
+
+You may also need to install virtual environment wrapper to easily work with virtual environments.
+```pip install virtualenvwrapper```
+For Windows users, please use ```pip install virtualenvwrapper-win```.
+
 
 ## Usage
+* Using your terminal or cmd, navigate to the location where you wish to store your local copy.
 * Clone this repo to your local computer using ```git clone https://github.com/danuluma/andela-project.git```
 * Switch into the project directory ```cd andela-project```
 * Create a virtual environment ```mkvirtualenv dannvenv```. You can replace ```danvenv``` with a name of your liking.
 * Install the project's dependencies by running ```pip install -r requirements.txt```
-* Run the app locally with ```python run.py``` or ```python3 run.py```
+* Create the required databases by pasting/typing ```python3 create_db.py```
+* Open ```.env``` file using yor favourite editor. Find and delete the line ```APP_SETTINGS="testing"``` and replace it with ```APP_SETTINGS="development"```
+* Run the app locally with ```python3 run.py```
 
 ## Testing
-* Ensure the app is running locally before testing. Start the app by typing ```python run.py``` or ```python3 run.py```
-* To run automatic tests on the project, simply run ```python -m unittest``` or ```python3 -m unittest```
+* This project uses unittest for automatic testing. To run the tests locally, do the following:
+* Navigate to the project directory via terminal
+* run ```python3 -m unittest```
 * Check on the terminal output for the test results
+* To test using postman, run the app in terminal using ```python3 run.py```
 * Use postman to test each of the endpoints
+* Optionally, it may also be tested using curl in a similar fashion as v1 above
 
 ## Demo
+https://www.getpostman.com/collections/e859aae66856254dc068
 
 ## Credits
-
+### Dann
+### [Andela](https://andela.com/)
 
 
 ## License
-
-MIT
