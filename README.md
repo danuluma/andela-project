@@ -8,7 +8,7 @@
 <!-- # WIP -->
 
 # Version 1
-|---|
+
 This is the api backend for dann's fast foods site. Dann's fasts foods fast it a website where customers can order for fast foods online and it gets delivered to them fast. The api provides access to all the necessary features required by the frontend. Customers are able to view all the available foods and place an order. Admins, (from dann's fast foods) can view the orders and either accept or reject if its an invalid order. When the order has been delivered, they can also update its status to 'delivered'. Customers can also view the previous orders they have made on the site.
 
 ### Orders API endpoints
@@ -117,17 +117,17 @@ This is the second version of the api backend for dann's fast foods site. It's a
 |---|---|---|---|
 |  /auth/signup |  POST |  registers a user | Public  |
 | /auth/login  | POST  |  logs in a user |  Public |
-|  /users/orders | POST  |  creates an order |  Private\ (Must be logged in) |
-|  /users/orders |  GET | retrieves order history  | Private\ (Must be logged in)  |
-|  /orders  |  GET |  retrieves all the orders |  Private\ (Must be logged in as admin) |
-|  /orders/<int:orderID> |  GET |  retrieves a specific order | Private\ (Must be logged in as admin)   |
-|  /orders/<int:orderID> |  PUT |  updates the status of an order |  Private\ (Must be logged in as admin) |
-|  /orders/<int:orderID> |  DELETE |  deletes an order |  Private\ (Must be logged in as admin) |
+|  /users/orders | POST  |  creates an order |  Private (Must be logged in) |
+|  /users/orders |  GET | retrieves order history  | Private (Must be logged in)  |
+|  /orders  |  GET |  retrieves all the orders |  Private (Must be logged in as admin) |
+|  /orders/<int:orderID> |  GET |  retrieves a specific order | Private (Must be logged in as admin)   |
+|  /orders/<int:orderID> |  PUT |  updates the status of an order |  Private (Must be logged in as admin) |
+|  /orders/<int:orderID> |  DELETE |  deletes an order |  Private (Must be logged in as admin) |
 |  /menu |  GET |  Retrieves all the menu items |  Public |
 |  /menu/<int:itemID> |  GET |  Retrieves a single menu item |  Public |
-|  /menu | POST  |  Creates a new menu item |  Private\ (Must be logged in as admin) |
-|  /menu/<int:itemID> | PUT  |  Edits a menu item |  Private\ (Must be logged in as admin) |
-|  /menu/<int:itemID> | DELETE  |  Deletes a menu item |  Private\ (Must be logged in as admin) |
+|  /menu | POST  |  Creates a new menu item |  Private (Must be logged in as admin) |
+|  /menu/<int:itemID> | PUT  |  Edits a menu item |  Private (Must be logged in as admin) |
+|  /menu/<int:itemID> | DELETE  |  Deletes a menu item |  Private  (Must be logged in as admin) |
 
 ## Installation
 * First, one needs to have postgresql, python and git on their computer. Please grab the latest versions from:
@@ -165,11 +165,11 @@ For Windows users, please use ```pip install virtualenvwrapper-win```.
 * Optionally, it may also be tested using curl in a similar fashion as v1 above
 
 ## Demo
-https://www.getpostman.com/collections/e859aae66856254dc068
+[Postman](https://www.getpostman.com/collections/e859aae66856254dc068)
 
 ## Credits
-### Dann
-### [Andela](https://andela.com/)
+#### Dann
+#### [Andela](https://andela.com/)
 
 
 ## License
