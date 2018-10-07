@@ -63,8 +63,6 @@ class Apiv2Test(unittest.TestCase):
                         "email": "guest@dan.com", "password": "guest", "phone": "0798765431"}
 
     response = self.client().post('/dann/api/v2/signup', json=test_user9)
-    json_data = json.loads(response.data)
-    self.assertTrue(json_data.get('Error'))
     self.assertEqual(response.status_code, 400)
 
   def test_user_reg_with_no_email(self):
@@ -73,8 +71,6 @@ class Apiv2Test(unittest.TestCase):
                         "email": "", "password": "guest", "phone": "0798765431"}
 
     response = self.client().post('/dann/api/v2/signup', json=test_user2)
-    json_data = json.loads(response.data)
-    self.assertTrue(json_data.get('Error'))
     self.assertEqual(response.status_code, 400)
 
   def test_user_reg_with_no_password(self):

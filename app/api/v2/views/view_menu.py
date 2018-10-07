@@ -18,6 +18,26 @@ parser.add_argument('title', type=str, location='json')
 parser.add_argument('category', type=str, location='json')
 parser.add_argument('image_url', type=str, location='json')
 
+def create_menu(self):
+  args = parser.parse_args()
+  menu = [
+        args['title'],
+        args['category'],
+        args['description'],
+        args['image_url'],
+        args['price']
+    ]
+  return menu
+
+
+def check_valid(self):
+  args = parser.parse_args()
+  errors = []
+  if not Validate().validate_name(args['title']):
+    errors.append({"Error":"Title should have at least 3 characters!"})
+  if not Validate().validate_name(args['category']):
+    errors.append({"Error":"Category should have at least 3 characters!"})
+  return errors
 
 class MenuView(Resource):
   """Endpoints for menu. ~/dann/api/v2/menu"""
@@ -49,21 +69,10 @@ class MenuView(Resource):
     role = current_user[2]
     if role == 1:
       args = parser.parse_args()
-      if not Validate().validate_name(args['title']):
-        return {"Error":"Title should have at least 3 characters!"}, 400
-      if not Validate().validate_name(args['category']):
-        return {"Error":"Category should have at least 3 characters!"}, 400
-
-      menu1 = [
-          args['title'],
-          args['category'],
-          args['description'],
-          args['image_url'],
-          args['price']
-      ]
-
-      MenuModel.post_menu_item(self, menu1)
-      return {"Mess":"Menu item added successfully"}, 200
+      if len(check_valid(self)) == 0:
+        MenuModel.post_menu_item(self, create_menu(self))
+        return {"Mess":"Menu item added successfully"}, 200
+      return check_valid(self)
     else:
       return {"Error":"Only admins are allowed to create a menu item"}, 401
 
@@ -91,21 +100,10 @@ class MenuItem(Resource):
     if role == 1:
       item = item_id
       args = parser.parse_args()
-      if not Validate().validate_name(args['title']):
-        return {"Error":"Title should have at least 3 characters!"}, 400
-      if not Validate().validate_name(args['category']):
-        return {"Error":"Category should have at least 3 characters!"}, 400
-
-      menu1 = [
-          args['title'],
-          args['category'],
-          args['description'],
-          args['image_url'],
-          args['price']
-      ]
-
-      MenuModel.update_menu_item(self, menu1, item)
-      return {"Success":"Menu has been updated"}, 200
+      if len(check_valid(self)) == 0:
+        MenuModel.update_menu_item(self, create_menu(self), item)
+        return {"Success":"Menu has been updated"}, 200
+      return check_valid(self)
     else:
       return {"Error":"Only admins are allowed to edit this"}, 401
 

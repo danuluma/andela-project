@@ -19,7 +19,6 @@ load_dotenv('.env')
 class Db(object):
   """docstring for Db"""
   def __init__(self):
-    pass
     self.dbase = app_config[os.getenv('APP_SETTINGS')].DB_URI
 
   def connect(self):
@@ -33,7 +32,7 @@ class Db(object):
   def run_query(self, file):
     for query in file:
       try:
-          conn = self.connect()
+          conn = Db().connect()
           cur = conn.cursor()
           cur.execute(query)
           conn.commit()
@@ -42,32 +41,32 @@ class Db(object):
       except:
         pass
   def creates(self):
-    self.run_query(create_tables)
+    Db().run_query(create_tables)
 
   def drops(self):
-    self.run_query(create_tables)
+    Db().run_query(create_tables)
 
   def get_query(self, table):
-    conn = self.connect()
+    conn = Db().connect()
     cur = conn.cursor()
     cur.execute("""SELECT * FROM {}""".format(table))
     return [row for row in cur.fetchall()]
 
   def post_query(self, post_query, data):
-    conn = self.connect()
+    conn = Db().connect()
     cur = conn.cursor()
     cur.execute(post_query, data)
     conn.commit()
     conn.close()
 
   def put_query(self, put_query, data):
-    conn = self.connect()
+    conn = Db().connect()
     cur = conn.cursor()
     cur.execute(put_query, data)
     conn.commit()
 
   def delete_query(self, delete_query):
-    conn = self.connect()
+    conn = Db().connect()
     cur = conn.cursor()
     cur.execute(delete_query)
     conn.commit()
