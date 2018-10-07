@@ -16,8 +16,6 @@ parser = reqparse.RequestParser(bundle_errors=True)
 parser.add_argument('status', type=str, default=0, location='json')
 
 
-
-
 class OrdersView(Resource):
   """Endpoints for orders. ~/dann/api/v2/orders"""
 
@@ -64,6 +62,6 @@ class OrderItem(Resource):
     current_user = get_jwt_identity()
     if current_user[2] == 1:
       OrderModel.delete_order(self, orderId)
-      return {"Success":"Order has been deleted"}, 200
+      return {"Success":"Order has been deleted"}, 204
     else:
       return {"Error":"Only admins are allowed to delete an order"}, 401

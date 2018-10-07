@@ -18,19 +18,22 @@ from app.config import app_config
 def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(app_config[config_name])
-    from app import api_bp, api_bp2
+    from app import api_bp, api_bp2, api_bp3
     app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
     jwt = JWTManager(app)
     # Db().drops()
     Db().creates()
     app.register_blueprint(api_bp, url_prefix='/dann/api/v1')
     app.register_blueprint(api_bp2, url_prefix='/dann/api/v2')
+    app.register_blueprint(api_bp3, url_prefix='/')
 
     return app
 
+application = create_app(os.getenv('APP_SETTINGS'))
+
 if __name__ == "__main__":
     # config_name = "testing"
-    config_name = os.getenv('APP_SETTINGS')
-    app = create_app(config_name)
+    # config_name = os.getenv('APP_SETTINGS')
+    # app = create_app(config_name)
     port = int(os.environ.get('PORT', 5000))
-    app.run(port=port, debug=True)
+    application.run(port=port, debug=True)
