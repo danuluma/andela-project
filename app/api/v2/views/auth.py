@@ -71,8 +71,8 @@ class Signup(Resource):
       UserModel.add_new_user(self, new_user)
       return {'mess': "success"}, 200
 
-    except psycopg2.IntegrityError as e:
-      return {"Error":"Data already exists"}
+    except psycopg2.IntegrityError:
+      return {"Error":"Data already exists"}, 409
 
   @jwt_required
   def get(self):
