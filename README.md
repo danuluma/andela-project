@@ -1,7 +1,8 @@
 # Dann's Fast Foods API
-[![Build Status](https://travis-ci.com/danuluma/andela-project.svg?branch=develop)](https://travis-ci.com/danuluma/andela-project)  [![Coverage Status](https://coveralls.io/repos/github/danuluma/andela-project/badge.svg?branch=ch-configure-badges-160759291)](https://coveralls.io/github/danuluma/andela-project?branch=ch-configure-badges-160759291)
+[![Build Status](https://travis-ci.com/danuluma/andela-project.svg?branch=develop)](https://travis-ci.com/danuluma/andela-project)  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/danuluma/andela-project/ch-add-license-1/LICENSE)
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/76222adb39c1ccdc0a94/maintainability)](https://codeclimate.com/github/danuluma/andela-project/maintainability)   <!-- [![Test Coverage](https://api.codeclimate.com/v1/badges/76222adb39c1ccdc0a94/test_coverage)](https://codeclimate.com/github/danuluma/andela-project/test_coverage) -->
+[![Maintainability](https://api.codeclimate.com/v1/badges/76222adb39c1ccdc0a94/maintainability)](https://codeclimate.com/github/danuluma/andela-project/maintainability)   [![Coverage Status](https://coveralls.io/repos/github/danuluma/andela-project/badge.svg?branch=ch-configure-badges-160759291)](https://coveralls.io/github/danuluma/andela-project?branch=ch-configure-badges-160759291)
+<!-- [![Test Coverage](https://api.codeclimate.com/v1/badges/76222adb39c1ccdc0a94/test_coverage)](https://codeclimate.com/github/danuluma/andela-project/test_coverage) -->
 
 
 
@@ -169,8 +170,10 @@ For Windows users, please use ```pip install virtualenvwrapper-win```.
 [Home](https://dannapi.herokuapp.com)
 
 ## Credits
-#### Dann
 #### [Andela](https://andela.com/)
 
+## Author
+#### [Dann](https://github.com/danuluma)
 
 ## License
+[MIT](https://raw.githubusercontent.com/danuluma/andela-project/ch-add-license-1/LICENSE)
