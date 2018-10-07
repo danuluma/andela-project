@@ -51,3 +51,9 @@ class UserOrder(Resource):
       return {"Success":"Order placed"}, 200
     else:
       return {"Error":"Item does not exist in menu"}, 404
+
+class Home1(Resource):
+  """Just a test endpoint ~/"""
+  def get(self):
+    return "God's not dead, and so is Dann's api. Hello, there ;-)", 200
+

@@ -9,13 +9,15 @@ from app.api.v1.auth import Reg, Login, Refresh
 from app.api.v2.views.auth import Signup, Loginv2
 from app.api.v2.views.view_menu import MenuView, MenuItem
 from app.api.v2.views.view_order import OrdersView, OrderItem
-from app.api.v2.views.view_user_order import UserOrder
+from app.api.v2.views.view_user_order import UserOrder, Home1
 
 
 api_bp = Blueprint('api', __name__)
 api_bp2 = Blueprint('api2', __name__)
+api_bp3 = Blueprint('home', __name__)
 api = Api(api_bp)
 api2 = Api(api_bp2)
+home = Api(api_bp3)
 
 
 # Routes
@@ -32,3 +34,4 @@ api2.add_resource(MenuItem, '/menu/<int:item_id>')
 api2.add_resource(OrdersView, '/orders')
 api2.add_resource(OrderItem, '/orders/<int:orderId>')
 api2.add_resource(UserOrder, '/users/orders')
+home.add_resource(Home1, '/')
